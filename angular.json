@@ -1,6 +1,32 @@
 {
   "version": 1,
   "projects": {
+    "mixed-bus": {
+      "projectType": "library",
+      "root": "libs/mixed-bus",
+      "sourceRoot": "libs/mixed-bus/src",
+      "prefix": "soer",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/mixed-bus"],
+          "options": {
+            "jestConfig": "libs/mixed-bus/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/mixed-bus/src/**/*.ts",
+              "libs/mixed-bus/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "naris": {
       "projectType": "application",
       "root": "apps/naris",
