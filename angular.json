@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "projects": {
+    "naris": {
+      "projectType": "application",
+      "root": "apps/naris",
+      "sourceRoot": "apps/naris/src",
+      "prefix": "soer",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/naris",
+            "index": "apps/naris/src/index.html",
+            "main": "apps/naris/src/main.ts",
+            "polyfills": "apps/naris/src/polyfills.ts",
+            "tsConfig": "apps/naris/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["apps/naris/src/favicon.ico", "apps/naris/src/assets"],
+            "styles": ["apps/naris/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/naris/src/environments/environment.ts",
+                  "with": "apps/naris/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "naris:build:production"
+            },
+            "development": {
+              "browserTarget": "naris:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "naris:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/naris/src/**/*.ts",
+              "apps/naris/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/naris"],
+          "options": {
+            "jestConfig": "apps/naris/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "naris-e2e": {
+      "root": "apps/naris-e2e",
+      "sourceRoot": "apps/naris-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/naris-e2e/cypress.json",
+            "devServerTarget": "naris:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "naris:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/naris-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["naris"]
+    }
+  }
+}
