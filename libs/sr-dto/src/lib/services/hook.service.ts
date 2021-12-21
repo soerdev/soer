@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BusMessage, BusOwner } from '../../mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from '../../mixed-bus/mixed-bus.service';
+import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
 import { CommandRead, CreateDoneEvent, DeleteDoneEvent, UpdateDoneEvent } from '../bus-messages/bus.messages';
 
-@Injectable()
+
 export class HookService {
 
   constructor(public domainName: string = '', private bus$: MixedBusService, public hooks: BusOwner[]) { 
@@ -13,7 +11,7 @@ export class HookService {
     this.bus$.of(CreateDoneEvent).subscribe(this.watch.bind(this));
   }
 
-  watch(data$: BusMessage): void {
+  watch(data$: BusMessage | BusError): void {
     const domain = this.hooks.filter(h => h.sid !== data$.owner.sid);
     if (domain.length != this.hooks.length) {
       domain.forEach(h => this.bus$.publish(new CommandRead(h)));

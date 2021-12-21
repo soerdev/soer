@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
 import { BehaviorSubject } from 'rxjs';
-import { BusMessage, BusOwner } from '../../mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from '../../mixed-bus/mixed-bus.service';
 import { ChangeDataEvent } from '../bus-messages/bus.messages';
 import { INIT } from '../interfaces/dto.pack.interface';
 
@@ -23,7 +22,7 @@ export class DataStoreService {
     return this.data$.get(owner.sid);
   }
 
-  dataEmission(data: BusMessage): void {
+  dataEmission(data: BusMessage | BusError): void {
     console.log('Update DataStore ==>>', data.owner, data);
     if (data instanceof ChangeDataEvent) {
         this.of(data.owner).next(data);

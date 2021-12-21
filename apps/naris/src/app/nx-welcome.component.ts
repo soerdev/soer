@@ -8,7 +8,6 @@ import { MixedBusService } from '@soer/mixed-bus';
     <head><title>Welcome naris</title></head>
     <body>
       <h1>Welcome naris</h1>
-      {{mixedBus.message()}}
     </body>
     </html>
   `,

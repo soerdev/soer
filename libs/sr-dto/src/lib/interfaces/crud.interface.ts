@@ -1,4 +1,4 @@
-import { BusMessage } from "../../mixed-bus/interfaces/mixed-bus.interface";
+import { BusMessage } from "@soer/mixed-bus";
 import { DtoPack } from "./dto.pack.interface";
 
 export interface CRUD {

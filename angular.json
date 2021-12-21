@@ -171,6 +171,32 @@
         }
       },
       "tags": []
+    },
+    "sr-url-builder": {
+      "projectType": "library",
+      "root": "libs/sr-url-builder",
+      "sourceRoot": "libs/sr-url-builder/src",
+      "prefix": "soer",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/sr-url-builder"],
+          "options": {
+            "jestConfig": "libs/sr-url-builder/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/sr-url-builder/src/**/*.ts",
+              "libs/sr-url-builder/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
   }
 }

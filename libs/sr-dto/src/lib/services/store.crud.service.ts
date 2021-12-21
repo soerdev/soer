@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
 import { isObservable, Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { ChangeDataEvent, CommandCreate, CommandDelete, CommandNew, CommandRead, CommandUpdate, CreateDoneEvent, DeleteDoneEvent, ErrorDataEvent, ReadDoneEvent, UpdateDoneEvent } from '../bus-messages/bus.messages';
 import { CRUD } from '../interfaces/crud.interface';
 import { DtoPack, ERROR, INIT, OK } from '../interfaces/dto.pack.interface';
-
+import { UrlBuilderService } from '@soer/sr-url-builder';
 
 @Injectable(
     { providedIn: 'root' }
@@ -27,15 +27,18 @@ export class StoreCrudService implements CRUD {
     }
 
     // New
-    createNew(msg: BusMessage): void {
+    createNew(msg: BusMessage|BusError): void {
         this.updateData({ status: INIT, items: [] }, msg.owner);
     }
     // Create
-    protected queryRead(owner: BusOwner, params): Observable<DtoPack<any>> {
-        return this.http.get<DtoPack<any>>(this.urlBuilder.build(owner.schema.read, params));
+    protected queryRead(owner: BusOwner, params: any): Observable<DtoPack<any>> {
+        return this.http.get<DtoPack<any>>(this.urlBuilder.build(owner.schema['read'], params));
     }
 
-    public read(msg: BusMessage): Promise<DtoPack<any>> {
+    public read(msg: BusMessage|BusError): Promise<DtoPack<any>> {
+        if (msg instanceof BusError) {
+            return Promise.resolve({status: ERROR, items: []});
+        }
         return this.updateData(this.queryRead(msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new ReadDoneEvent(msg.owner, data, msg.params)))
@@ -44,11 +47,14 @@ export class StoreCrudService implements CRUD {
     }
 
     // Create
-    protected queryCreate(data: any, owner: BusOwner, params): Observable<DtoPack<any>> {
-        return this.http.post<DtoPack<any>>(this.urlBuilder.build(owner.schema.create, params), data);
+    protected queryCreate(data: any, owner: BusOwner, params: any): Observable<DtoPack<any>> {
+        return this.http.post<DtoPack<any>>(this.urlBuilder.build(owner.schema['create'], params), data);
     }
 
-    public create(msg: BusMessage): Promise<DtoPack<any>> {
+    public create(msg: BusMessage | BusError): Promise<DtoPack<any>> {
+        if (msg instanceof BusError) {
+            return Promise.resolve({status: ERROR, items: []});
+        }
         return this.updateData(this.queryCreate(msg.result, msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new CreateDoneEvent(msg.owner, data)))
@@ -57,11 +63,15 @@ export class StoreCrudService implements CRUD {
     }
 
     // UPDATE
-    protected queryUpdate(data: any, owner: BusOwner, params): Observable<DtoPack<any>> {
-        return this.http.put<DtoPack<any>>(this.urlBuilder.build(owner.schema.update, params), data);
+    protected queryUpdate(data: any, owner: BusOwner, params: any): Observable<DtoPack<any>> {
+        return this.http.put<DtoPack<any>>(this.urlBuilder.build(owner.schema['update'], params), data);
     }
 
-    public update(msg: BusMessage): Promise<DtoPack<any>> {
+    public update(msg: BusMessage | BusError): Promise<DtoPack<any>> {
+        if (msg instanceof BusError) {
+            return Promise.resolve({status: ERROR, items: []});
+        }
+
         return this.updateData(this.queryUpdate(msg.result, msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new UpdateDoneEvent(msg.owner, data, msg.params)))
@@ -70,11 +80,15 @@ export class StoreCrudService implements CRUD {
     }
 
     // DELETE
-    protected queryDelete(owner: BusOwner, params): Observable<DtoPack<any>> {
-        return this.http.delete<DtoPack<any>>(this.urlBuilder.build(owner.schema.delete, params));
+    protected queryDelete(owner: BusOwner, params: any): Observable<DtoPack<any>> {
+        return this.http.delete<DtoPack<any>>(this.urlBuilder.build(owner.schema['delete'], params));
     }
 
-    public delete(msg: BusMessage): Promise<DtoPack<any>> {
+    public delete(msg: BusMessage | BusError): Promise<DtoPack<any>> {
+        if (msg instanceof BusError) {
+            return Promise.resolve({status: ERROR, items: []});
+        }
+
         return this.updateData(this.queryDelete(msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new DeleteDoneEvent(msg.owner, data, msg.params)))
@@ -83,16 +97,25 @@ export class StoreCrudService implements CRUD {
     }
 
     async updateData(
-        dataOrObservable: DtoPack<any> | Observable<DtoPack<any>>,
+        dataOrObservable: DtoPack<any> | Observable<DtoPack<any>> | undefined,
         id: BusOwner
     ): Promise<DtoPack<any>> {
         if (isObservable(dataOrObservable)) {
             try {
                 dataOrObservable = await dataOrObservable.pipe(first()).toPromise();
-            } catch (e) {
-                dataOrObservable = {status: ERROR, items: [{message: e.message}]};
+            } catch (e: unknown) {
+                if (e instanceof Error) {
+                    dataOrObservable = {status: ERROR, items: [{message: e.message}]};
+                } else {
+                    dataOrObservable = {status: ERROR, items: [{message: 'Unknown error'}]};
+                }
             }
         }
+
+        if (dataOrObservable === undefined) {
+            dataOrObservable = {status: ERROR, items: []};
+        }
+
         const status = dataOrObservable?.status ?? OK;
         const items = dataOrObservable?.items ?? [];
 
