@@ -145,6 +145,32 @@
       },
       "tags": [],
       "implicitDependencies": ["naris"]
+    },
+    "sr-dto": {
+      "projectType": "library",
+      "root": "libs/sr-dto",
+      "sourceRoot": "libs/sr-dto/src",
+      "prefix": "soer",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/sr-dto"],
+          "options": {
+            "jestConfig": "libs/sr-dto/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/sr-dto/src/**/*.ts",
+              "libs/sr-dto/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
   }
 }

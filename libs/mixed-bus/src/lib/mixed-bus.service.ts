@@ -53,7 +53,7 @@ export class MixedBusService {
      * @param eventOwners BusOwner[]
      * @returns 
      */
-    public of<T extends Record<string, unknown>>(messageType: T, eventOwners: BusOwner[] = []): Observable<BusMessage|BusError> {
+    public of(messageType: unknown, eventOwners: BusOwner[] = []): Observable<BusMessage|BusError> {
         const channel = (messageType as any).name;
         return this.bus$.pipe(
             filter(m => m != null && m.channel === channel),

@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@soer/mixed-bus": ["libs/mixed-bus/src/index.ts"]
+      "@soer/mixed-bus": ["libs/mixed-bus/src/index.ts"],
+      "@soer/sr-dto": ["libs/sr-dto/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
