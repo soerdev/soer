@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-topics-list',
+  selector: 'soer-topics-list',
   templateUrl: './topics-list.component.html',
   styleUrls: ['./topics-list.component.scss']
 })

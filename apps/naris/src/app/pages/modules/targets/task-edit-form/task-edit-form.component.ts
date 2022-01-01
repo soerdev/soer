@@ -1,20 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { convertToJsonDTO, parseJsonDTOPack } from 'src/app/api/json.dto.helpers';
-import { TargetModel } from 'src/app/api/targets/target.interface';
-import { CommandCancel, CommandDelete, CommandUpdate } from 'src/app/packages/dto/bus-messages/bus.messages';
-import { DtoPack } from 'src/app/packages/dto/interfaces/dto.pack.interface';
-import { DataStoreService } from 'src/app/packages/dto/services/data-store.service';
-import { BusOwner } from 'src/app/packages/mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from 'src/app/packages/mixed-bus/mixed-bus.service';
+import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
+import { TargetModel } from '../../../../api/targets/target.interface';
+import { CommandCancel, CommandDelete, CommandUpdate } from '@soer/sr-dto';
+import { DtoPack } from '@soer/sr-dto';
+import { DataStoreService } from '@soer/sr-dto';
+import { BusOwner } from '@soer/mixed-bus';
+import { MixedBusService } from '@soer/mixed-bus';
 
 
 @Component({
-  selector: 'app-task-edit-form',
+  selector: 'soer-task-edit-form',
   templateUrl: './task-edit-form.component.html',
   styleUrls: ['./task-edit-form.component.scss']
 })
-export class TaskEditFormComponent implements OnInit {
+export class TaskEditFormComponent {
   target$: Observable<DtoPack<TargetModel>>;
   public history: {ind: number, title: string}[] = [];
 
@@ -22,14 +22,12 @@ export class TaskEditFormComponent implements OnInit {
     @Inject('target') private targetId: BusOwner,
     private bus$: MixedBusService,
     private store$: DataStoreService
-  ) { }
-
-  ngOnInit(): void {
+  ) { 
     this.target$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetId), 'Targets');
   }
 
   onSave(target: TargetModel): void {
-    this.bus$.publish<CommandUpdate>(
+    this.bus$.publish(
       new CommandUpdate(
         this.targetId,
         { ...convertToJsonDTO(target, ['id']), id: target.id},
@@ -38,7 +36,7 @@ export class TaskEditFormComponent implements OnInit {
     );
   }
 
-  createTask(target: TargetModel, title): void {
+  createTask(target: TargetModel, title: any): void {
     target.tasks = target.tasks || [];
     target.tasks.push({title: title.value, overview: '', progress: 0, tasks: []});
     title.value = '';
@@ -48,7 +46,7 @@ export class TaskEditFormComponent implements OnInit {
 
 
   onDelete(target: TargetModel): void {
-    this.bus$.publish<CommandDelete>(
+    this.bus$.publish(
       new CommandDelete(
         this.targetId,
         target,
@@ -58,7 +56,7 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.bus$.publish<CommandCancel>(
+    this.bus$.publish(
       new CommandCancel(
         this.targetId
       )

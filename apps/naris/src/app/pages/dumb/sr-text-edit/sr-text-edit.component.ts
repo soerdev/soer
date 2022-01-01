@@ -16,15 +16,13 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, O
 })
 export class SrTextEditComponent implements AfterViewInit {
 
-  @Input() srText: string;
+  @Input() srText = '';
   @Output() srTextChange = new EventEmitter<string>();
   @Output() readonly ok = new EventEmitter<string>(true);
   @Output() readonly cancel = new EventEmitter<string>(true);
   beforeText = '';
   currentText = '';
   @ViewChild('textarea', { static: false }) textarea!: ElementRef<HTMLTextAreaElement>;
-
-  constructor() { }
 
   ngAfterViewInit(): void {
     this.beforeText = this.currentText =  this.srText;

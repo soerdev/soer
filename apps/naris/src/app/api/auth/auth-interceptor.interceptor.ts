@@ -10,8 +10,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { MixedBusService } from '../../packages/mixed-bus/mixed-bus.service';
-import { BusError } from 'src/app/packages/mixed-bus/interfaces/mixed-bus.interface';
+import { BusError, MixedBusService } from '@soer/mixed-bus';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

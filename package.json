@@ -23,6 +23,7 @@
     "@ant-design/icons-angular": "^13.0.1",
     "@nrwl/angular": "13.3.8",
     "ng-zorro-antd": "^13.0.0",
+    "ngx-markdown": "^13.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

@@ -2,29 +2,28 @@ import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO, parseJsonDTO } from '../../../../api/json.dto.helpers';
 import { WorkbookModel } from '../../../../api/workbook/workbook.model';
-import { DataStoreService } from '../../../../packages/dto/services/data-store.service';
-import { MixedBusService } from '../../../../packages/mixed-bus/mixed-bus.service';
-import { CommandCreate, CommandUpdate } from '../../../../packages/dto/bus-messages/bus.messages';
-import { BusOwner } from '../../../../packages/mixed-bus/interfaces/mixed-bus.interface';
+import { DataStoreService } from '@soer/sr-dto';
+import { MixedBusService } from '@soer/mixed-bus';
+import { CommandCreate, CommandUpdate } from '@soer/sr-dto';
+import { BusOwner } from '@soer/mixed-bus';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-edit-abstracte-page',
+  selector: 'soer-edit-abstracte-page',
   templateUrl: './edit-abstracte-page.component.html',
   styleUrls: ['./edit-abstracte-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditAbstractePageComponent implements OnInit, OnDestroy {
+export class EditAbstractePageComponent implements OnDestroy {
   form: FormGroup;
   public previewFlag = false;
-  subscriptions = [];
+  subscriptions: Subscription[] = [];
   constructor(
     @Inject('workbook') private workbookId: BusOwner,
     private formBuilder: FormBuilder,
     private bus$: MixedBusService,
     private store$: DataStoreService
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.form = this.formBuilder.group({
       id: [null],
       question: [null, [Validators.maxLength(255)]],
@@ -44,14 +43,14 @@ export class EditAbstractePageComponent implements OnInit, OnDestroy {
   }
   onSubmit(): void {
     if (this.form.value.id === null) {
-          this.bus$.publish<CommandCreate>(
+          this.bus$.publish(
               new CommandCreate(
                 this.workbookId,
                 convertToJsonDTO(this.form.value, ['id']),
               )
           );
     } else {
-      this.bus$.publish<CommandUpdate>(
+      this.bus$.publish(
         new CommandUpdate(
           this.workbookId,
           {...convertToJsonDTO(this.form.value, ['id']), id: this.form.value.id}

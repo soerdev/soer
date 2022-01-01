@@ -1,7 +1,7 @@
 <ng-container *ngIf="(question$ | async) as questions">
     <div *ngFor="let question of questions" class="question_answer">
             <div class="audio-player">
-                <app-audio-player *ngIf="question?.url;else noans" [audioUrl]="hostUrl + question?.url"></app-audio-player>
+                <soer-audio-player *ngIf="question?.url;else noans" [audioUrl]="hostUrl + question?.url"></soer-audio-player>
             </div>
             <div class="text">
                 <p>{{question.question}}</p>

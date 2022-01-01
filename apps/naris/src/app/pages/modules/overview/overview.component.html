@@ -1,10 +1,10 @@
 
 <div nz-row [nzGutter]="[24, 24]" >
 
-  <ng-container *ngIf="data.brif">
+  <ng-container *ngIf="data['brif']">
     <div class="user-level" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-      <nz-card [nzTitle]="data.brif.role.name">
-        {{data.brif.role.message}}
+      <nz-card [nzTitle]="data['brif'].role.name">
+        {{data['brif'].role.message}}
       </nz-card>
     </div>
   </ng-container>

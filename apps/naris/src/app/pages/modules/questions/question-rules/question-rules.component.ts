@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-question-rules',
+  selector: 'soer-question-rules',
   templateUrl: './question-rules.component.html',
   styleUrls: ['./question-rules.component.scss']
 })

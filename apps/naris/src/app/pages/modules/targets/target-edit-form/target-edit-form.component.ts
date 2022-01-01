@@ -1,17 +1,16 @@
 import { AfterViewInit, Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { convertToJsonDTO } from 'src/app/api/json.dto.helpers';
-import { CommandCreate, CommandUpdate } from 'src/app/packages/dto/bus-messages/bus.messages';
-import { DataStoreService } from 'src/app/packages/dto/services/data-store.service';
-import { BusOwner } from 'src/app/packages/mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from 'src/app/packages/mixed-bus/mixed-bus.service';
+import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
+import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
+
 
 @Component({
-  selector: 'app-target-edit-form',
+  selector: 'soer-target-edit-form',
   templateUrl: './target-edit-form.component.html',
   styleUrls: ['./target-edit-form.component.scss']
 })
-export class TargetEditFormComponent implements OnInit, AfterViewInit {
+export class TargetEditFormComponent implements AfterViewInit {
 
   @Input() title = '';
   @Input() overview = '';
@@ -34,7 +33,7 @@ export class TargetEditFormComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngOnInit(): void {}
+
 
   ngAfterViewInit(): void {
     this.titleElem.nativeElement.focus();
@@ -42,14 +41,14 @@ export class TargetEditFormComponent implements OnInit, AfterViewInit {
 
   onSubmit(): void {
    if (this.form.value.id === null) {
-      this.bus$.publish<CommandCreate>(
+      this.bus$.publish(
         new CommandCreate(
           this.targetId,
           convertToJsonDTO(this.form.value, ['id'])
         )
       );
     } else {
-      this.bus$.publish<CommandUpdate>(
+      this.bus$.publish(
         new CommandUpdate(
           this.targetId,
           { ...convertToJsonDTO(this.form.value, ['id']), id: this.form.value.id }

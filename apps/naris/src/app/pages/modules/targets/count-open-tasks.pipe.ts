@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TargetModel } from 'src/app/api/targets/target.interface';
+import { TargetModel } from '../../../api/targets/target.interface';
 import { DONE_PROGRESS } from './targets.const';
 
 @Pipe({

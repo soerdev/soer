@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <ng-container *ngIf="(targets$ | async).items as topics">
+    <ng-container *ngIf="(targets$ | async)?.items as topics">
         <div nz-row [nzGutter]="[24, 24]" >
             <ng-container *ngIf="topics.length > 0;else nocontent">
             <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">

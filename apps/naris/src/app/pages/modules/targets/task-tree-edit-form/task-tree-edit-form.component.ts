@@ -1,29 +1,33 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { TargetModel } from 'src/app/api/targets/target.interface';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { TargetModel } from '../../../../api/targets/target.interface';
 
 @Component({
-  selector: 'app-task-tree-edit-form',
+  selector: 'soer-task-tree-edit-form',
   templateUrl: './task-tree-edit-form.component.html',
   styleUrls: ['./task-tree-edit-form.component.scss']
 })
-export class TaskTreeEditFormComponent implements OnInit, OnChanges {
-  @Input() target: TargetModel;
-  @Input() history: {ind: number, title: string}[];
+export class TaskTreeEditFormComponent implements OnChanges {
+  @Input() target: TargetModel = {
+    title: '',
+    overview: '',
+    progress: 0,
+    tasks: []
+  };
+
+  @Input() history: {ind: number, title: string}[] = [];
 
   @Output() readonly save = new EventEmitter<TargetModel>();
   @Output() readonly historyChange = new EventEmitter<{ind: number, title: string}[]>();
   @Output() readonly cancel = new EventEmitter<any>();
   @Output() readonly delete = new EventEmitter<TargetModel>();
 
-  public activeTarget: TargetModel;
+  public activeTarget: TargetModel | undefined;
   public isEdit = true;
   public isEditTask = false;
   public editTaskByIndex = -1;
 
 
-  constructor() { }
 
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
       this.applyHistory(this.history);
@@ -37,16 +41,16 @@ export class TaskTreeEditFormComponent implements OnInit, OnChanges {
   }
 
   autoEditTask(): boolean {
-    this.activeTarget.tasks?.forEach( (task, index) => {
+    const items = this.activeTarget?.tasks || [];
+    items.forEach( (task, index) => {
       if (task.title === '') {
         this.editTaskByIndex = index;
-        return true;
       }
     });
     return false;
   }
 
-  onCancelEdit(value): void {
+  onCancelEdit(value: any): void {
     if (value === '') {
       this.onDeleteTask(this.target, this.editTaskByIndex);
       return;
@@ -78,6 +82,7 @@ export class TaskTreeEditFormComponent implements OnInit, OnChanges {
 
   private applyHistory(history: {ind: number, title: string}[] = []): void {
     this.activeTarget = this.target;
-    history.forEach(item => this.activeTarget = this.activeTarget.tasks[item.ind]);
+    history.forEach(item => this.activeTarget = this.activeTarget?.tasks[item.ind]);
+
   }
 }

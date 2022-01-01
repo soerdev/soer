@@ -1,23 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-audio-player',
+  selector: 'soer-audio-player',
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.scss']
 })
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent {
 
-  @Input() audioUrl: string;
+  @Input() audioUrl = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
-
-
-
-  changeSound(event, item) {
+  changeSound(event: any, item: any) {
       this.audioUrl = '';
       const audioPlayer =  <HTMLAudioElement> document.getElementById('audio');
       if (audioPlayer) {

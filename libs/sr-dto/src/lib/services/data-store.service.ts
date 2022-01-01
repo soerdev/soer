@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
 import { BehaviorSubject } from 'rxjs';
 import { ChangeDataEvent } from '../bus-messages/bus.messages';
-import { INIT } from '../interfaces/dto.pack.interface';
+import { INIT } from '@soer/sr-dto';
 
 @Injectable({
   providedIn: 'root'

@@ -1,20 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-compose-video-player',
+  selector: 'soer-compose-video-player',
   templateUrl: './compose-video-player.component.html',
   styleUrls: ['./compose-video-player.component.scss']
 })
 export class ComposeVideoPlayerComponent implements OnInit, OnDestroy {
 
   videoId = null;
-  subscription;
+  subscription: Subscription | null = null;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(
-      (params) => this.videoId = params.videoId
+      (params) => this.videoId = params?.['videoId']
     );
   }
 

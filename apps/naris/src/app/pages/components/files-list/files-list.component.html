@@ -2,22 +2,22 @@
   
     <ng-container *ngIf="webFiles.length > 0;else nocontent">
         <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let file of webFiles">
-          <a [href]="url(file.url, file.level)" (click)="download($event, file)">
+          <a [href]="url(file['url'], file['level'])" (click)="download($event, file)">
             <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[downloadIcon]" >
-                <nz-card-meta [nzTitle]="file.title" [nzDescription]="overview"></nz-card-meta>
+                <nz-card-meta [nzTitle]="file['title']" [nzDescription]="overview"></nz-card-meta>
             </nz-card>
          </a>
 
           <ng-template #coverTemplate>
               <div class="file-icon">
-                <i nz-icon [nzType]="file.icon" nzTheme="outline"></i>
+                <i nz-icon [nzType]="file['icon']" nzTheme="outline"></i>
               </div>
           </ng-template>
           <ng-template #overview>
-            <p>{{file.desc}}</p>
+            <p>{{file['desc']}}</p>
             <div class="file-label">
-                <nz-tag [nzColor]="'blue'">{{file.level}}</nz-tag>
-                <nz-tag *ngFor="let label of file.labels" [nzColor]="'green'">{{label}}</nz-tag>
+                <nz-tag [nzColor]="'blue'">{{file['level']}}</nz-tag>
+                <nz-tag *ngFor="let label of file['labels']" [nzColor]="'green'">{{label}}</nz-tag>
               </div>
 
           </ng-template>
@@ -30,6 +30,6 @@
 
 
 <ng-template #nocontent>
-  <app-access-denied></app-access-denied>
+  <soer-access-denied></soer-access-denied>
 </ng-template>
 <ng-template #downloadIcon>скачать</ng-template>

@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
+  selector: 'soer-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

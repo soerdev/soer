@@ -78,8 +78,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/naris/src/environments/environment.ts",
-                  "with": "apps/naris/src/environments/environment.prod.ts"
+                  "replace": "apps/naris/../../../../environments/environment.ts",
+                  "with": "apps/naris/../../../../environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"

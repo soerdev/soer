@@ -1,20 +1,19 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { Observable } from 'rxjs';
-import { CommandDelete, CommandEdit, CommandNew, CommandRead, CommandView } from '../../../../packages/dto/bus-messages/bus.messages';
+import { CommandDelete, CommandEdit, CommandNew, CommandRead, CommandView, DtoPack } from '@soer/sr-dto';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
-import { MixedBusService } from '../../../../packages/mixed-bus/mixed-bus.service';
-import { DataStoreService } from '../../../../packages/dto/services/data-store.service';
-import { DtoPack } from '../../../../packages/dto/interfaces/dto.pack.interface';
-import { BusOwner } from '../../../../packages/mixed-bus/interfaces/mixed-bus.interface';
+import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { DataStoreService } from '@soer/sr-dto';
+
 
 @Component({
-  selector: 'app-list-abstracte-page',
+  selector: 'soer-list-abstracte-page',
   templateUrl: './list-abstracte-page.component.html',
   styleUrls: ['./list-abstracte-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListAbstractePageComponent implements OnInit {
+export class ListAbstractePageComponent {
 
   workbook$: Observable<DtoPack<WorkbookModel>>;
 
@@ -23,14 +22,12 @@ export class ListAbstractePageComponent implements OnInit {
     @Inject('workbooks') private workbooksId: BusOwner,
     private bus$: MixedBusService,
     private store$: DataStoreService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbooksId), 'workbooks');
   }
 
   workbookDelete(workbook: WorkbookModel): void {
-    this.bus$.publish<CommandDelete>(
+    this.bus$.publish(
       new CommandDelete(
         this.workbookId,
         workbook,
@@ -40,7 +37,7 @@ export class ListAbstractePageComponent implements OnInit {
   }
 
   workbookEdit(workbook: WorkbookModel): void {
-    this.bus$.publish<CommandEdit>(
+    this.bus$.publish(
       new CommandEdit(
         this.workbookId,
         workbook
@@ -49,7 +46,7 @@ export class ListAbstractePageComponent implements OnInit {
   }
 
   workbookView(workbook: WorkbookModel): void {
-    this.bus$.publish<CommandView>(
+    this.bus$.publish(
       new CommandView(
         this.workbookId,
         workbook
@@ -58,7 +55,7 @@ export class ListAbstractePageComponent implements OnInit {
   }
 
   createWorkbook(): void {
-    this.bus$.publish<CommandNew>(
+    this.bus$.publish(
         new CommandNew(
           this.workbookId
         )

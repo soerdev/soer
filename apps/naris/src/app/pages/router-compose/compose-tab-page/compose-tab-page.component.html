@@ -7,10 +7,10 @@
 </nz-tabset>
 <router-outlet></router-outlet>
 
-<app-overlay (close)="closePopup()" [activate]="popup">
+<soer-overlay (close)="closePopup()" [activate]="popup">
     <div class="popup-container popup-container-width">
         <div class="popup-wrapper">
             <router-outlet (activate)="showPopup(true)" (deactivate)="showPopup(false)" name='popup'></router-outlet>    
         </div>
     </div>    
-</app-overlay>
+</soer-overlay>

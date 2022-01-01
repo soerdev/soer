@@ -1,18 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, HookService, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { CommandCancel, CommandEdit,
-         CommandNew,
-         CommandView,
-         CreateDoneEvent,
-         DeleteDoneEvent,
-         UpdateDoneEvent } from '../../packages/dto/bus-messages/bus.messages';
-import { HookService } from '../../packages/dto/services/hook.service';
-import { BusMessage, BusOwner } from '../../packages/mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from '../../packages/mixed-bus/mixed-bus.service';
+import { Subscription } from 'rxjs';
+
 
 
 export abstract class ComposePage {
-    protected subscriptions = [];
+    protected subscriptions: Subscription[] = [];
     public popup = false;
 
     render = () => console.log(Math.random());
@@ -28,12 +23,13 @@ export abstract class ComposePage {
 
     composeInit(): void {
       this.subscriptions = [
-        this.bus$.of(DeleteDoneEvent).subscribe(() => this.message.success('Элемент успешно удален')),
+        this.bus$
+          .of(DeleteDoneEvent).subscribe(() => this.message.success('Элемент успешно удален')),
         this.bus$.of(CreateDoneEvent).subscribe(() => this.message.success('Элемент успешно создан')),
         this.bus$.of(UpdateDoneEvent).subscribe(() => this.message.success('Элемент успешно изменен'))
       ];
 
-      const pathDomain = this.route.snapshot.routeConfig.path.split('/').shift();
+      const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
       const watchDomain = this.domain.find(d => d.domainName === pathDomain);
 
       if (!watchDomain) {
@@ -62,8 +58,9 @@ export abstract class ComposePage {
       this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
-    onCRUDDone(data: BusMessage): void {
-        if (data.params?.skipRoute) {
+    onCRUDDone(data: BusMessage | BusError): void {
+      if (data instanceof BusError) { return; }
+        if (data.params?.['skipRoute']) {
             return;
         }
         this.router.navigate([{outlets: {popup: null}}], { relativeTo: this.route });
@@ -72,11 +69,13 @@ export abstract class ComposePage {
     onNewWorkbook(): void {
       this.router.navigate(['new'], { relativeTo: this.route });
     }
-    onEditWorkbook(data: BusMessage): void {
+    onEditWorkbook(data: BusMessage | BusError): void {
+      if (data instanceof BusError) { return; }
       this.router.navigate(['edit', data.result.id], { relativeTo: this.route });
     }
 
-    onViewWorkbook(data: BusMessage): void {
+    onViewWorkbook(data: BusMessage | BusError): void {
+      if (data instanceof BusError) { return; }
       this.router.navigate(['view', data.result.id], { relativeTo: this.route });
     }
 

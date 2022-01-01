@@ -2,22 +2,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 ;
 
 @Component({
-  selector: 'app-overlay',
+  selector: 'soer-overlay',
   templateUrl: './overlay.component.html',
   styleUrls: ['./overlay.component.scss']
 })
-export class OverlayComponent implements OnInit {
+export class OverlayComponent {
 
   @Input() activate = true;
-  // tslint:disable-next-line: no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() readonly close = new EventEmitter<void>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  clickOnOverlay(event): void {
+  clickOnOverlay(event: any): void {
     if (event.target.id === 'overlay') {
       this.close.emit();
     }

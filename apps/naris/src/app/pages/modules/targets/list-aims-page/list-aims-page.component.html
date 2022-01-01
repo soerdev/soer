@@ -1,13 +1,13 @@
-<ng-container *ngIf="(targets$ | async).items as targets">
+<ng-container *ngIf="(targets$ | async)?.items as targets">
     <ng-container *ngIf="targets.length > 0;else nocontent">
         <ng-container *ngFor="let target of targets; let index = index">
             <nz-divider [nzText]="targetHeader"></nz-divider>
             <ng-template #targetHeader>
                 <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress" nzType="circle" [nzWidth]="30"></nz-progress>
                 <a  [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', target.id]}}]" nz-button nzType="link">{{target.title}}</a>
-                <a (click)="targetHeader.visibility = !targetHeader.visibility"><i nz-icon [nzType]="targetHeader.visibility ? 'eye' : 'eye-invisible'"></i></a> 
+                <a (click)="visibility.targetHeader.visibility = !visibility.targetHeader.visibility"><i nz-icon [nzType]="visibility.targetHeader?.visibility ? 'eye' : 'eye-invisible'"></i></a> 
             </ng-template>
-            <ng-container *ngTemplateOutlet="listTasks; context: {target: target, root: target, visibility: !!targetHeader.visibility, taskId: index+''}"></ng-container>
+            <ng-container *ngTemplateOutlet="listTasks; context: {target: target, root: target, visibility: !!visibility.targetHeader?.visibility, taskId: index+''}"></ng-container>
         </ng-container>
     </ng-container>
 

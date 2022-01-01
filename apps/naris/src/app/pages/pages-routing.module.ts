@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SrDTOModule } from '@soer/sr-dto';
 import { ByRoutePathResolver } from '../api/by-route-path.resolver';
 import { StreamService } from '../api/streams/stream.service';
 import { TasksResolver } from '../api/tasks/tasks.resolver';
 import { WorkshopsService } from '../api/workshops/workshops.service';
 
 import { FilesListComponent } from './components/files-list/files-list.component';
-import { UnderDevelopmentComponent } from './dumb/under-development/under-development.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';
 import { WORKBOOKS_ID, WORKBOOK_ID } from './modules/abstracte/abstracte.const';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
@@ -79,7 +79,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
 
-    DTOModule.forChild({
+    SrDTOModule.forChild({
       namespace: 'workbook',
       crudProviders: {
         workbook: WORKBOOK_ID,
@@ -87,7 +87,7 @@ const routes: Routes = [
       }
     }),
 
-    DTOModule.forChild({
+    SrDTOModule.forChild({
       namespace: 'qa',
       crudProviders: {
         questionsAll: QUESTIONS_ALL_ID,
@@ -95,7 +95,7 @@ const routes: Routes = [
         question: QUESTION_ID
       }
     }),
-    DTOModule.forChild({
+    SrDTOModule.forChild({
       namespace: 'targets',
       crudProviders: {
         targets: {create: 'json/targets', read: 'json/targets', update: 'json/targets', delete: 'json/targets/:tid'},

@@ -1,17 +1,15 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
-import { CommandCreate, CommandUpdate } from '../../../../packages/dto/bus-messages/bus.messages';
-import { DataStoreService } from '../../../../packages/dto/services/data-store.service';
-import { BusOwner } from '../../../../packages/mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from '../../../../packages/mixed-bus/mixed-bus.service';
+import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
 
 @Component({
-  selector: 'app-question-form',
+  selector: 'soer-question-form',
   templateUrl: './question-form.component.html',
   styleUrls: ['./question-form.component.scss']
 })
-export class QuestionFormComponent implements OnInit {
+export class QuestionFormComponent {
 
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
   form: FormGroup;
@@ -29,19 +27,16 @@ export class QuestionFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   onSubmit(): void {
     if (this.form.value.id === null) {
-      this.bus$.publish<CommandCreate>(
+      this.bus$.publish(
         new CommandCreate(
           this.questionId,
           this.form.value
         )
       );
     } else {
-      this.bus$.publish<CommandUpdate>(
+      this.bus$.publish(
         new CommandUpdate(
           this.questionId,
           { ...convertToJsonDTO(this.form.value, ['id']), id: this.form.value.id }

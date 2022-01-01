@@ -12,7 +12,7 @@
             <textarea rows="8" formControlName="text" nz-input></textarea>
         </nz-textarea-count>
         <div *ngIf="previewFlag" style="padding: 1.5em;">
-            <markdown>{{form.get('text').value}}</markdown>
+            <markdown>{{form.get('text')?.value}}</markdown>
         </div>
         </nz-form-control>
     </nz-form-item>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-under-development',
+  selector: 'soer-under-development',
   templateUrl: './under-development.component.html',
   styleUrls: ['./under-development.component.scss']
 })

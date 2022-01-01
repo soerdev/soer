@@ -1,7 +1,7 @@
+import { BusMessage } from "@soer/mixed-bus";
+import { DtoPack, OK } from "@soer/sr-dto";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { DtoPack, OK } from "../packages/dto/interfaces/dto.pack.interface";
-import { BusMessage } from "../packages/mixed-bus/interfaces/mixed-bus.interface";
 import { JsonDTOModel } from "./jsonDto.model";
 
 
@@ -12,7 +12,7 @@ export function parseJsonDTO<T>(messages$: Observable<BusMessage>, id: string): 
         const result: T[] = [];
         console.log('Pipe map => ', id, data);
         if (data?.result?.status === OK) {
-            data?.result.items.forEach(data => result.push({...JSON.parse(data.json), id: data.id}));
+            data?.result.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
         }
         console.log('after pipe =>', id, result);
         return result;
@@ -27,7 +27,7 @@ export function parseJsonDTOPack<T>(messages$: Observable<BusMessage>, id: strin
         const result: T[] = [];
         console.log(`Pipe map '${id}' => `, data);
         if (data?.result?.status === OK) {
-            data?.result.items.forEach(data => result.push({...JSON.parse(data.json), id: data.id}));
+            data?.result.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
         }
         console.log(`after pipe '${id}' =>`, result, data);
         return {status: data?.result?.status ?? OK, items: result};
@@ -35,8 +35,8 @@ export function parseJsonDTOPack<T>(messages$: Observable<BusMessage>, id: strin
     );
 }
 
-export function convertToJsonDTO<T>(data: T, excludeKeys: string[] = []): JsonDTOModel {
-    const result = {};
-    Object.keys(data).forEach(key => excludeKeys.includes(key) ? null : result[key] = data[key]);
+export function convertToJsonDTO(data: any, excludeKeys: string[] = []): JsonDTOModel {
+    const result: { [key: string]: string; } = {};
+    Object.keys(data).forEach( (key: string) => excludeKeys.includes(key) ? null : result[key] = data[key]);
     return {json: JSON.stringify(result)};
 }

@@ -7,7 +7,7 @@ import {MixedBusModule} from '@soer/mixed-bus';
 import { SrUrlBuilderModule, UrlBuilderService } from '@soer/sr-url-builder';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DataStoreService, StoreCrudService } from '@soer/sr-dto';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { ru_RU } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -19,6 +19,9 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { IconsProviderModule } from '../icons-provider.module';
+import { environment } from '../environments/environment';
+import { AuthService } from './api/auth/auth.service';
+import { AuthInterceptor } from './api/auth/auth-interceptor.interceptor';
 
 registerLocaleData(ru);
 
@@ -27,7 +30,7 @@ registerLocaleData(ru);
   imports: [
     BrowserModule, 
     MixedBusModule,
-    SrUrlBuilderModule.forRoot({apiRoot: 'test'}),
+    SrUrlBuilderModule.forRoot({apiRoot: environment.apiUrl}),
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -39,6 +42,9 @@ registerLocaleData(ru);
   ],
 
   providers: [
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
     {
       provide: APP_INITIALIZER,
       multi: true,

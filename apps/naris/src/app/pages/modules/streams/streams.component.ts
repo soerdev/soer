@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-streams',
+  selector: 'soer-streams',
   templateUrl: './streams.component.html',
   styleUrls: ['./streams.component.scss']
 })
 export class StreamsComponent implements OnInit {
 
-  public streams;
+  public streams: any;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.streams = this.route.snapshot.data.streams;
+    this.streams = this.route.snapshot.data?.['streams'];
   }
 
   showVideo(youtube_id: string): void {
