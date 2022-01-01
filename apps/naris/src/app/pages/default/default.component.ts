@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { BusError, MixedBusService } from '@soer/mixed-bus';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../api/auth/auth.service';
-import { BusError } from '../../packages/mixed-bus/interfaces/mixed-bus.interface';
-import { MixedBusService } from '../../packages/mixed-bus/mixed-bus.service';
 import { MAIN_MENU } from './menu.const';
 
 @Component({
-  selector: 'app-default',
+  selector: 'soer-default',
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
 })
@@ -17,7 +16,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   title = '';
   subtitle = '';
-  subscriptions;
+  subscriptions: any;
   isShowOverlay = true;
 
   menuItems = MAIN_MENU;
@@ -43,7 +42,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach( sub => sub.unsubscribe());
+    this.subscriptions.forEach( (sub: any) => sub.unsubscribe());
   }
 
   logout(): void {
@@ -66,8 +65,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
     const child = findChildActiveRoute(this.route);
 
     const data = child.snapshot.data;
-    this.title = data?.header?.title ?? '';
-    this.subtitle = data?.header?.subtitle ?? '';
+    this.title = (data['header'] || {}).title;
+    this.subtitle = (data['header'] || {}).subtitle;
   }
 
   check(sider: NzSiderComponent): void {
@@ -76,7 +75,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     }
   }
 
-  showOverlay(status): void {
+  showOverlay(status: any): void {
     this.isShowOverlay = status;
   }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+
 
 
 const TOKEN = 'token';
@@ -12,7 +13,7 @@ export class AuthService {
   static cookieCheck = false;
   public tokenUpdate$ = new EventEmitter();
   public get token(): string {
-    return localStorage.getItem(TOKEN);
+    return localStorage.getItem(TOKEN) + '';
   }
   public set token(n: string|null) {
     n !== null ? localStorage.setItem(TOKEN, n) : localStorage.removeItem(TOKEN);

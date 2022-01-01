@@ -1,3 +1,13 @@
-export const environment = {
+import { EnvironmentInterface } from './environment.interface';
+
+const HOST = 'https://soer.pro';
+
+export const environment: EnvironmentInterface = {
   production: true,
+  host: HOST,
+  googleAuthUrl: HOST + '/api/auth/google',
+  patreonAuthUrl: HOST + '/api/auth/patreon',
+  apiUrl: HOST + '/api/',
+  assetsUrl: HOST + '/assets/',
+  privateAssetsUrl: HOST + '/assets/private/'
 };

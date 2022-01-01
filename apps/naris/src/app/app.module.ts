@@ -14,6 +14,11 @@ import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { IconsProviderModule } from '../icons-provider.module';
 
 registerLocaleData(ru);
 
@@ -25,8 +30,12 @@ registerLocaleData(ru);
     SrUrlBuilderModule.forRoot({apiRoot: 'test'}),
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
-
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    IconsProviderModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzMessageModule
   ],
 
   providers: [

@@ -1,0 +1,12 @@
+<svg width="72" height="20" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S0ER: PRO">
+  <title>S0ER: PRO</title>
+      <g>
+        <rect width="420" height="200" fill="#fff"/>
+        <rect width="350" height="200" fill="#E00" x="420"/>
+      </g>
+      <g font-family="Verdana" font-size="120">
+        <text fill="#000"  x="50" y="140" textLength="320">S0ER</text>
+        <text fill="#fff"  x="460" y="140" textLength="250">PRO</text>
+      </g>
+
+</svg>

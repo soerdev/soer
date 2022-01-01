@@ -4,7 +4,7 @@ import { ByRoutePathResolver } from '../api/by-route-path.resolver';
 import { StreamService } from '../api/streams/stream.service';
 import { TasksResolver } from '../api/tasks/tasks.resolver';
 import { WorkshopsService } from '../api/workshops/workshops.service';
-import { DTOModule } from '../packages/dto/dto.module';
+
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { UnderDevelopmentComponent } from './dumb/under-development/under-development.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';

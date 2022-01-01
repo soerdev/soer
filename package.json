@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@angular/youtube-player": "^13.1.1",
+    "@ant-design/icons-angular": "^13.0.1",
     "@nrwl/angular": "13.3.8",
     "ng-zorro-antd": "^13.0.0",
     "rxjs": "~7.4.0",

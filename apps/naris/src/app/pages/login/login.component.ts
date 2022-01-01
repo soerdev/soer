@@ -1,9 +1,10 @@
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/api/auth/auth.service';
-import { MEDIUM_TIMEOUT_INTERVAL } from 'src/environments/constants';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../../api/auth/auth.service';
+import { MEDIUM_TIMEOUT_INTERVAL } from '../../../environments/constants';
+import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,16 +13,16 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   validateForm!: FormGroup;
-  subscriptions = [];
+  subscriptions: Subscription[] = [];
 
   loading = false;
   private isSkipChecks = false;
 
-  private externalWindow = null;
-  public jwt = null;
+  private externalWindow: any;
+  public jwt: string | null = null;
   submitForm(): void {
     for (const i in this.validateForm.controls) {
-      if (this.validateForm.controls.hasOwnProperty(i)) {
+      if (Object.prototype.hasOwnProperty.call(this.validateForm.controls, i)) {
         this.validateForm.controls[i].markAsDirty();
         this.validateForm.controls[i].updateValueAndValidity();
       }
@@ -35,14 +36,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.isSkipChecks = this.route.snapshot.queryParams.skipchecks === 'true';
+    this.isSkipChecks = this.route.snapshot.queryParams?.['skipchecks'] === 'true';
 
     if (!this.isSkipChecks) {
       this.subscriptions = [ this.auth.tokenUpdate$.subscribe(() => {
         this.checkJWT();
         this.loading = this.isSkipChecks || !!this.jwt;
       }) ];
-      this.checkJWT(this.route.snapshot.queryParams.jwt);
+      this.checkJWT(this.route.snapshot.queryParams?.['jwt']);
     }
   
     this.loading = this.isSkipChecks || !!this.jwt;
@@ -83,22 +84,27 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const uid = setInterval(() => {
       try{
-        const href = this.externalWindow.location.href;
+        const href = this.externalWindow?.['location']?.['href'] + '';
         if (href) {
           this.jwt = href.split('jwt=')[1];
           if (this.jwt) {
             this.loading = true;
             this.auth.token = this.jwt;
-            this.externalWindow.close();
+            if (this.externalWindow) {
+              this.externalWindow.close();
+            }
             clearInterval(uid);
             this.redirectToHome();
           }
         }
-      }catch (e) {}
+      }catch (e) { 
+        console.log('Something goes wrong.');
+      }
     }, MEDIUM_TIMEOUT_INTERVAL);
   }
 
-  private popupCenter({url, title, w, h}): any {
+  private popupCenter(params: any): any {
+    const {url, title, w, h} = params;
     // Fixes dual-screen position                             Most browsers      Firefox
     const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
     const dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
@@ -125,9 +131,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       `
     );
 
-    if (window.focus) {
-      newWindow.focus();
-    }
+
+    newWindow?.focus();
+
     return newWindow;
   }
 
