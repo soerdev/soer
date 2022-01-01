@@ -1,0 +1,16 @@
+.question_answer {
+    padding: 2em;
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+
+    .audio-player {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+    .text {
+        overflow: auto;
+        margin: 2em;
+    }
+}

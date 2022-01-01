@@ -1,0 +1,66 @@
+
+
+<nz-tabset nzLinkRouter [nzAnimated]="false" [nzLinkExact]="false">
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['/', 'pages', 'qa', 'my']" >Мои вопросы</a>
+      <ng-container *ngIf="(question$ | async) as questions">
+        <ng-container *ngTemplateOutlet="listQuestions; context: {showAddButton: true, showRemoveButton: true, questions, empty: emptylist, target: 'my'}"></ng-container>
+      </ng-container>
+    </nz-tab>
+
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['/', 'pages', 'qa', 'all']">Все вопросы <img src="/assets/favicons/favicon-194x194.png" width="16" style="margin-top: -8px;" /></a>
+      <ng-container *ngIf="(question$ | async | onlyWithAnaswer) as questions">
+        <ng-container *ngTemplateOutlet="listQuestions; context: {showAddButton: false, showRemoveButton: false, questions, empty: rights, target: 'all'}"></ng-container>
+      </ng-container>
+    </nz-tab>
+</nz-tabset>
+
+<ng-template #listQuestions let-showAddButton="showAddButton" let-showRemoveButton="showRemoveButton" let-questions="questions" let-empty="empty" let-target="target">
+        <ng-container *ngIf="questions.length > 0; else empty">
+
+        <div *ngIf="showAddButton" nz-row [nzGutter]="[24, 24]" >  
+            <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+                <button (click)="createQuestion()" nz-button [nzType]="'primary'">Добавить вопрос</button>
+            </div>
+        </div>
+
+        <div nz-row [nzGutter]="[24, 24]" >    
+            <ng-container *ngFor="let question of questions">
+                <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+                    <nz-card [nzActions]="showRemoveButton ? [actionPlay, actionDelete] : [actionPlay]" class="question-card">
+                            {{question.question}}                                                
+                    </nz-card>
+                </div>
+                <ng-template #actionPlay>
+                    <ng-container *ngIf="question.url;else noans">
+    
+                        <span [ngSwitch]="(question.url | fileExtension)">
+                            <a *ngSwitchCase="'yt'" [routerLink]="['show','video', question.url | ytFromUrl]"><i nz-icon nzType="play-square"></i></a>
+                            <a *ngSwitchDefault [routerLink]="['/pages/qa', {outlets: { primary: [target], popup: ['show', 'answer', question.id]}}]"><i nz-icon nzType="play-square"></i></a>
+                        </span>
+                    </ng-container>
+                </ng-template>
+                <ng-template #actionDelete>
+                    <i nz-icon nzType="delete" (click)="questionDelete(question)"></i>
+                </ng-template>
+            </ng-container> 
+        </div>
+        </ng-container>
+</ng-template>
+
+<ng-template #emptylist>
+    <nz-result nzStatus="info" nzTitle="Задать первый вопрос">
+    <div nz-result-extra>
+      <p class="info">Здесь можно задать свой вопрос и получить ответ в аудиоформе
+      </p>
+      <button nz-button nzType="primary" (click)="createQuestion()">Задать</button>
+    </div>
+  </nz-result>
+</ng-template>
+
+<ng-template #rights>
+    <app-access-denied></app-access-denied>
+</ng-template>
+<router-outlet></router-outlet>
+<ng-template #noans>Нет ответа</ng-template>

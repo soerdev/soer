@@ -1,0 +1,57 @@
+nz-tabset {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 5;
+    ::ng-deep .ant-tabs-nav {
+        margin: 0 0 2px 0;
+    }
+}
+
+
+.popup-container {
+    background: #fff;
+    margin: 0 auto;
+    width: auto;
+    position: absolute;
+    z-index: 1;
+    cursor: default;
+
+    &-width {
+        max-width: 960px;
+    }
+
+    .popup-wrapper {
+        display: block;
+        box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .popup-container {
+        top: 50%;
+        right: 20px;
+        left: 20px;
+        transform: translateY(-50%);
+    
+        .popup-wrapper {
+                height: 540px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .popup-container {
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 100%;
+    
+        .popup-wrapper {
+                height: 100%;
+        }
+    }
+}
+
+
+

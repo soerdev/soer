@@ -1,0 +1,18 @@
+<div nz-row [nzGutter]="[24, 24]" >
+      <ng-container *ngIf="topics.length > 0;else nocontent">
+        <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">
+          
+            <nz-card nzHoverable >
+                <p>{{topic.title}}</p>
+            </nz-card>
+          
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #nocontent>
+    <div  nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8">
+        Нет данных
+    </div>
+</ng-template>
+<ng-template #downloadIcon>скачать</ng-template>

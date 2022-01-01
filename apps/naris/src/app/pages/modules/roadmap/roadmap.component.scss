@@ -1,0 +1,17 @@
+
+.warning-message {
+    height: 100%;
+    margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .warning-message {
+        width: 70%;
+    }
+}
+
+  @media screen and (max-width: 768px) {
+    .warning-message {
+        width: 100%;
+    }
+  }

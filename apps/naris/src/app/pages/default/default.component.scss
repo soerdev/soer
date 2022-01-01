@@ -1,0 +1,101 @@
+
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+nz-content {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+.app-layout {
+  height: 100vh;
+}
+
+.menu-sidebar {
+  z-index: 10;
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 64px;
+  padding-left: 14px;
+  overflow: hidden;
+  line-height: 64px;
+  background: #001529;
+  transition: all .3s;
+  width: 80%;
+  margin: auto;
+}
+
+.sidebar-logo img {
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.sidebar-logo h1 {
+  display: inline-block;
+  margin: 0 0 0 5px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 2em;
+  font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
+  vertical-align: middle;
+}
+
+.site-page-header {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  z-index: 9;
+}
+
+
+
+.main-content {
+  background: white;
+  max-width: 1440px;
+}
+
+@media screen and (min-width: 768px) {
+  .menu-sidebar {
+    position: relative;
+  }
+  .main-content {
+    padding: 50px 30px;
+    margin: 20px auto 0 auto;
+    min-height: calc(100vh - 100px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  ::ng-deep .ant-page-header-heading-sub-title {
+    display: none;
+  }
+
+  ::ng-deep .ant-page-header {
+    padding: 24px 16px 24px 50px;
+  }
+
+  .main-content {
+    padding: 50px 20px 50px 40px;
+    margin: 10px 0;
+    min-height: calc(100vh - 80px);
+  }
+  .menu-sidebar {
+    position: absolute;
+  }
+}
+
+
+@media screen and (max-width: 460px) {
+  ::ng-deep .ant-page-header-heading {
+    flex-flow: column-reverse;
+  }
+}

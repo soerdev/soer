@@ -1,0 +1,30 @@
+.youtube-player {
+    position: absolute;
+    z-index: 1000;
+    background-color: rgba($color: (#FFF), $alpha: .9);
+    box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+    text-align: right;
+}
+
+@media screen and (min-width: 768px) {
+    .youtube-player  {
+        width: 60vw;
+        height: 70vh;
+        top: 15vh;
+        left: 20vw;
+    }
+    .warning-message {
+        width: 70%;
+    }
+}
+
+  @media screen and (max-width: 768px) {
+    .warning-message {
+        width: 100%;
+    }
+    .youtube-player  {
+        width: 100vw;
+        top: 0;
+        left: 0;
+    }
+  }

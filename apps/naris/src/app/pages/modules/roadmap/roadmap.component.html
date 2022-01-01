@@ -1,0 +1,36 @@
+<div nz-row>
+  <ng-container *ngIf="target.tasks.length;else nocontent">
+    <div style="margin: -18px auto 0 auto;">
+      <nz-descriptions  [nzTitle]="target.title" nzBordered nzLayout="vertical">
+          <nz-descriptions-item nzTitle="Описание цели" [nzSpan]="2">{{target.overview}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Завершено"><nz-progress [nzPercent]="total" nzType="circle"></nz-progress></nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Короткая цель" [nzSpan]="3">
+            <nz-badge nzStatus="processing" [nzText]="target.activity"></nz-badge>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Дорожная карта" [nzSpan]="3">
+              <nz-timeline>
+                  <nz-timeline-item *ngFor="let task of target.tasks" [nzDot]="task.progress === 100 ? complete : working ">
+                      {{task.title}} 
+                      <nz-progress *ngIf="task.progress < 100" [nzPercent]="task.progress" nzType="circle" [nzWidth]="30"></nz-progress>
+                      <ng-container *ngIf="task.children">
+                          <p *ngFor="let child of task.children">
+                              <span *ngIf="!child.file">{{ child.title }}</span>
+                              <a *ngIf="child.file" [href]="url(child.file)" target="_blank">
+                                  {{ child.title }}
+                                  <i *ngIf="child.file.split('.').pop() === 'pdf'" nz-icon nzType="file-pdf" nzTheme="outline" style="color: red;"></i>
+                              </a>
+                          </p>
+                      </ng-container>
+                  </nz-timeline-item>
+              </nz-timeline>
+          </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
+  </ng-container>
+</div>
+
+
+<ng-template #complete><i nz-icon nzType="check-circle" nzTheme="outline" style="color: green"></i></ng-template>
+<ng-template #working><i nz-icon nzType="info-circle" nzTheme="outline"></i></ng-template>
+
+<ng-template #nocontent><app-access-denied></app-access-denied></ng-template>

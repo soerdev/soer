@@ -1,0 +1,90 @@
+<div class="task_form">
+    <header>
+        <nz-steps [nzCurrent]="2">
+            <nz-step nzTitle="Выполнено" nzDescription="Определить цель"></nz-step>
+            <nz-step nzTitle="Выполнено" nzDescription="Создать цель"></nz-step>
+            <nz-step nzTitle="Выполняется" nzDescription="Определить конкретные шаги"></nz-step>
+        </nz-steps> 
+    </header>
+        <ng-container *ngIf="activeTarget">
+            <content>
+                <div>
+                    <a class="back"
+                            nzSize="small"
+                            *ngIf="history.length > 0" 
+                            (click)="truncateHistory(history.length - 1)"><i nz-icon nzType="arrow-left" nzTheme="outline"></i></a>
+                    <h5 class="target-title"
+                        nz-typography
+                        nzEditable
+                        [nzEditTooltip]="null"
+                        [(nzContent)]="activeTarget.title"
+                        (nzContentChange)="save.emit(target)"></h5>
+                    <p class="target-title"
+                    nz-typography
+                    nzEditable
+                    [nzEditTooltip]="null"
+                    [(nzContent)]="activeTarget.overview"
+                    (nzContentChange)="save.emit(target)"></p>
+                </div>
+                <nz-divider *ngIf="target.tasks.length > 0"></nz-divider>
+                <nz-timeline *ngIf="activeTarget.tasks?.length > 0">
+                    <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? complete : working ">
+                        <p *ngIf="editTaskByIndex !== ind" class="task-item">{{task.title}}</p>
+                        <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="save.emit(target)" (cancel)="onCancelEdit($event)"></sr-text-edit>
+                        <ng-container *ngIf="editTaskByIndex === -1">
+                            <button nz-button
+                                    nzType="default"
+                                    nzSize="small"
+                                    nzShape="circle"
+                                    (click)="editTask(ind)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+                            <button nz-button
+                                    nzType="default"
+                                    nzSize="small"
+                                    nzShape="circle"
+                                    (click)="onActiveTask(activeTarget, ind)"><i nz-icon nzType="setting" nzTheme="outline"></i></button>
+                            <button nzDanger
+                                    nz-button
+                                    nzType="default"
+                                    nzSize="small"
+                                    nzShape="circle"
+                                    (click)="onDeleteTask(activeTarget, ind)"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+
+                        </ng-container>
+                    </nz-timeline-item>
+                </nz-timeline>
+                <nz-divider nzDashed [nzText]="text">
+                    <ng-template #text>
+                      <button nz-button
+                        nzType="default"
+                        nzSize="small"
+                        nzShape="circle"
+                        (click)="createTask(activeTarget)"
+                      ><i nz-icon nzType="plus"></i>
+                      </button>
+                    </ng-template>
+                  </nz-divider>
+            </content>
+            <footer>
+                <button nz-button nzType="primary"
+                        *ngIf="history.length > 0"
+                        (click)="truncateHistory(history.length - 1)">
+                        <i nz-icon nzType="arrow-left" nzTheme="outline"></i></button>
+
+                <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
+                <button
+                    *ngIf="history.length === 0"
+                    nz-button nzType="default"  nzDanger
+                    nz-popconfirm
+                    nzPopconfirmTitle="Точно удалить?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="delete.next(target)">
+                Удалить</button>
+            </footer>
+    </ng-container>
+
+</div>
+
+<ng-template #nocontent>Нет данных</ng-template>
+<ng-template #dotAddTemplate>
+    <i nz-icon nzType="plus" style="font-size: 16px;"></i>
+  </ng-template>

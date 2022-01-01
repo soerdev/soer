@@ -1,0 +1,20 @@
+<div nz-row [nzGutter]="[24, 24]" >
+  
+    <ng-container *ngIf="streams.length > 0;else nocontent">
+        <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let video of streams">
+          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="showVideo(video.youtube_id, video.title)" >
+              <nz-card-meta [nzTitle]="video.title" [nzDescription]="video.desc"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+              <img src='https://img.youtube.com/vi/{{video.youtube_id}}/hq720.jpg' width="100%" style="margin-top: -20px;"/>
+          </ng-template>
+        </div>
+    </ng-container>
+</div>
+
+<router-outlet></router-outlet>
+
+
+<ng-template #nocontent>
+  <app-access-denied></app-access-denied>
+</ng-template>

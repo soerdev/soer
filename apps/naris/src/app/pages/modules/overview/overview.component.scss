@@ -1,0 +1,26 @@
+.personal-target {
+    ::ng-deep .ant-card-head {
+        background-color: darkred !important;
+        color: white;
+    }
+
+    ::ng-deep i.anticon {
+        color: white;
+    }
+}
+
+.user-level {
+    ::ng-deep .ant-card-head {
+        background-color: darkblue !important;
+        color: white;
+    }
+
+    ::ng-deep i.anticon {
+        color: white;
+    }
+}
+
+.general-target {
+    color: #535FD7;
+    background-color: #E9EDF3;
+}

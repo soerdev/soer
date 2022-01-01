@@ -1,0 +1,13 @@
+<h1>Задайте свой вопрос</h1>
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" nzLayout="vertical">
+    <nz-form-item>
+        <nz-form-control>
+        <nz-textarea-count [nzMaxCharacterCount]="1512">
+            <textarea rows="8" formControlName="question" nz-input></textarea>
+        </nz-textarea-count>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Задать вопрос</button>
+    </nz-form-item>
+</form>

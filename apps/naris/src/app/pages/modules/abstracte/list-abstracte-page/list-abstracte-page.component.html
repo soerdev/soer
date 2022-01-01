@@ -1,0 +1,41 @@
+<ng-container *ngIf="(workbook$ | async) as workbooks">
+    <ng-container *ngIf="workbooks.items.length > 0; else emptylist">
+    <div nz-row [nzGutter]="[24, 24]" >  
+        <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+            <button (click)="createWorkbook()" nz-button [nzType]="'primary'">Добавить конспект</button>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="[24, 24]" >    
+        <ng-container *ngFor="let workbook of workbooks.items">
+            <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+                <nz-card [nzTitle]="workbook.question" [nzActions]="[actionEdit, actionView, actionDelete]">
+                    <p>{{workbook.text}}</p>
+                </nz-card>
+            </div>
+            <ng-template #actionEdit>
+                <i nz-icon nzType="edit" (click)="workbookEdit(workbook)"></i>
+            </ng-template>
+            <ng-template #actionView>
+                <i nz-icon nzType="eye" (click)="workbookView(workbook)"></i>
+            </ng-template>
+            <ng-template #actionDelete>
+                <i nz-icon nzType="delete" (click)="workbookDelete(workbook)"></i>
+            </ng-template>
+        </ng-container> 
+    </div>
+    </ng-container>
+</ng-container>
+
+<ng-template #emptylist>
+    <nz-result nzStatus="info" nzTitle="Создайте свой первый конспект">
+    <div nz-result-extra>
+      <p class="info">Для закрепления материала важно не только смотреть видео и читать
+          книги, но и пытаться выделить главное. 
+      </p>
+      <button nz-button nzType="primary" (click)="createWorkbook()">Начать</button>
+    </div>
+  </nz-result>
+</ng-template>
+  
+  

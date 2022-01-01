@@ -7,7 +7,7 @@ import {MixedBusModule} from '@soer/mixed-bus';
 import { SrUrlBuilderModule, UrlBuilderService } from '@soer/sr-url-builder';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DataStoreService, StoreCrudService } from '@soer/sr-dto';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { ru_RU } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';

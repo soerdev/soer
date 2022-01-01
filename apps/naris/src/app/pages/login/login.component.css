@@ -1,0 +1,30 @@
+
+      .login-form {
+        max-width: 300px;
+        min-width: 300px;
+        min-height: 300px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -150px 0 0 -150px;
+      }
+      .login-form_title {
+        text-align: center;
+      }
+
+      .login-form-margin {
+        margin-bottom: 16px;
+      }
+
+      .login-form-forgot {
+        float: right;
+      }
+
+      .login-form-button {
+        width: 100%;
+      }
+nz-spin {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}

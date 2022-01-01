@@ -1,0 +1,38 @@
+<div class="target-panel">
+    <div nz-row [nzGutter]="[24, 24]" >  
+        <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+            <a nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
+        </div>
+    </div>
+
+    <ng-container *ngIf="(targets$ | async).items as topics">
+        <div nz-row [nzGutter]="[24, 24]" >
+            <ng-container *ngIf="topics.length > 0;else nocontent">
+            <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">
+                <nz-card  [nzActions]="[actionEdit, actionDelete]" >
+                    <p>{{topic.title}}</p>
+                </nz-card>
+
+                <ng-template #actionDelete>
+                    <i nz-icon nzType="delete" nz-popconfirm
+                    nzPopconfirmTitle="Точно удалить?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="onDelete(topic)"></i>
+                </ng-template>
+                <ng-template #actionEdit>
+                    <a [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', topic.id]}}]">
+                        <i nz-icon nzType="edit"></i>
+                    </a>
+                </ng-template>
+            </div>
+        </ng-container>
+        </div>
+
+        <ng-template #nocontent>
+        <div  nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8">
+            Нет данных
+        </div>
+        </ng-template>
+        <ng-template #downloadIcon>скачать</ng-template>
+    </ng-container>
+</div>

@@ -1,0 +1,9 @@
+<ng-container *ngIf="!loading;else loggedin">
+  
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <h2 class="login-form_title">LOGIN via</h2>
+      <button nz-button (click)="oAuthLogin('google')" class="login-form-button login-form-margin" [nzType]="'primary'">Google</button>
+      <button nz-button (click)="oAuthLogin('patreon')" class="login-form-button login-form-margin" [nzType]="'primary'">Patreon</button>
+    </form>
+  </ng-container>
+  <ng-template #loggedin><nz-spin nzSimple [nzSize]="'large'"></nz-spin></ng-template>

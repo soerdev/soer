@@ -1,0 +1,16 @@
+<nz-tabset nzLinkRouter [nzAnimated]="false" >
+    <ng-container *ngFor="let tab of tabs">
+        <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="tab.path" >{{tab.title}}</a>
+        </nz-tab>
+    </ng-container>
+</nz-tabset>
+<router-outlet></router-outlet>
+
+<app-overlay (close)="closePopup()" [activate]="popup">
+    <div class="popup-container popup-container-width">
+        <div class="popup-wrapper">
+            <router-outlet (activate)="showPopup(true)" (deactivate)="showPopup(false)" name='popup'></router-outlet>    
+        </div>
+    </div>    
+</app-overlay>

@@ -1,0 +1,75 @@
+
+<div nz-row [nzGutter]="[24, 24]" >
+
+  <ng-container *ngIf="data.brif">
+    <div class="user-level" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-card [nzTitle]="data.brif.role.name">
+        {{data.brif.role.message}}
+      </nz-card>
+    </div>
+  </ng-container>
+  <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/targets">
+      <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+        <ng-container *ngIf="(target$ | async) as targets">
+          <h2 style="text-align: center;">Цель ➡️</h2>
+          <h2 *ngFor="let target of targets.items" style="text-align: center; color: gray;">{{target.title}}</h2>
+          <h2 *ngIf="targets.items.length === 0" style="text-align: center; color: gray;">Нужно задать цель</h2>
+        </ng-container>
+      </nz-card>
+    </a>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/workbook">
+    <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+      <ng-container *ngIf="(workbook$ | async) as workbooks">
+        <h2 style="text-align: center;">Конспекты ➡️</h2>
+        <h2 style="text-align: center; color: gray;">кол-во: {{workbooks.items.length}}, оценок: нет</h2>
+      </ng-container>
+    </nz-card>
+    </a>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/qa">
+    <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+      <ng-container *ngIf="(question$ | async) as questions">
+        <h2 style="text-align: center;">Вопросы ➡️</h2>
+        <h2 style="text-align: center; color: gray;">кол-во: {{questions.items.length}}, ответов: нет</h2>
+      </ng-container>
+    </nz-card>
+    </a>
+  </div>
+
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/streams">
+    <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+        <h2 style="text-align: center;">Стримы ➡️</h2>
+        <h2 style="text-align: center; color: gray;">кол-во: 18</h2>
+    </nz-card>
+    </a>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/workshops">
+    <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+        <h2 style="text-align: center;">Воркшопы ➡️</h2>
+        <h2 style="text-align: center; color: gray;">кол-во: 20</h2>
+    </nz-card>
+    </a>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+    <a href="#!/pages/book">
+    <nz-card class="general-target" nzHoverable [nzActions]="[aimIcon]">
+        <h2 style="text-align: center;">Книга ➡️</h2>
+        <h2 style="text-align: center; color: gray;">🏆57%</h2>
+    </nz-card>
+    </a>
+  </div>
+
+</div>
+
+
+<ng-template #aimIcon><p style="text-align: center;">посмотреть</p></ng-template>

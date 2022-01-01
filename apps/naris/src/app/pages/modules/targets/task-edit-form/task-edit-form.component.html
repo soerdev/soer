@@ -1,0 +1,13 @@
+
+<ng-container *ngIf="(target$ | async).items as targets">
+    <ng-container *ngIf="targets.length > 0;else nocontent">
+        <app-task-tree-edit-form *ngFor="let target of targets"
+            [target]="target"
+            [(history)]="history"
+            (save)="onSave($event)"
+            (cancel)="onCancel()"
+            (delete)="onDelete($event)"></app-task-tree-edit-form>
+    </ng-container>
+</ng-container>
+
+<ng-template #nocontent>Нет данных</ng-template>

@@ -1,0 +1,23 @@
+textarea {
+    width: calc(100% - 4rem);
+    height: 22px;
+    padding: 2px 5px;
+    margin: 5px;
+    font-size: 14px;
+    line-height: 16px;
+    border: 1px solid lightgray;
+}
+
+a {
+    line-height: 30px;
+}
+:host * {
+    vertical-align: middle;
+}
+:host {
+    line-height: 30px;
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
