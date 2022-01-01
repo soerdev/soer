@@ -8,6 +8,14 @@ import { SrUrlBuilderModule, UrlBuilderService } from '@soer/sr-url-builder';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DataStoreService, StoreCrudService } from '@soer/sr-dto';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { ru_RU } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import ru from '@angular/common/locales/ru';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+registerLocaleData(ru);
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -15,7 +23,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     BrowserModule, 
     MixedBusModule,
     SrUrlBuilderModule.forRoot({apiRoot: 'test'}),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule
 
   ],
 
@@ -28,7 +38,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
                    MixedBusService: MixedBusService,
                    DataStoreService: DataStoreService,
                    StoreCrudService: StoreCrudService) => () => null
-    }
+    },
+    { provide: NZ_I18N, useValue: ru_RU }
 
   ],
   bootstrap: [AppComponent],

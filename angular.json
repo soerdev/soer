@@ -9,7 +9,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/mixed-bus"],
+          "outputs": [
+            "coverage/libs/mixed-bus"
+          ],
           "options": {
             "jestConfig": "libs/mixed-bus/jest.config.js",
             "passWithNoTests": true
@@ -35,7 +37,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/naris",
             "index": "apps/naris/src/index.html",
@@ -43,8 +47,14 @@
             "polyfills": "apps/naris/src/polyfills.ts",
             "tsConfig": "apps/naris/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["apps/naris/src/favicon.ico", "apps/naris/src/assets"],
-            "styles": ["apps/naris/src/styles.scss"],
+            "assets": [
+              "apps/naris/src/favicon.ico",
+              "apps/naris/src/assets"
+            ],
+            "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "apps/naris/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -109,7 +119,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/naris"],
+          "outputs": [
+            "coverage/apps/naris"
+          ],
           "options": {
             "jestConfig": "apps/naris/jest.config.js",
             "passWithNoTests": true
@@ -137,14 +149,20 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/naris-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/naris-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["naris"]
+      "implicitDependencies": [
+        "naris"
+      ]
     },
     "sr-dto": {
       "projectType": "library",
@@ -154,7 +172,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/sr-dto"],
+          "outputs": [
+            "coverage/libs/sr-dto"
+          ],
           "options": {
             "jestConfig": "libs/sr-dto/jest.config.js",
             "passWithNoTests": true
@@ -180,7 +200,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/sr-url-builder"],
+          "outputs": [
+            "coverage/libs/sr-url-builder"
+          ],
           "options": {
             "jestConfig": "libs/sr-url-builder/jest.config.js",
             "passWithNoTests": true
