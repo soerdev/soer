@@ -28,7 +28,7 @@
                 </div>
                 <nz-divider *ngIf="target.tasks.length > 0"></nz-divider>
                 <nz-timeline *ngIf="activeTarget !== undefined && activeTarget.tasks.length > 0">
-                    <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? 'complete' : 'working' ">
+                    <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? complete : working ">
                         <p *ngIf="editTaskByIndex !== ind" class="task-item">{{task.title}}</p>
                         <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="save.emit(target)" (cancel)="onCancelEdit($event)"></sr-text-edit>
                         <ng-container *ngIf="editTaskByIndex === -1">
@@ -88,3 +88,6 @@
 <ng-template #dotAddTemplate>
     <i nz-icon nzType="plus" style="font-size: 16px;"></i>
   </ng-template>
+
+<ng-template #complete><i nz-icon nzType="check-circle" nzTheme="outline" style="color: green"></i></ng-template>
+<ng-template #working><i nz-icon nzType="info-circle" nzTheme="outline"></i></ng-template>
