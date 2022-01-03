@@ -19,7 +19,7 @@ import { DumbModule } from '../../dumb/dumb.module';
 import { SoerComponentsModule } from '../../soer-components/soer-components.module';
 import { ListTargetsPageComponent } from './list-targets-page/list-targets-page.component';
 import { ListTemplatesPageComponent } from './list-templates-page/list-templates-page.component';
-import { RoadmapEditFormComponent } from './roadmap-edit-form/roadmap-edit-form.component';
+
 import { TargetEditFormComponent } from './target-edit-form/target-edit-form.component';
 import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
 import { ListAimsPageComponent } from './list-aims-page/list-aims-page.component';
@@ -38,7 +38,6 @@ import { CountClosedTasksPipe } from './count-closed-tasks.pipe';
 @NgModule({
   declarations: [
     TargetEditFormComponent,
-    RoadmapEditFormComponent,
     ListTemplatesPageComponent,
     ListTargetsPageComponent,
     TaskEditFormComponent,
