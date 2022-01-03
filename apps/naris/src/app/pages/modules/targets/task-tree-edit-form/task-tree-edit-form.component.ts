@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TargetModel } from '../../../../api/targets/target.interface';
+import { updateProgress } from '../progress.helper';
 
 @Component({
   selector: 'soer-task-tree-edit-form',
@@ -65,11 +66,13 @@ export class TaskTreeEditFormComponent implements OnChanges {
   createTask(target: TargetModel): void {
     target.tasks = target.tasks || [];
     target.tasks.push({title: '', overview: '', progress: 0, tasks: []});
+    updateProgress(this.target);
     this.save.next(this.target);
   }
 
   onDeleteTask(target: TargetModel, ind: number): void {
     target.tasks = target.tasks.filter( (_, taskIndex) => taskIndex !== ind);
+    updateProgress(this.target);
     this.save.next(this.target);
   }
 

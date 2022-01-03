@@ -8,6 +8,7 @@ import { DataStoreService } from '@soer/sr-dto';
 import { BusOwner } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DONE_PROGRESS, UNDONE_PROGRESS } from '../targets.const';
+import { propagateProgress, updateProgress } from '../progress.helper';
 
 
 
@@ -41,8 +42,8 @@ export class ListAimsPageComponent {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   check(task: TargetModel, target: TargetModel, progress: number = DONE_PROGRESS, template: TemplateRef<{}> | null = null): void {
-    this.propagateProgress(task, progress);
-    this.updateProgress(target);
+    propagateProgress(task, progress);
+    updateProgress(target);
     this.bus$.publish(
       new CommandUpdate(
         this.targetId,
@@ -64,23 +65,5 @@ export class ListAimsPageComponent {
       }
       notify.close();
 
-  }
-
-  private propagateProgress(target: TargetModel, progress: number): void {
-    if (target.tasks?.length > 0) {
-      target.tasks.forEach(task => this.propagateProgress(task, progress));
-    }
-    target.progress = progress;
-  }
-  private updateProgress(target: TargetModel): void {
-    if (target.tasks?.length > 0) {
-        target.tasks.forEach( task => this.updateProgress(task));
-        target.progress = this.calcProgress(target);
-    }
-  }
-
-  private calcProgress(target: TargetModel): number {
-    const value = target.tasks.reduce((r, v) => ({ total: r.total + 100, real: r.real + v.progress }), { total: 0, real: 0 });
-    return value.total > 0 ? Math.floor(value.real / value.total * 100) : 0;
   }
 }
