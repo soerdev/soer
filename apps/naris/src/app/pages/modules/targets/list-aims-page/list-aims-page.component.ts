@@ -21,7 +21,9 @@ export class ListAimsPageComponent {
 
   checked = false;
   public targets$: Observable<DtoPack<TargetModel>>;
-  public visibility: any = {};
+  public visibility: any = {
+    targetHeader: {visibility: false}
+  };
 
   public readonly doneProgress = DONE_PROGRESS;
   public readonly undoneProgress = UNDONE_PROGRESS;

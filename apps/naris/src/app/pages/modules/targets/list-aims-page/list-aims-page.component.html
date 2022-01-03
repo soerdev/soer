@@ -5,7 +5,7 @@
             <ng-template #targetHeader>
                 <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress" nzType="circle" [nzWidth]="30"></nz-progress>
                 <a  [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', target.id]}}]" nz-button nzType="link">{{target.title}}</a>
-                <a (click)="visibility.targetHeader.visibility = !visibility.targetHeader.visibility"><i nz-icon [nzType]="visibility.targetHeader?.visibility ? 'eye' : 'eye-invisible'"></i></a> 
+                <a (click)="visibility.targetHeader.visibility = !visibility.targetHeader?.visibility"><i nz-icon [nzType]="visibility.targetHeader?.visibility ? 'eye' : 'eye-invisible'"></i></a> 
             </ng-template>
             <ng-container *ngTemplateOutlet="listTasks; context: {target: target, root: target, visibility: !!visibility.targetHeader?.visibility, taskId: index+''}"></ng-container>
         </ng-container>
