@@ -12,8 +12,8 @@ export class AuthService {
 
   static cookieCheck = false;
   public tokenUpdate$ = new EventEmitter();
-  public get token(): string {
-    return localStorage.getItem(TOKEN) + '';
+  public get token(): string|null {
+    return localStorage.getItem(TOKEN);
   }
   public set token(n: string|null) {
     n !== null ? localStorage.setItem(TOKEN, n) : localStorage.removeItem(TOKEN);
