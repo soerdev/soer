@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel } from '../../../../api/targets/target.interface';
-import { CommandCancel, CommandDelete, CommandUpdate } from '@soer/sr-dto';
+import { CommandCancel, CommandCreate, CommandDelete, CommandUpdate } from '@soer/sr-dto';
 import { DtoPack } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
 import { BusOwner } from '@soer/mixed-bus';
@@ -20,6 +20,7 @@ export class TaskEditFormComponent {
 
   constructor(
     @Inject('target') private targetId: BusOwner,
+    @Inject('templates') private templateId: BusOwner,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) { 
@@ -51,6 +52,16 @@ export class TaskEditFormComponent {
         this.targetId,
         target,
         {tid: target.id}
+      )
+    );
+  }
+
+  onCreateTemplate(target: TargetModel): void {
+    this.bus$.publish(
+      new CommandCreate(
+        this.templateId,
+        { ...convertToJsonDTO(target, ['id']), accessTag: 'ALL'},
+        {skipRoute: true, skipInfo: true}
       )
     );
   }

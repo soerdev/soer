@@ -71,6 +71,7 @@
                         <i nz-icon nzType="arrow-left" nzTheme="outline"></i></button>
 
                 <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
+                <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="inTemplate.next(target);">В шаблон</button>
                 <button
                     *ngIf="history.length === 0"
                     nz-button nzType="default"  nzDanger

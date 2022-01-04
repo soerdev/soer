@@ -12,9 +12,9 @@ import { TargetModel } from '../../../../api/targets/target.interface';
 export class ListTemplatesPageComponent {
   public templates$: Observable<DtoPack<TargetModel>>;
   constructor(
-      @Inject('targets') private targetsId: BusOwner,
+      @Inject('templates') private templatesId: BusOwner,
       private store$: DataStoreService,
   ) {
-    this.templates$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'TargetsTemplates');
+    this.templates$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.templatesId), 'TargetsTemplates');
    }
 }

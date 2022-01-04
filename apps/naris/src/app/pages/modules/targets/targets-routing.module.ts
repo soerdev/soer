@@ -33,7 +33,10 @@ const routes: Routes = [
       {
         path: 'templates',
         data: { header: {title: 'Шаблоны', subtitle: 'Выберите стандартную цель для достижения'}},
-        component: ListTemplatesPageComponent
+        component: ListTemplatesPageComponent,
+        resolve: {
+          templates: 'templatesEmitter'
+        }
       },
       {
         path: 'target/new',

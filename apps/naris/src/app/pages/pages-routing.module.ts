@@ -102,6 +102,14 @@ const routes: Routes = [
         target: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'}
       }
     }),
+
+    SrDTOModule.forChild({
+      namespace: 'templates',
+      crudProviders: {
+        templates: {create: 'json/templates', read: 'json/public/templates', update: 'json/templates', delete: 'json/templates/:tid'},
+        template: {create: 'json/templates', read: 'json/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'}
+      }
+    }),
     QuestionsRoutingModule,
     TargetsRoutingModule,
     AbstracteRoutingModule

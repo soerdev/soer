@@ -20,6 +20,7 @@ export class TaskTreeEditFormComponent implements OnChanges {
   @Output() readonly save = new EventEmitter<TargetModel>();
   @Output() readonly historyChange = new EventEmitter<{ind: number, title: string}[]>();
   @Output() readonly cancel = new EventEmitter<any>();
+  @Output() readonly inTemplate = new EventEmitter<any>();
   @Output() readonly delete = new EventEmitter<TargetModel>();
 
   public activeTarget: TargetModel | undefined;
