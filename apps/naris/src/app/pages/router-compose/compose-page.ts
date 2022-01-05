@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
-import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, HookService, UpdateDoneEvent } from '@soer/sr-dto';
+import { BusCommand, BusError, BusEvent, BusMessage, BusOwner, isBusMessage, MixedBusService } from '@soer/mixed-bus';
+import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, HookService, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
@@ -24,9 +24,9 @@ export abstract class ComposePage {
     composeInit(): void {
       this.subscriptions = [
         this.bus$
-          .of(DeleteDoneEvent).subscribe(() => this.message.success('Элемент успешно удален')),
-        this.bus$.of(CreateDoneEvent).subscribe(() => this.message.success('Элемент успешно создан')),
-        this.bus$.of(UpdateDoneEvent).subscribe(() => this.message.success('Элемент успешно изменен'))
+          .of(DeleteDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно удален', evtResult)),
+        this.bus$.of(CreateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно создан', evtResult)),
+        this.bus$.of(UpdateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно изменен', evtResult))
       ];
 
       const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
@@ -39,6 +39,20 @@ export abstract class ComposePage {
         this.register(watchDomain.hooks ?? []);
       }
     }
+
+
+    showMessageOrErrors(msg: string, data: BusMessage | BusError): void {
+
+      if (isBusMessage(data)){
+        if (data.result.status === OK) {
+          this.message.success(msg);
+        } else if(data.result.status === ERROR) {
+          this.message.error('Что-то пошло не так...');
+        }
+      }
+    }
+
+    
 
     register(hooks: BusOwner[]): void {
       if (hooks.length > 0) {
