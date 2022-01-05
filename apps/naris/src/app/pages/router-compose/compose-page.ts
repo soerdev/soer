@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BusCommand, BusError, BusEvent, BusMessage, BusOwner, isBusMessage, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusOwner, isBusMessage, MixedBusService } from '@soer/mixed-bus';
 import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, HookService, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
@@ -31,7 +31,6 @@ export abstract class ComposePage {
 
       const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
       const watchDomain = this.domain.find(d => d.domainName === pathDomain);
-
       if (!watchDomain) {
         this.message.error('Неверно настроена конфигурация Router-а');
         console.error('You should specify "bus: {list, single}" param in router resolve');

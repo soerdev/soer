@@ -20,7 +20,7 @@ export class TaskEditFormComponent {
 
   constructor(
     @Inject('target') private targetId: BusOwner,
-    @Inject('templates') private templateId: BusOwner,
+    @Inject('template') private templateId: BusOwner,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) { 

@@ -13,6 +13,7 @@ export class ListTemplatesPageComponent {
   public templates$: Observable<DtoPack<TargetModel>>;
   constructor(
       @Inject('templates') private templatesId: BusOwner,
+      @Inject('template') private templateId: BusOwner,
       private store$: DataStoreService,
       private bus$: MixedBusService
   ) {
@@ -21,7 +22,7 @@ export class ListTemplatesPageComponent {
 
    onDelete(template: any): void {
     this.bus$.publish(
-      new CommandDelete(this.templatesId, {}, {tid: template.id})
+      new CommandDelete(this.templateId, {}, {tid: template.id})
     );
    }
 }
