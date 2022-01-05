@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { BusError, BusMessage, BusOwner, IBus } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusOwner, IBus } from './interfaces/mixed-bus.interface';
 
 /**
  * Шина для обмена сообщениями

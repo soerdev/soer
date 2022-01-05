@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { CommandDelete } from '@soer/sr-dto';
 import { DtoPack } from '@soer/sr-dto';

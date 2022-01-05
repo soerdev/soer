@@ -60,7 +60,7 @@ export class TaskEditFormComponent {
     this.bus$.publish(
       new CommandCreate(
         this.templateId,
-        { ...convertToJsonDTO(target, ['id']), accessTag: 'ALL'},
+        { ...convertToJsonDTO({overview: 'Some text here', target}, ['id']), accessTag: 'ALL'},
         {skipRoute: true, skipInfo: true}
       )
     );

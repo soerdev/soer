@@ -1,3 +1,26 @@
-<soer-under-development></soer-under-development>
+<ng-container *ngIf="(templates$ | async)?.items as templates">
+    <div nz-row [nzGutter]="[24, 24]" >
+        <ng-container *ngIf="templates.length > 0;else nocontent">
+        <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let template of templates">
+            <nz-card  [nzActions]="[actionView, actionDelete]" >
+                <p>{{template.overview}}</p>
+            </nz-card>
 
-{{templates$ | async | json}}
+            <ng-template #actionDelete>
+                <i nz-icon nzType="delete" nz-popconfirm
+                nzPopconfirmTitle="Точно удалить?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="onDelete(template)"></i>
+            </ng-template>
+            <ng-template #actionView>
+                <i nz-icon nzType="delete" nz-popconfirm
+                nzPopconfirmTitle="Точно удалить?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="onDelete(template)"></i>
+            </ng-template>
+        </div>
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-template #nocontent>Нет шаблонов</ng-template>
