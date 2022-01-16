@@ -37,7 +37,7 @@ const routes: Routes = [
         resolve: {streams: StreamService},
         children: [
           {
-            path: ':videoId',
+            path: ':videoSource/:videoId',
             component: ComposeVideoPlayerComponent,
             data: { header: {title: 'Смотрим стрим...'}}
           }
@@ -50,7 +50,7 @@ const routes: Routes = [
         resolve: {streams: WorkshopsService},
         children: [
           {
-            path: ':videoId',
+            path: ':videoSource/:videoId',
             component: ComposeVideoPlayerComponent,
             data: { header: {title: 'Смотрим воркшоп...'}}
           }

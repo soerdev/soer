@@ -2,7 +2,7 @@
   
     <ng-container *ngIf="streams.length > 0;else nocontent">
         <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let video of streams">
-          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="showVideo(video.youtube_id)" >
+          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="showVideo(video)" >
               <nz-card-meta [nzTitle]="video.title" [nzDescription]="video.desc"></nz-card-meta>
           </nz-card>
           <ng-template #coverTemplate>

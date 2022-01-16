@@ -9,13 +9,17 @@ import { Subscription } from 'rxjs';
 })
 export class ComposeVideoPlayerComponent implements OnInit, OnDestroy {
 
-  videoId = null;
+  public videoId = null;
+  public videoSource: 'youtube' | 'vimeo' = 'youtube';
   subscription: Subscription | null = null;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(
-      (params) => this.videoId = params?.['videoId']
+      (params) =>{
+        this.videoId = params?.['videoId'];
+        this.videoSource = params?.['videoSource'] || 'youtube';
+      }
     );
   }
 

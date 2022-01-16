@@ -1,6 +1,10 @@
 <div class="player-container player-container-width">
     <div class="player-wrapper">
-        <youtube-player [videoId]="videoId" style="width: '100%'; height: '100%'"></youtube-player>
+        <ng-template #vimeo>
+            <iframe [src]="getVimeoId()" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <script src="https://player.vimeo.com/api/player.js"></script>
+        </ng-template>
+        <youtube-player *ngIf="videoSource === 'youtube';else vimeo" [videoId]="videoId" style="width: '100%'; height: '100%'"></youtube-player>
     </div>
 </div>
 
