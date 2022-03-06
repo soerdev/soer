@@ -1,6 +1,6 @@
 import { EnvironmentInterface } from './environment.interface';
 
-const HOST = 'https://soer.pro';
+const HOST = 'https://platform.soer.pro';
 
 export const environment: EnvironmentInterface = {
   production: true,
