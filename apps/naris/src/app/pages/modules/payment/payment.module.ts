@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 
@@ -22,6 +23,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     NzButtonModule,
     NzAlertModule,
     NzDividerModule,
+    NzIconModule,
     RouterModule
   ]
 })
