@@ -99,3 +99,24 @@ nz-content {
     flex-flow: column-reverse;
   }
 }
+
+
+.stream-label {
+  color: white;
+  background-color: #6B7A90;
+}
+.workshop-label {
+  color: white;
+  background-color: #1e64f0;
+}
+
+.pro-label {
+color: white;
+background-color: red;
+}
+.price-label {
+margin: 2px 5px;
+display: inline-block;
+border-radius: 5px;
+padding: 0px 10px;
+}

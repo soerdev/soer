@@ -20,7 +20,9 @@
     <nz-layout>
           <nz-page-header class="site-page-header" [nzTitle]="title" [nzSubtitle]="subtitle">
             <nz-page-header-extra>
-                <a href="https://www.patreon.com/soersoft" nz-button nzType="primary">Улучшить уровень</a>
+                <a *ngIf="role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить уровень</a>
+                <span class="price-label" 
+                [ngClass]="{'pro-label': role === 'PRO', 'workshop-label': role === 'WORKSHOP', 'stream-label': role === 'STREAM'}">{{role}}</span>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="search" nzTheme="outline"></i></button>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="bell" nzTheme="outline"></i></button>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="menu"></i></button>

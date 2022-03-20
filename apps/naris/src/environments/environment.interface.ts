@@ -6,4 +6,5 @@ export interface EnvironmentInterface {
     apiUrl: string;
     assetsUrl: string;
     privateAssetsUrl: string;
+    payServiceUrl: string;
 }

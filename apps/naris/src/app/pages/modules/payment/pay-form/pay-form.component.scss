@@ -1,0 +1,121 @@
+.warning-message {
+    margin: 1rem;
+    
+    text-align: center;
+    p {
+        font-size: 1rem;
+        margin: 0;
+    }
+}
+
+.price-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.gird-layout {
+    display: -ms-grid;
+    display: grid;
+    grid-auto-columns: 1fr;
+    -ms-grid-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    -ms-grid-rows: auto auto;
+    grid-template-rows: auto auto;
+    grid-row-gap: 16px;
+    grid-column-gap: 16px;
+  }
+  .pricing-blocks {
+    grid-column-gap: 24px;
+    grid-row-gap: 48px;
+    -ms-grid-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    -ms-grid-rows: auto;
+    grid-template-rows: auto;
+  }
+
+  @media screen and (max-width: 991px) {
+    .pricing-blocks {
+        width: 100%;
+        max-width: 470px;
+        margin-right: auto;
+        margin-left: auto;
+        grid-row-gap: 60px;
+        -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    }
+  }
+
+  .proposal {
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding-bottom: 48px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 15px 40px 0 rgb(0 0 0 / 11%);
+    text-align: center;
+    padding: 1em 0;
+
+    h4 {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        min-height: 2em;
+        strong {
+            font-size: 3em;
+        }
+      }
+  }
+
+  .proposal 
+
+  ul.features-list {
+    color: #6B7A90;
+    font-size: 1.2em;
+    min-height: 13rem;
+    margin: 0;
+    padding: 0;
+  }
+  .features-list li {
+    margin-top: 0.2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .gray-label {
+      color: white;
+      background-color: #6B7A90;
+  }
+  .blue-label {
+      color: white;
+      background-color: #1e64f0;
+  }
+
+  .red-label {
+    color: white;
+    background-color: red;
+  }
+  .price-label {
+    margin: 2px 5px;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 10px;
+  }

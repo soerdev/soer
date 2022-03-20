@@ -9,5 +9,6 @@ export const environment: EnvironmentInterface = {
   patreonAuthUrl: HOST + '/api/auth/patreon',
   apiUrl: HOST + '/api/',
   assetsUrl: HOST + '/assets/',
-  privateAssetsUrl: HOST + '/assets/private/'
+  privateAssetsUrl: HOST + '/assets/private/',
+  payServiceUrl: HOST + '/api/payservice/subscribe/'
 };

@@ -10,6 +10,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { UnderDevelopmentComponent } from './under-development/under-development.component';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { SrTextEditComponent } from './sr-text-edit/sr-text-edit.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -26,7 +27,8 @@ import { SrTextEditComponent } from './sr-text-edit/sr-text-edit.component';
     YouTubePlayerModule,
     NzIconModule,
     NzResultModule,
-    NzButtonModule
+    NzButtonModule,
+    RouterModule
   ],
   exports: [
     VideoPlayerComponent,

@@ -11,6 +11,7 @@ import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.mo
 import { WORKBOOKS_ID, WORKBOOK_ID } from './modules/abstracte/abstracte.const';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
 import { OverviewComponent } from './modules/overview/overview.component';
+import { PayFormComponent } from './modules/payment/pay-form/pay-form.component';
 import { QUESTIONS_ALL_ID, QUESTIONS_ID, QUESTION_ID } from './modules/questions/questions.const';
 import { QuestionsRoutingModule } from './modules/questions/questions.routing.module';
 import { RoadmapComponent } from './modules/roadmap/roadmap.component';
@@ -19,6 +20,11 @@ import { TargetsRoutingModule } from './modules/targets/targets-routing.module';
 
 const routes: Routes = [
       { path: '', redirectTo: 'overview' },
+      {
+        path: 'pay',
+        data: { header: {title: 'Выбор тарифа', subtitle: 'определите уровень платного доступа'}},
+        component: PayFormComponent
+      },
       {
         path: 'overview',
         component: OverviewComponent,

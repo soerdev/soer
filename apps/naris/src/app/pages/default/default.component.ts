@@ -19,6 +19,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   subscriptions: any;
   isShowOverlay = true;
 
+  public role = 'GUEST';
   menuItems = MAIN_MENU;
 
   constructor(private auth: AuthService,
@@ -29,6 +30,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
               ) {}
 
   ngOnInit(): void {
+    this.role = this.auth.getRole();
     this.subscriptions = [
       this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(this.findTitle.bind(this)),

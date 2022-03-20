@@ -5,6 +5,7 @@ import { AuthService } from '../../api/auth/auth.service';
 import { MEDIUM_TIMEOUT_INTERVAL } from '../../../environments/constants';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'soer-login',
@@ -29,13 +30,29 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private fb: FormBuilder,
+  constructor(
+              private http: HttpClient,
+              private fb: FormBuilder,
               private auth: AuthService,
               private route: ActivatedRoute,
               private router: Router) {}
 
   ngOnInit(): void {
     
+  /*  const payId = this.route.snapshot.queryParams?.['paymentid'];
+    if (payId) {
+      this.auth.token = null;
+      this.loading = true;
+      this.http.get('http://localhost:4000/api/payservice/thanks/'+payId).subscribe(
+        result => {
+          console.log('Pay result: ', result);
+          this.router.navigate(['login']);
+          this.loading = false;
+        }
+      )
+    }
+     */
+
     this.isSkipChecks = this.route.snapshot.queryParams?.['skipchecks'] === 'true';
 
     if (!this.isSkipChecks) {

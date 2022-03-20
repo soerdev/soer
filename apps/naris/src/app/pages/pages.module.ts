@@ -18,6 +18,7 @@ import { StreamsComponent } from "./modules/streams/streams.component";
 import { TargetsModule } from "./modules/targets/targets.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { RouterComposeModule } from "./router-compose/router-compose.module";
+import { PaymentModule } from "./modules/payment/payment.module";
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { RouterComposeModule } from "./router-compose/router-compose.module";
     QuestionsModule,
     NzModalModule,
     TargetsModule,
-    AbstracteModule
+    AbstracteModule,
+    PaymentModule
   ],
   declarations: [
     DefaultComponent,
