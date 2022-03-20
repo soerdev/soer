@@ -1,11 +1,11 @@
 
-
 <div *ngIf="email !== '';else noemail">
     <div class="warning-message">
         <nz-alert *ngIf="role === 'GUEST'" nzType="warning" [nzMessage]="warning"></nz-alert>
+        <nz-alert *ngIf="pendingPayment.id" nzType="error" [nzMessage]="pendingPaymentMessage"></nz-alert>
         <nz-alert *ngIf="role !== 'GUEST'" nzType="error" [nzMessage]="roleExistsError"></nz-alert>
     </div>
-    <div *ngIf="role === 'GUEST'" class="gird-layout pricing-blocks">
+    <div *ngIf="role === 'GUEST' && !pendingPayment.id" class="gird-layout pricing-blocks">
         <div class="proposal">
           <h1 class="price-label gray-label">Stream</h1>
           <h2><strong>350₽</strong> / 30 дней.</h2>
@@ -64,4 +64,8 @@
 <ng-template #roleExistsError>
     <p><b>Внимание!</b> У вас уже есть подписка {{role}}</p>
     <p>На данный момент возможность апгрейда уже оплаченного уровня не поддерживается.</p>
+</ng-template>
+
+<ng-template #pendingPaymentMessage>
+  <p>Ранее вы пытались оплатить тариф на сумму {{pendingPayment.amount}} рублей, вы можете <a href="{{payUrl}}stream/{{email}}">продолжить оплату</a> или <a (click)="deletePayment(pendingPayment.id)">удалить</a> информацию о платеже, чтобы выбрать другой тариф. </p>
 </ng-template>
