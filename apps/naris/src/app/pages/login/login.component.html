@@ -2,6 +2,7 @@
   
     <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
       <h2 class="login-form_title">LOGIN via</h2>
+      <button nz-button (click)="oAuthLogin('yandex')" class="login-form-button login-form-margin" [nzType]="'primary'">Yandex</button>
       <button nz-button (click)="oAuthLogin('google')" class="login-form-button login-form-margin" [nzType]="'primary'">Google</button>
       <button nz-button (click)="oAuthLogin('patreon')" class="login-form-button login-form-margin" [nzType]="'primary'">Patreon</button>
     </form>

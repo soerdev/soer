@@ -1,0 +1,44 @@
+  ul.features-list {
+    color: #6B7A90;
+    font-size: 1.2em;
+    min-height: 13rem;
+    margin: 0;
+    padding: 0;
+  }
+  .features-list li {
+    margin-top: 0.2rem;
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  .certificate {
+    padding: 2rem;
+   
+    .information {
+        margin: 1rem;
+    }
+
+    .valid-date {
+        text-align: right;
+        color: #1890ff;
+    }
+  }
+  .certificate.done {
+    width: 40%;
+    margin: auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    h2 {
+      text-align: center;
+      text-transform: uppercase;
+    }  
+
+    .controls {
+      text-align: center;
+    }
+  }
+
+  .certificate.start {
+    width: 100%;
+  }

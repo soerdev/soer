@@ -28,6 +28,7 @@
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="menu"></i></button>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                   <ul nz-menu>
+                    <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
                     <li (click)="logout()" nz-menu-item>Выход</li>
                   </ul>
                 </nz-dropdown-menu>          

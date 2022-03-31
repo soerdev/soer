@@ -9,6 +9,7 @@ import { WorkshopsService } from '../api/workshops/workshops.service';
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';
 import { WORKBOOKS_ID, WORKBOOK_ID } from './modules/abstracte/abstracte.const';
+import { CertificateComponent } from './modules/certificate/certificate/certificate.component';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
 import { OverviewComponent } from './modules/overview/overview.component';
 import { PayFormComponent } from './modules/payment/pay-form/pay-form.component';
@@ -20,6 +21,11 @@ import { TargetsRoutingModule } from './modules/targets/targets-routing.module';
 
 const routes: Routes = [
       { path: '', redirectTo: 'overview' },
+      {
+        path: 'certificate',
+        data: { header: {title: 'Подарочный сертификат', subtitle: 'использовать сертификат'}},
+        component: CertificateComponent
+      },
       {
         path: 'pay',
         data: { header: {title: 'Выбор тарифа', subtitle: 'определите уровень платного доступа'}},

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PayFormComponent } from './pay-form/pay-form.component';
-import { PayService } from './pay.service';
+import { CertificateComponent } from './certificate/certificate.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RouterModule } from '@angular/router';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
@@ -15,12 +14,10 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
   declarations: [
-    PayFormComponent
-  ],
-  providers: [
-    PayService
+    CertificateComponent
   ],
   imports: [
+    CommonModule,
     CommonModule,
     NzButtonModule,
     NzAlertModule,
@@ -32,4 +29,4 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     FormsModule,
   ]
 })
-export class PaymentModule { }
+export class CertificateModule { }

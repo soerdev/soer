@@ -43,20 +43,23 @@ export class AuthService {
     }
   }
 
+  extractAndParseJWT(jwt: string | null): any {
+    if (jwt === null) {
+      return {};
+    }
+    try {
+      const base64Url = jwt.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const result = JSON.parse(atob(base64));
+      return result;
+    } catch(err) {
+      // do nothing
+    }
+    return null;
+  }
 
   decodeJWT(jwt: string|null): void {
-    if (jwt) {
-      try {
-        const base64Url = jwt.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        this.decodedJSON = JSON.parse(atob(base64));
-        console.log('Decoded JSON ?=>', this.decodedJSON);
-      } catch(err) {
-        console.error(err);
-      }
-    } else {
-      this.decodedJSON = {id: -1, email: '', role: 'GUEST', iat: 0, exp: 0};
-    }
+    this.decodedJSON = this.extractAndParseJWT(jwt) || {id: -1, email: '', role: 'GUEST', iat: 0, exp: 0};
   }
 
   getEmail(): string {

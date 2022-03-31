@@ -90,10 +90,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  oAuthLogin(provider: 'patreon' | 'google'): void {
-
+  oAuthLogin(provider: 'patreon' | 'google' | 'yandex'): void {
+    
+    const urls = {
+	'patreon': environment.patreonAuthUrl,
+	'google': environment.googleAuthUrl,
+	'yandex': environment.yandexAuthUrl
+    };
+console.log(urls[provider]);
     this.externalWindow = this.popupCenter({
-      url: provider === 'google' ? environment.googleAuthUrl : environment.patreonAuthUrl,
+      url: urls[provider],
       title: '',
       w: 500,
       h: 500

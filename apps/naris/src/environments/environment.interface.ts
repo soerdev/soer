@@ -3,6 +3,7 @@ export interface EnvironmentInterface {
     production: boolean;
     googleAuthUrl: string;
     patreonAuthUrl: string;
+    yandexAuthUrl: string;
     apiUrl: string;
     assetsUrl: string;
     privateAssetsUrl: string;

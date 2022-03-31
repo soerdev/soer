@@ -19,6 +19,7 @@ import { TargetsModule } from "./modules/targets/targets.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { RouterComposeModule } from "./router-compose/router-compose.module";
 import { PaymentModule } from "./modules/payment/payment.module";
+import { CertificateModule } from "./modules/certificate/certificate.module";
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { PaymentModule } from "./modules/payment/payment.module";
     NzModalModule,
     TargetsModule,
     AbstracteModule,
-    PaymentModule
+    PaymentModule,
+    CertificateModule
   ],
   declarations: [
     DefaultComponent,

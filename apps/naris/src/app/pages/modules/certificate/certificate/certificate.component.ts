@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../../../api/auth/auth.service';
 
 
 @Component({
-  selector: 'soer-pay-form',
-  templateUrl: './pay-form.component.html',
-  styleUrls: ['./pay-form.component.scss']
+  selector: 'soer-certificate',
+  templateUrl: './certificate.component.html',
+  styleUrls: ['./certificate.component.scss']
 })
-export class PayFormComponent implements OnChanges{
+export class CertificateComponent {
   public email = '';
   public role = 'GUEST';
   public payUrl = '';
@@ -61,11 +61,11 @@ export class PayFormComponent implements OnChanges{
     if (cert && cert.role) {
       this.certObject = {
         role: cert.role,
-        status: 'pending'
+        status: 'pending',
+        exp: new Date(cert.exp * 1000)
       }
 
       this.http.get(environment.host + '/api/payservice/prepaid_status/' + this.certText).subscribe(result => {
-        console.log(result);
         this.certObject.status = (result as any)['status'];
       });
     } 

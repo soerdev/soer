@@ -1,0 +1,57 @@
+<div *ngIf="certObject && certObject.role" class="certificate done">
+    <h2>Сертификат</h2>
+    <p class="valid-date">Использовать до: {{certObject.exp | date: 'dd/MM/yyyy'}}</p>
+    <div [ngSwitch]="certObject.status">
+
+    <div *ngSwitchCase="'succeeded'">
+        <nz-alert
+               nzType="success"
+               nzMessage="Вы успешно активировали сертификат. Пожалуйста сделайте повторный вход на платформу.">
+        </nz-alert>
+      </div>
+
+      <div *ngSwitchDefault="'pending'">
+          <nz-divider></nz-divider>
+          <ul class="features-list">
+            <li><i nz-icon nzType="check-circle"></i> Тариф: <b>{{certObject.role}}</b></li>
+            <li><i nz-icon nzType="check-circle"></i> Срок действия: <b>30 дней</b></li>
+            <li><i nz-icon nzType="check-circle"></i> Состояние:
+                <b> 
+                <span [ngSwitch]="certObject.status">
+                    <span *ngSwitchDefault>не могу определить статус</span>
+                    <span *ngSwitchCase="'pending'"></span>
+                    <span *ngSwitchCase="'new'" style="color: green;">Новый</span>
+                    <span *ngSwitchCase="'inuse'" style="color: red;">Уже использован</span> 
+                </span>
+                </b>
+            </li>
+          </ul>
+          <div class="controls">
+            <button [disabled]="certObject?.status !== 'new'" (click)="useCert()" 
+              nzSize="large" nz-button nzType="primary">Использовать</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+<div *ngIf="!certObject" class="certificate start">
+    <nz-alert
+               nzType="warning"
+               [nzMessage]="info">
+    </nz-alert>
+    <nz-divider></nz-divider>
+    <h4>Введите подарочный сертификат в окне ниже</h4>
+    <textarea  nz-input [(ngModel)]="certText" (ngModelChange)="certinfo()" style="width: 100%; height: 4rem;"></textarea>
+</div>
+
+<ng-template #info>
+    <div class="information">
+        <p><b>Внимание!</b></p>
+        <ul>
+            <li>Все сертификаты имеют ограниченный срок использования и могут быть использованы только один раз;</li>
+            <li>Сертификат может работать вместе с подпиской, тогда уровень доступа будет выбираться по наилучшему результату;</li>
+            <li>Вы можете дождаться окончания действия тарифа и тогда активировать сертификат.</li>
+        </ul>
+    </div>
+</ng-template>
