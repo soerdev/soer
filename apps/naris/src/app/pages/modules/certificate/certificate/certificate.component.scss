@@ -24,8 +24,22 @@
         color: #1890ff;
     }
   }
+
+
+  @media screen and (min-width: 1024px) {
+    .certificate.done {
+      width: 40%;
+    }
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .certificate.done {
+      width: 90%;
+    }
+  }
+  
+
   .certificate.done {
-    width: 40%;
     margin: auto;
     border: 1px solid lightgray;
     border-radius: 5px;
