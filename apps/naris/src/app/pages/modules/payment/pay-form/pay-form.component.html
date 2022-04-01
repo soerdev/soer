@@ -1,5 +1,4 @@
 <div *ngIf="email !== '';else noemail">
-    <a *ngIf="role === 'GUEST'" [routerLink]="['/', 'pages', 'certificate']">Использовать сертификат</a>
     <div class="warning-message">
         <nz-alert *ngIf="role === 'GUEST'" nzType="warning" [nzMessage]="warning"></nz-alert>
         <nz-alert *ngIf="pendingPayment?.id" nzType="error" [nzMessage]="pendingPaymentMessage"></nz-alert>
@@ -57,8 +56,10 @@
 
 <ng-template #noemail><h1>Ошибка обработки токена JWT обратитесь к администратору. Оплата невозможна.</h1></ng-template>
 <ng-template #warning>
-    <p><b>Внимание!</b> Подписка будет оформлена на email:&nbsp;<b>{{email}}</b> и привязана к аккаунту, через который вы вошли.</p>
+    <p><b>Внимание!</b> Подписка будет оформлена на email:&nbsp;<b>{{email}}</b> и привязана к аккаунту, 
+      через который вы вошли. </p>
     <p><i>Обратите внимание после выбора и оплаты конкретного тарифа, его можно будет изменить только после окончания действия тарифа.</i></p>
+    <p><i>Вместо оплаты можно использовать <a [routerLink]="['/', 'pages', 'certificate']">сертификат</a>.</i></p>
 </ng-template>
 
 <ng-template #roleExistsError>
