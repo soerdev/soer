@@ -50,14 +50,13 @@ export class CertificateComponent {
   }
 
   useCert(): void {
-    this.http.get(environment.host + '/api/payservice/prepaid/' + this.email + '/' + this.certText).subscribe(result => {
-      console.log(result);
+    this.http.get(environment.host + '/api/payservice/prepaid/' + this.email + '/' + this.getClearedCertText()).subscribe(result => {
       this.certObject.status = (result as any)['status'];
     });
   }
 
   certinfo(): void {
-    const cert = this.authService.extractAndParseJWT(this.certText);
+    const cert = this.authService.extractAndParseJWT(this.getClearedCertText());
     if (cert && cert.role) {
       this.certObject = {
         role: cert.role,
@@ -65,9 +64,13 @@ export class CertificateComponent {
         exp: new Date(cert.exp * 1000)
       }
 
-      this.http.get(environment.host + '/api/payservice/prepaid_status/' + this.certText).subscribe(result => {
+      this.http.get(environment.host + '/api/payservice/prepaid_status/' + this.getClearedCertText()).subscribe(result => {
         this.certObject.status = (result as any)['status'];
       });
     } 
+  }
+
+  getClearedCertText(): string {
+    return this.certText.replace(/[\n\r\s]*/g, '');
   }
 }
