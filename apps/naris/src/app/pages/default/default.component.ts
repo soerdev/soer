@@ -30,6 +30,9 @@ export class DefaultComponent implements OnInit, OnDestroy {
               ) {}
 
   ngOnInit(): void {
+    this.auth.tokenUpdate$.subscribe(() => {
+      this.role = this.auth.getRole();
+    });
     this.role = this.auth.getRole();
     this.subscriptions = [
       this.router.events.pipe(filter(event => event instanceof NavigationEnd))

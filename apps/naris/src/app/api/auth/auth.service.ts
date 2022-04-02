@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 
@@ -21,14 +22,14 @@ export class AuthService {
   static cookieCheck = false;
   private decodedJSON: JWTModel = {id: -1, email: '', role: 'GUEST', iat: 0, exp: 0};
 
-  public tokenUpdate$ = new EventEmitter();
+  public tokenUpdate$ = new BehaviorSubject<string|null>(null);
   public get token(): string|null {
     return localStorage.getItem(TOKEN);
   }
   public set token(n: string|null) {
     n !== null ? localStorage.setItem(TOKEN, n) : localStorage.removeItem(TOKEN);
     this.decodeJWT(n);
-    this.tokenUpdate$.emit(n);
+    this.tokenUpdate$.next(n);
   }
 
   constructor(private http: HttpClient) { }
@@ -41,6 +42,12 @@ export class AuthService {
     if (this.token) {
       this.http.get(`${environment.apiUrl}auth/cookie`).subscribe(() => { console.log('Cookie renew')});
     }
+  }
+
+  renewToken(): Observable<{accessToken: string}> {
+    return this.http.get<{accessToken: string}>(`${environment.apiUrl}auth/renew`).pipe(
+        tap(result => this.token = result.accessToken)
+      );
   }
 
   extractAndParseJWT(jwt: string | null): any {

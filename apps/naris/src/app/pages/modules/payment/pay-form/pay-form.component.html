@@ -1,10 +1,10 @@
+<nz-spin *ngIf="remoteState.status === 'loading'" nzSimple [nzSize]="'large'"></nz-spin>
 <div *ngIf="email !== '';else noemail">
     <div class="warning-message">
-        <nz-alert *ngIf="role === 'GUEST'" nzType="warning" [nzMessage]="warning"></nz-alert>
-        <nz-alert *ngIf="pendingPayment?.id" nzType="error" [nzMessage]="pendingPaymentMessage"></nz-alert>
-        <nz-alert *ngIf="role !== 'GUEST'" nzType="error" [nzMessage]="roleExistsError"></nz-alert>
+        <nz-alert *ngIf="remoteState.status === 'ok'" nzType="warning" [nzMessage]="warning"></nz-alert>
+        <nz-alert *ngIf="remoteState.status === 'error'" nzType="error" [nzMessage]="pendingPaymentMessage"></nz-alert>
     </div>
-    <div *ngIf="role === 'GUEST' && !pendingPayment?.id" class="gird-layout pricing-blocks">
+    <div *ngIf="remoteState.status === 'ok'" class="gird-layout pricing-blocks">
         <div class="proposal">
           <h1 class="price-label gray-label">Stream</h1>
           <h2><strong>350₽</strong> / 30 дней.</h2>
@@ -16,7 +16,7 @@
             <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
           </ul>
           <nz-divider></nz-divider>
-          <a (click)="cleanJWT()" href="{{payUrl}}stream/{{email}}" 
+          <a href="{{payUrl}}stream/{{email}}" 
             nzSize="large" nz-button nzType="primary">Оплатить</a>
         </div>
         <div class="proposal">
@@ -31,7 +31,7 @@
             <li><i nz-icon nzType="check-circle"></i>  Воркшопы</li>
           </ul>
           <nz-divider></nz-divider>
-          <a (click)="cleanJWT()" href="{{payUrl}}workshop/{{email}}" 
+          <a  href="{{payUrl}}workshop/{{email}}" 
             nzSize="large" nz-button nzType="primary">Оплатить</a>
         </div>
         <div class="proposal">
@@ -47,7 +47,7 @@
             <li><i nz-icon nzType="check-circle"></i>  "Исходники"</li>
           </ul>
           <nz-divider></nz-divider>
-          <a (click)="cleanJWT()" href="{{payUrl}}pro/{{email}}" 
+          <a  href="{{payUrl}}pro/{{email}}" 
             nzSize="large" nz-button nzType="primary">Оплатить</a>
         </div>
         
@@ -62,11 +62,15 @@
     <p><i>Вместо оплаты можно использовать <a [routerLink]="['/', 'pages', 'certificate']">сертификат</a>.</i></p>
 </ng-template>
 
-<ng-template #roleExistsError>
-    <p><b>Внимание!</b> У вас уже есть подписка {{role}}</p>
-    <p>На данный момент возможность апгрейда уже оплаченного уровня не поддерживается.</p>
-</ng-template>
-
 <ng-template #pendingPaymentMessage>
-  <p>Ранее вы пытались оплатить тариф на сумму {{pendingPayment.amount}} рублей, вы можете <a href="{{payUrl}}stream/{{email}}">продолжить оплату</a> или <a (click)="deletePayment(pendingPayment.id)">удалить</a> информацию о платеже, чтобы выбрать другой тариф. </p>
+  <ul class="features-list">
+    <li *ngFor="let message of remoteState.messages"><i nz-icon nzType="check-circle"></i> {{message}}</li>
+  </ul>
+  <ul class="features-list" *ngFor="let action of remoteState.actions">
+    <li *ngIf="action.continue">Ранее вы пытались оплатить тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей, вы можете <a href="{{payUrl}}stream/{{email}}">продолжить оплату</a></li>
+    <li *ngIf="action.delete">Если вы не хотите продолжать оплату, то <a (click)="deletePayment(action.delete.id)">удалите платеж</a></li>
+    <li *ngIf="action.logout && action.logout.role !== role">Вам необходимо <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
+  </ul>
+
+  
 </ng-template>

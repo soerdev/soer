@@ -10,6 +10,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 
@@ -28,6 +29,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzIconModule,
     NzCheckboxModule,
     NzInputModule,
+    NzSpinModule,
     RouterModule,
     FormsModule,
   ]
