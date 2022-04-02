@@ -34,13 +34,13 @@ export class AuthService {
   }
 
   checkCookieAuth() {
-    if (this.token) {
-      this.http.get(`${this.options.apiRoot}auth/cookie`).subscribe(() => { console.log('Cookie renew')});
+    if (this.token && this.options.schema.cookieApi) {
+      this.http.get(this.options.schema.cookieApi).subscribe(() => { console.log('Cookie renew')});
     }
   }
 
   renewToken(): Observable<{accessToken: string}> {
-    return this.http.get<{accessToken: string}>(`${this.options.apiRoot}auth/renew`).pipe(
+    return this.http.get<{accessToken: string}>(this.options.schema.renewApi).pipe(
         tap(result => this.token = result.accessToken)
       );
   }

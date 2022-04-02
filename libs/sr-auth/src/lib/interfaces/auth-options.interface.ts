@@ -1,3 +1,7 @@
 export interface AuthOptions {
-    apiRoot: string;
+    sid: symbol;
+    schema: {
+        cookieApi: string;
+        renewApi: string;
+    };
   }
