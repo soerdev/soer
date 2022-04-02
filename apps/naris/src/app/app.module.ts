@@ -20,8 +20,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { IconsProviderModule } from '../icons-provider.module';
 import { environment } from '../environments/environment';
-import { AuthService } from './api/auth/auth.service';
-import { AuthInterceptor } from './api/auth/auth-interceptor.interceptor';
+import { AuthInterceptor, SrAuthModule } from '@soer/sr-auth';
+
 
 registerLocaleData(ru);
 
@@ -30,6 +30,7 @@ registerLocaleData(ru);
   imports: [
     BrowserModule, 
     MixedBusModule,
+    SrAuthModule.forRoot({apiRoot: environment.apiUrl}),
     SrUrlBuilderModule.forRoot({apiRoot: environment.apiUrl}),
     HttpClientModule,
     FormsModule,
@@ -42,7 +43,6 @@ registerLocaleData(ru);
   ],
 
   providers: [
-    AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
     {

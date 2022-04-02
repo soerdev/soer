@@ -1,7 +1,7 @@
 import { APP_BASE_HREF, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './api/auth/auth.guard';
+import { AuthGuard } from '@soer/sr-auth';
 import { DefaultComponent } from './pages/default/default.component';
 
 
@@ -17,7 +17,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   providers: [
-    AuthGuard,
     {provide: APP_BASE_HREF, useValue: '!'},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
 

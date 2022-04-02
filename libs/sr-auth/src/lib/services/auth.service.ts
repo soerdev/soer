@@ -1,17 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AuthOptions } from '../interfaces/auth-options.interface';
+import { JWTModel } from '../interfaces/jwt.models';
 
 
-
-export interface JWTModel {
-  id: number;
-  email: string;
-  role: string;
-  iat: number;
-  exp: number;
-}
 
 const TOKEN = 'token';
 @Injectable({
@@ -32,7 +25,9 @@ export class AuthService {
     this.tokenUpdate$.next(n);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    @Inject('AuthServiceConfig') private options: AuthOptions,
+    private http: HttpClient) { }
 
   logout(): void {
     this.token = null;
@@ -40,12 +35,12 @@ export class AuthService {
 
   checkCookieAuth() {
     if (this.token) {
-      this.http.get(`${environment.apiUrl}auth/cookie`).subscribe(() => { console.log('Cookie renew')});
+      this.http.get(`${this.options.apiRoot}auth/cookie`).subscribe(() => { console.log('Cookie renew')});
     }
   }
 
   renewToken(): Observable<{accessToken: string}> {
-    return this.http.get<{accessToken: string}>(`${environment.apiUrl}auth/renew`).pipe(
+    return this.http.get<{accessToken: string}>(`${this.options.apiRoot}auth/renew`).pipe(
         tap(result => this.token = result.accessToken)
       );
   }

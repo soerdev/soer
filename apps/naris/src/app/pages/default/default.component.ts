@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BusError, MixedBusService } from '@soer/mixed-bus';
+import { AuthService } from '@soer/sr-auth';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
-import { AuthService } from '../../api/auth/auth.service';
+
 import { MAIN_MENU } from './menu.const';
 
 @Component({
