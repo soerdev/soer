@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Provider } from "@angular/compiler/src/core";
 import { ModuleWithProviders } from "@angular/compiler/src/core";
 import { NgModule } from "@angular/core";
-import { BusOwner, MixedBusService } from "@soer/mixed-bus";
+import { BusEmitter, MixedBusService } from "@soer/mixed-bus";
 import { DataStoreService } from "./services/data-store.service";
 import { HookService } from "./services/hook.service";
 import { ResolveReadEmitterService } from "./services/resolve-read-emitter.service";
@@ -40,7 +40,7 @@ export class SrDTOModule {
 
 function crudProivders(options: CrudOptions): Provider[] {
   const result: Provider[] = [];
-  const hooks: BusOwner[] = [];
+  const hooks: BusEmitter[] = [];
   Object.keys(options.crudProviders).forEach(providerName => {
     const schema: CRUDMethods = options.crudProviders[providerName];
     const providerSid = schema.sid ?? Symbol(providerName);
@@ -75,7 +75,7 @@ function createDataEmitterProvider(providerName: string, sid: symbol, methods: C
   }
 }
 
-function createDomain(hooks: BusOwner[], domainName: string): Provider {
+function createDomain(hooks: BusEmitter[], domainName: string): Provider {
   return {
     provide: `HookDomain`,
     multi: true,

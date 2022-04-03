@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandDelete, DataStoreService, DtoPack } from '@soer/sr-dto';
 import { Observable } from 'rxjs';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
@@ -12,8 +12,8 @@ import { TargetModel } from '../../../../api/targets/target.interface';
 export class ListTemplatesPageComponent {
   public templates$: Observable<DtoPack<TargetModel>>;
   constructor(
-      @Inject('templates') private templatesId: BusOwner,
-      @Inject('template') private templateId: BusOwner,
+      @Inject('templates') private templatesId: BusEmitter,
+      @Inject('template') private templateId: BusEmitter,
       private store$: DataStoreService,
       private bus$: MixedBusService
   ) {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { isObservable, Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { ChangeDataEvent, CommandCreate, CommandDelete, CommandNew, CommandRead, CommandUpdate, CreateDoneEvent, DeleteDoneEvent, ErrorDataEvent, ReadDoneEvent, UpdateDoneEvent } from '../bus-messages/bus.messages';
@@ -31,7 +31,7 @@ export class StoreCrudService implements CRUD {
         this.updateData({ status: INIT, items: [] }, msg.owner);
     }
     // Create
-    protected queryRead(owner: BusOwner, params: any): Observable<DtoPack<any>> {
+    protected queryRead(owner: BusEmitter, params: any): Observable<DtoPack<any>> {
         return this.http.get<DtoPack<any>>(this.urlBuilder.build(owner.schema['read'], params));
     }
 
@@ -47,7 +47,7 @@ export class StoreCrudService implements CRUD {
     }
 
     // Create
-    protected queryCreate(data: any, owner: BusOwner, params: any): Observable<DtoPack<any>> {
+    protected queryCreate(data: any, owner: BusEmitter, params: any): Observable<DtoPack<any>> {
         return this.http.post<DtoPack<any>>(this.urlBuilder.build(owner.schema['create'], params), data);
     }
 
@@ -63,7 +63,7 @@ export class StoreCrudService implements CRUD {
     }
 
     // UPDATE
-    protected queryUpdate(data: any, owner: BusOwner, params: any): Observable<DtoPack<any>> {
+    protected queryUpdate(data: any, owner: BusEmitter, params: any): Observable<DtoPack<any>> {
         return this.http.put<DtoPack<any>>(this.urlBuilder.build(owner.schema['update'], params), data);
     }
 
@@ -80,7 +80,7 @@ export class StoreCrudService implements CRUD {
     }
 
     // DELETE
-    protected queryDelete(owner: BusOwner, params: any): Observable<DtoPack<any>> {
+    protected queryDelete(owner: BusEmitter, params: any): Observable<DtoPack<any>> {
         return this.http.delete<DtoPack<any>>(this.urlBuilder.build(owner.schema['delete'], params));
     }
 
@@ -98,7 +98,7 @@ export class StoreCrudService implements CRUD {
 
     async updateData(
         dataOrObservable: DtoPack<any> | Observable<DtoPack<any>> | undefined,
-        id: BusOwner
+        id: BusEmitter
     ): Promise<DtoPack<any>> {
         if (isObservable(dataOrObservable)) {
             try {

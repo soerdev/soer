@@ -3,7 +3,7 @@ import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { Observable } from 'rxjs';
 import { CommandDelete, CommandEdit, CommandNew, CommandRead, CommandView, DtoPack } from '@soer/sr-dto';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
-import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { DataStoreService } from '@soer/sr-dto';
 
 
@@ -18,8 +18,8 @@ export class ListAbstractePageComponent {
   workbook$: Observable<DtoPack<WorkbookModel>>;
 
   constructor(
-    @Inject('workbook') private workbookId: BusOwner,
-    @Inject('workbooks') private workbooksId: BusOwner,
+    @Inject('workbook') private workbookId: BusEmitter,
+    @Inject('workbooks') private workbooksId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) {

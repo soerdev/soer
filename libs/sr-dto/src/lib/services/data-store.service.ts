@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { BehaviorSubject } from 'rxjs';
 import { ChangeDataEvent } from '../bus-messages/bus.messages';
 import { INIT } from '@soer/sr-dto';
@@ -15,7 +15,7 @@ export class DataStoreService {
     this.bus$.of(ChangeDataEvent).subscribe(this.dataEmission.bind(this));
   }
 
-  of(owner: BusOwner): BehaviorSubject<BusMessage> {
+  of(owner: BusEmitter): BehaviorSubject<BusMessage> {
     if (!this.data$.has(owner.sid)) {
       this.data$.set(owner.sid, new BehaviorSubject<BusMessage>({owner, result: {status: INIT, items: []}, params: {}}));
     }

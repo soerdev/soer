@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionModel } from '../../../../api/questions/question.model';
-import { BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusMessage, BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { environment } from '../../../../../environments/environment';
 import { DataStoreService } from '@soer/sr-dto';
 
@@ -14,7 +14,7 @@ import { DataStoreService } from '@soer/sr-dto';
 export class QuestionViewComponent {
   public readonly hostUrl = environment.host;
   public question$: Observable<QuestionModel[]>;
-  constructor( @Inject('question') private questionId: BusOwner,
+  constructor( @Inject('question') private questionId: BusEmitter,
                private bus$: MixedBusService,
                private store$: DataStoreService,
                private route: ActivatedRoute) { 

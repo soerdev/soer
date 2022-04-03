@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BusError, BusMessage, BusOwner, isBusMessage, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
 import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, HookService, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
@@ -53,7 +53,7 @@ export abstract class ComposePage {
 
     
 
-    register(hooks: BusOwner[]): void {
+    register(hooks: BusEmitter[]): void {
       if (hooks.length > 0) {
         this.subscriptions = [...this.subscriptions,
           this.bus$.of(CreateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),

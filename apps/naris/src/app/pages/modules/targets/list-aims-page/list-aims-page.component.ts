@@ -5,7 +5,7 @@ import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.hel
 import { TargetModel } from '../../../../api/targets/target.interface';
 import { CommandUpdate, DtoPack } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
-import { BusOwner } from '@soer/mixed-bus';
+import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DONE_PROGRESS, UNDONE_PROGRESS } from '../targets.const';
 import { propagateProgress, updateProgress } from '../progress.helper';
@@ -32,8 +32,8 @@ export class ListAimsPageComponent {
   public expanderCache: any = {};
 
   constructor(
-      @Inject('targets') private targetsId: BusOwner,
-      @Inject('target') private targetId: BusOwner,
+      @Inject('targets') private targetsId: BusEmitter,
+      @Inject('target') private targetId: BusEmitter,
       private bus$: MixedBusService,
       private store$: DataStoreService,
       private notification: NzNotificationService

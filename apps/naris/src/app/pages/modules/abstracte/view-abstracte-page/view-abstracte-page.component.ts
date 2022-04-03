@@ -4,7 +4,7 @@ import { DtoPack } from '@soer/sr-dto';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { DataStoreService } from '@soer/sr-dto';
-import { BusOwner } from '@soer/mixed-bus';
+import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
 
 @Component({
@@ -16,7 +16,7 @@ export class ViewAbstractePageComponent {
 
   public workbook$: Observable<DtoPack<WorkbookModel>>;
   constructor(
-    @Inject('workbook') private workbookId: BusOwner,
+    @Inject('workbook') private workbookId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) {

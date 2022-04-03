@@ -1,4 +1,4 @@
-import { ANY_SERVICE, BusCommand, BusEvent, BusOwner } from "@soer/mixed-bus";
+import { ANY_SERVICE, BusCommand, BusEvent, BusEmitter } from "@soer/mixed-bus";
 import { DtoPack, ERROR, OK } from "../interfaces/dto.pack.interface";
 
 export class CreateStartEvent extends BusEvent {}
@@ -8,7 +8,7 @@ export class UpdateDoneEvent extends BusEvent {}
 export class DeleteDoneEvent extends BusEvent {}
 export class ChangeDataEvent extends BusEvent {
     constructor(
-        public override owner: BusOwner = ANY_SERVICE,
+        public override owner: BusEmitter = ANY_SERVICE,
         public override result: DtoPack<any> = {status: OK, items: []},
         public override params = {}) {
         super();
@@ -17,7 +17,7 @@ export class ChangeDataEvent extends BusEvent {
 
 export class ErrorDataEvent extends BusEvent {
     constructor(
-        public override owner: BusOwner = ANY_SERVICE,
+        public override owner: BusEmitter = ANY_SERVICE,
         public override result: DtoPack<any> = {status: ERROR, items: []},
         public override params: {[key: string]: any} = {}) {
         super();

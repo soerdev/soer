@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BusMessage, BusOwner } from '@soer/mixed-bus';
+import { BusMessage, BusEmitter } from '@soer/mixed-bus';
 import { QuestionModel } from '../../../../api/questions/question.model';
 import { CommandDelete, CommandNew } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
@@ -21,8 +21,8 @@ export class ListQuestionsPageComponent  {
   hostUrl = environment.host;
   question$: Observable<QuestionModel[]> | null;
   selectedQuestion: QuestionModel | null = null;
-  constructor( @Inject('questionsAll') private questionsId: BusOwner,
-               @Inject('question') private questionId: BusOwner,
+  constructor( @Inject('questionsAll') private questionsId: BusEmitter,
+               @Inject('question') private questionId: BusEmitter,
                private bus$: MixedBusService,
                private store$: DataStoreService,
                private route: ActivatedRoute

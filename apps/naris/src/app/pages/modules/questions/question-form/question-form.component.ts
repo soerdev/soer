@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
-import { BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
 
 @Component({
@@ -15,8 +15,8 @@ export class QuestionFormComponent {
   form: FormGroup;
 
   constructor(
-    @Inject('questions') private questionsId: BusOwner,
-    @Inject('question') private questionId: BusOwner,
+    @Inject('questions') private questionsId: BusEmitter,
+    @Inject('question') private questionId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService,
     private formBuilder: FormBuilder

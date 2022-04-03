@@ -5,7 +5,7 @@ import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { DataStoreService } from '@soer/sr-dto';
 import { MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate } from '@soer/sr-dto';
-import { BusOwner } from '@soer/mixed-bus';
+import { BusEmitter } from '@soer/mixed-bus';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,7 +19,7 @@ export class EditAbstractePageComponent implements OnDestroy {
   public previewFlag = false;
   subscriptions: Subscription[] = [];
   constructor(
-    @Inject('workbook') private workbookId: BusOwner,
+    @Inject('workbook') private workbookId: BusEmitter,
     private formBuilder: FormBuilder,
     private bus$: MixedBusService,
     private store$: DataStoreService

@@ -4,7 +4,7 @@ import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { CommandDelete } from '@soer/sr-dto';
 import { DtoPack } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
-import { BusOwner } from '@soer/mixed-bus';
+import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
 import { TargetModel } from '../../../../api/targets/target.interface';
 
@@ -16,8 +16,8 @@ import { TargetModel } from '../../../../api/targets/target.interface';
 export class ListTargetsPageComponent  {
   public targets$: Observable<DtoPack<TargetModel>>;
   constructor(
-      @Inject('targets') private targetsId: BusOwner,
-      @Inject('target') private targetId: BusOwner,
+      @Inject('targets') private targetsId: BusEmitter,
+      @Inject('target') private targetId: BusEmitter,
       private bus$: MixedBusService,
       private store$: DataStoreService,
   ) {

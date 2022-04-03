@@ -1,10 +1,10 @@
-import { BusError, BusMessage, BusOwner, MixedBusService } from '@soer/mixed-bus';
+import { BusError, BusMessage, BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandRead, CreateDoneEvent, DeleteDoneEvent, UpdateDoneEvent } from '../bus-messages/bus.messages';
 
 
 export class HookService {
 
-  constructor(public domainName: string = '', private bus$: MixedBusService, public hooks: BusOwner[]) { 
+  constructor(public domainName: string = '', private bus$: MixedBusService, public hooks: BusEmitter[]) { 
     console.log('Start hook service', hooks);
     this.bus$.of(DeleteDoneEvent).subscribe(this.watch.bind(this));
     this.bus$.of(UpdateDoneEvent).subscribe(this.watch.bind(this));

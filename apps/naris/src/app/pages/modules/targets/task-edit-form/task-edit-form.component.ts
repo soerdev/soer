@@ -5,7 +5,7 @@ import { TargetModel } from '../../../../api/targets/target.interface';
 import { CommandCancel, CommandCreate, CommandDelete, CommandUpdate } from '@soer/sr-dto';
 import { DtoPack } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
-import { BusOwner } from '@soer/mixed-bus';
+import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
 
 
@@ -19,8 +19,8 @@ export class TaskEditFormComponent {
   public history: {ind: number, title: string}[] = [];
 
   constructor(
-    @Inject('target') private targetId: BusOwner,
-    @Inject('template') private templateId: BusOwner,
+    @Inject('target') private targetId: BusEmitter,
+    @Inject('template') private templateId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) { 

@@ -1,6 +1,6 @@
-export type BusOwner = {sid: symbol, schema: {[key: string]: any}};
+export type BusEmitter = {sid: symbol, schema: {[key: string]: any}};
 
-export const ANY_SERVICE: BusOwner = {sid: Symbol('AnyService'), schema: {}};
+export const ANY_SERVICE: BusEmitter = {sid: Symbol('AnyService'), schema: {}};
 
 /**
  *  EVENTS
@@ -8,7 +8,7 @@ export const ANY_SERVICE: BusOwner = {sid: Symbol('AnyService'), schema: {}};
  *  середине и конце выполнения
  */
 export class BusEvent {
-    constructor(public owner: BusOwner = ANY_SERVICE, public result: any = {}, public params: {[key: string]: any} = {}) {}
+    constructor(public owner: BusEmitter = ANY_SERVICE, public result: any = {}, public params: {[key: string]: any} = {}) {}
 }
 
 /**
@@ -16,7 +16,7 @@ export class BusEvent {
  *   Команды используются для инициирования действия
  */
 export class BusCommand {
-    constructor(public owner: BusOwner = ANY_SERVICE, public result: any = {}, public params: {[key: string]: any} = {} ) {}
+    constructor(public owner: BusEmitter = ANY_SERVICE, public result: any = {}, public params: {[key: string]: any} = {} ) {}
 }
 
 /**
@@ -24,7 +24,7 @@ export class BusCommand {
  *   Ошибки в процессе обработки событий
  */
 export class BusError {
-    constructor(public owner: BusOwner = ANY_SERVICE, public errors: string[] ) {}
+    constructor(public owner: BusEmitter = ANY_SERVICE, public errors: string[] ) {}
 }
 
 
