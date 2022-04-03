@@ -69,7 +69,7 @@
   <ul class="features-list" *ngFor="let action of remoteState.actions">
     <li *ngIf="action.continue">Ранее вы пытались оплатить тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей, вы можете <a href="{{payUrl}}stream/{{email}}">продолжить оплату</a></li>
     <li *ngIf="action.delete">Если вы не хотите продолжать оплату, то <a (click)="deletePayment(action.delete.id)">удалите платеж</a></li>
-    <li *ngIf="action.logout && action.logout.role !== role">Вам необходимо <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
+    <li *ngIf="action.logout && action.logout.role !== role">Вам необходимо <a (click)="renewToken()">обновить</a> токен или  <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
   </ul>
 
   

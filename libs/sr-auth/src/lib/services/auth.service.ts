@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { BusEvent, MixedBusService } from '@soer/mixed-bus';
+import { ChangeDataEvent, OK } from '@soer/sr-dto';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { AuthOptions } from '../interfaces/auth-options.interface';
+import { AuthEmitter } from '../interfaces/auth-options.interface';
 import { JWTModel } from '../interfaces/jwt.models';
 
 
@@ -16,18 +18,30 @@ export class AuthService {
   private decodedJSON: JWTModel = {id: -1, email: '', role: 'GUEST', iat: 0, exp: 0};
 
   public tokenUpdate$ = new BehaviorSubject<string|null>(null);
+
+  private _token: string|null = '';
+
   public get token(): string|null {
-    return localStorage.getItem(TOKEN);
+    return this._token;
   }
   public set token(n: string|null) {
+    this._token = n;
     n !== null ? localStorage.setItem(TOKEN, n) : localStorage.removeItem(TOKEN);
     this.decodeJWT(n);
     this.tokenUpdate$.next(n);
+
+    this.bus$.publish(
+      new ChangeDataEvent(this.options, {status: OK, items: [this.extractAndParseJWT(n)]})
+    );
+    
   }
 
   constructor(
-    @Inject('AuthServiceConfig') private options: AuthOptions,
-    private http: HttpClient) { }
+    @Inject('AuthServiceConfig') private options: AuthEmitter,
+    private bus$: MixedBusService,
+    private http: HttpClient) { 
+      this.token = localStorage.getItem(TOKEN) || null;
+    }
 
   logout(): void {
     this.token = null;

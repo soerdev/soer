@@ -20,7 +20,7 @@ export class QuestionViewComponent {
                private route: ActivatedRoute) { 
                 this.question$ = this.store$.of(this.route.snapshot.data?.['bus']?.active || this.questionId).pipe(map<BusMessage, QuestionModel[]>(
                   (data: BusMessage | null) => {
-                    return data?.result?.items ?? [];
+                    return data?.payload?.items ?? [];
                   }
                 ));
                }

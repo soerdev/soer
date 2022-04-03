@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Injectable } from '@angular/core';
 import { BusError, BusMessage, BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { BehaviorSubject } from 'rxjs';
@@ -17,7 +18,7 @@ export class DataStoreService {
 
   of(owner: BusEmitter): BehaviorSubject<BusMessage> {
     if (!this.data$.has(owner.sid)) {
-      this.data$.set(owner.sid, new BehaviorSubject<BusMessage>({owner, result: {status: INIT, items: []}, params: {}}));
+      this.data$.set(owner.sid, new BehaviorSubject<BusMessage>({owner, payload: {status: INIT, items: []}, params: {}}));
     }
     return this.data$.get(owner.sid);
   }

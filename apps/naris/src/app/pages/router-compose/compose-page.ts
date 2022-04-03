@@ -43,9 +43,9 @@ export abstract class ComposePage {
     showMessageOrErrors(msg: string, data: BusMessage | BusError): void {
 
       if (isBusMessage(data)){
-        if (data.result.status === OK) {
+        if (data.payload.status === OK) {
           this.message.success(msg);
-        } else if(data.result.status === ERROR) {
+        } else if(data.payload.status === ERROR) {
           this.message.error('Что-то пошло не так...');
         }
       }
@@ -84,12 +84,12 @@ export abstract class ComposePage {
     }
     onEditWorkbook(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
-      this.router.navigate(['edit', data.result.id], { relativeTo: this.route });
+      this.router.navigate(['edit', data.payload.id], { relativeTo: this.route });
     }
 
     onViewWorkbook(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
-      this.router.navigate(['view', data.result.id], { relativeTo: this.route });
+      this.router.navigate(['view', data.payload.id], { relativeTo: this.route });
     }
 
     closePopup(): void {

@@ -29,7 +29,7 @@ export class ListQuestionsPageComponent  {
   ) { 
     this.question$ = this.store$.of(this.route.snapshot.data?.['bus']?.active || this.questionsId).pipe(map<BusMessage, QuestionModel[]>(
       (data: BusMessage | null) => {
-        return data?.result?.items ?? [];
+        return data?.payload?.items ?? [];
       }
     ));
   }

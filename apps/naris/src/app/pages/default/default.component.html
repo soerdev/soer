@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout *ngIf="(user | async | dtoLastItem) as userInfo; else userError" class="app-layout">
     <nz-sider class="menu-sidebar"
               nzCollapsible
               nzBreakpoint="lg"
@@ -20,9 +20,9 @@
     <nz-layout>
           <nz-page-header class="site-page-header" [nzTitle]="title" [nzSubtitle]="subtitle">
             <nz-page-header-extra>
-                <a *ngIf="role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить уровень</a>
+                <a *ngIf="userInfo.role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить уровень</a>
                 <span class="price-label" 
-                [ngClass]="{'pro-label': role === 'PRO', 'workshop-label': role === 'WORKSHOP', 'stream-label': role === 'STREAM'}">{{role}}</span>
+                [ngClass]="{'pro-label': userInfo.role === 'PRO', 'workshop-label': userInfo.role === 'WORKSHOP', 'stream-label': userInfo.role === 'STREAM'}">{{userInfo.role}}</span>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="search" nzTheme="outline"></i></button>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="bell" nzTheme="outline"></i></button>
                 <button nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="menu"></i></button>
@@ -41,4 +41,7 @@
       </nz-content>
     </nz-layout>
 </nz-layout>
-  
+
+<ng-template #userError>
+  <p>Произошла ошибка идентификации пользователя, обратитесь в тех. поддержку - soersoft@gmail.com</p>
+</ng-template>

@@ -3,6 +3,7 @@ import { Component, OnChanges} from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { AuthService } from '@soer/sr-auth';
+import { first } from 'rxjs';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthService } from '@soer/sr-auth';
   templateUrl: './pay-form.component.html',
   styleUrls: ['./pay-form.component.scss']
 })
-export class PayFormComponent implements OnChanges{
+export class PayFormComponent {
   public email = '';
   public role = 'GUEST';
   public payUrl = '';
@@ -27,11 +28,7 @@ export class PayFormComponent implements OnChanges{
   }
 
 
-  ngOnChanges(): void {
-      console.log('?=> run');
-  }
   checkRemoteStatus(): void {
-    this.authService.renewToken().subscribe(result => console.log('Result2', this.authService.extractAndParseJWT(result.accessToken)));
     this.http.get(environment.host + '/api/seller/order/status/' + this.email)
     .subscribe( result => {
       const status = (result as any).status || 'ok';
@@ -48,6 +45,14 @@ export class PayFormComponent implements OnChanges{
     });
   }
 
+  renewToken(): void {
+    this.authService.renewToken().subscribe(
+      () => {
+        this.role = this.authService.getRole();
+        this.router.navigate(['login']);
+      }
+    );
+  }
   logout(): void {
     this.authService.logout();
     this.router.navigate(['login']);

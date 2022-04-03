@@ -59,7 +59,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.subscriptions = [ this.auth.tokenUpdate$.subscribe(() => {
         this.checkJWT();
         this.loading = this.isSkipChecks || !!this.jwt;
-      }) ];
+      }),
+    ];
       this.checkJWT(this.route.snapshot.queryParams?.['jwt']);
     }
   

@@ -34,6 +34,7 @@ import { CalcProgressPipe } from './calc-progress.pipe';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { CountOpenTasksPipe } from './count-open-tasks.pipe';
 import { CountClosedTasksPipe } from './count-closed-tasks.pipe';
+import { SrDTOModule } from '@soer/sr-dto';
 
 @NgModule({
   declarations: [

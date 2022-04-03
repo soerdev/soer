@@ -1,7 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { NzModalModule } from "ng-zorro-antd/modal";
 import { IconsProviderModule } from "../../icons-provider.module";
@@ -20,6 +19,7 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { RouterComposeModule } from "./router-compose/router-compose.module";
 import { PaymentModule } from "./modules/payment/payment.module";
 import { CertificateModule } from "./modules/certificate/certificate.module";
+import { SrDTOModule } from "@soer/sr-dto";
 
 @NgModule({
   imports: [
@@ -35,7 +35,8 @@ import { CertificateModule } from "./modules/certificate/certificate.module";
     TargetsModule,
     AbstracteModule,
     PaymentModule,
-    CertificateModule
+    CertificateModule,
+    SrDTOModule
   ],
   declarations: [
     DefaultComponent,

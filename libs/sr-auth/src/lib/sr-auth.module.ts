@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
-import { AuthOptions } from './interfaces/auth-options.interface';
+import { AuthEmitter } from './interfaces/auth-options.interface';
 import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
@@ -11,7 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
   ]
 })
 export class SrAuthModule {
-  static forRoot(options: AuthOptions): ModuleWithProviders<SrAuthModule> {
+  static forRoot(options: AuthEmitter): ModuleWithProviders<SrAuthModule> {
     return {
       ngModule: SrAuthModule,
       providers: [

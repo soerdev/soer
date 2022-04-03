@@ -11,8 +11,8 @@ export function parseJsonDTO<T>(messages$: Observable<BusMessage>, id: string): 
     return messages$.pipe(map( (data: BusMessage|null) => {
         const result: T[] = [];
         console.log('Pipe map => ', id, data);
-        if (data?.result?.status === OK) {
-            data?.result.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
+        if (data?.payload?.status === OK) {
+            data?.payload.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
         }
         console.log('after pipe =>', id, result);
         return result;
@@ -26,11 +26,11 @@ export function parseJsonDTOPack<T>(messages$: Observable<BusMessage>, id: strin
     return messages$.pipe(map( (data: BusMessage|null) => {
         const result: T[] = [];
         console.log(`Pipe map '${id}' => `, data);
-        if (data?.result?.status === OK) {
-            data?.result.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
+        if (data?.payload?.status === OK) {
+            data?.payload.items.forEach((data: any) => result.push({...JSON.parse(data.json), id: data.id}));
         }
         console.log(`after pipe '${id}' =>`, result, data);
-        return {status: data?.result?.status ?? OK, items: result};
+        return {status: data?.payload?.status ?? OK, items: result};
     })
     );
 }

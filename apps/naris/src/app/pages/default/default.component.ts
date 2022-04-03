@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BusError, MixedBusService } from '@soer/mixed-bus';
-import { AuthService } from '@soer/sr-auth';
+import { BusError, BusMessage, MixedBusService } from '@soer/mixed-bus';
+import { AuthService, AuthEmitter, JWTModel, authUserInfo } from '@soer/sr-auth';
+import { DataStoreService, DtoPack, extractDtoPackFromBus } from '@soer/sr-dto';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { MAIN_MENU } from './menu.const';
@@ -20,21 +22,22 @@ export class DefaultComponent implements OnInit, OnDestroy {
   subscriptions: any;
   isShowOverlay = true;
 
-  public role = 'GUEST';
+  public user: Observable<DtoPack<JWTModel>>;
   menuItems = MAIN_MENU;
 
-  constructor(private auth: AuthService,
+  constructor(
+              @Inject('AuthServiceConfig') private authEmitter: AuthEmitter,
+              private auth: AuthService,
               private router: Router,
               private route: ActivatedRoute,
               private bus$: MixedBusService,
+              private store$: DataStoreService,
               private message: NzMessageService
-              ) {}
+              ) {
+    this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.authEmitter));
+  }
 
   ngOnInit(): void {
-    this.auth.tokenUpdate$.subscribe(() => {
-      this.role = this.auth.getRole();
-    });
-    this.role = this.auth.getRole();
     this.subscriptions = [
       this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(this.findTitle.bind(this)),

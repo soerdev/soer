@@ -55,7 +55,7 @@ export class StoreCrudService implements CRUD {
         if (msg instanceof BusError) {
             return Promise.resolve({status: ERROR, items: []});
         }
-        return this.updateData(this.queryCreate(msg.result, msg.owner, msg.params)
+        return this.updateData(this.queryCreate(msg.payload, msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new CreateDoneEvent(msg.owner, data)))
             ), msg.owner
@@ -72,7 +72,7 @@ export class StoreCrudService implements CRUD {
             return Promise.resolve({status: ERROR, items: []});
         }
 
-        return this.updateData(this.queryUpdate(msg.result, msg.owner, msg.params)
+        return this.updateData(this.queryUpdate(msg.payload, msg.owner, msg.params)
             .pipe(
                 tap((data) => this.bus$.publish(new UpdateDoneEvent(msg.owner, data, msg.params)))
             ), msg.owner
