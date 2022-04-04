@@ -11,6 +11,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { SrDTOModule } from '@soer/sr-dto';
 
 
 
@@ -32,6 +33,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzSpinModule,
     RouterModule,
     FormsModule,
+    SrDTOModule
   ]
 })
 export class PaymentModule { }

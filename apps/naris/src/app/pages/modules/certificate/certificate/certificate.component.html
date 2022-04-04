@@ -1,3 +1,4 @@
+<ng-container *ngIf="(user$ | async | dtoLastItem) as userManifest">
 <div *ngIf="certObject && certObject.role" class="certificate done">
     <h2>Сертификат</h2>
     <p class="valid-date">Использовать до: {{certObject.exp | date: 'dd/MM/yyyy'}}</p>
@@ -10,7 +11,7 @@
         </nz-alert>
       </div>
 
-      <div *ngSwitchDefault="'pending'">
+      <div *ngSwitchDefault>
           <nz-divider></nz-divider>
           <ul class="features-list">
             <li><i nz-icon nzType="check-circle"></i> Тариф: <b>{{certObject.role}}</b></li>
@@ -27,7 +28,7 @@
             </li>
           </ul>
           <div class="controls">
-            <button [disabled]="certObject?.status !== 'new'" (click)="useCert()" 
+            <button [disabled]="certObject?.status !== 'new'" (click)="useCert(userManifest.email)" 
               nzSize="large" nz-button nzType="primary">Использовать</button>
           </div>
       </div>
@@ -55,3 +56,4 @@
         </ul>
     </div>
 </ng-template>
+</ng-container>

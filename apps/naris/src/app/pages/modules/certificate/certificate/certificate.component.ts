@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
-import { AuthService } from '@soer/sr-auth';
+import { AuthService, JWTModel } from '@soer/sr-auth';
+import { BusEmitter } from '@soer/mixed-bus';
+import { DataStoreService, DtoPack, extractDtoPackFromBus } from '@soer/sr-dto';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,46 +14,25 @@ import { AuthService } from '@soer/sr-auth';
   styleUrls: ['./certificate.component.scss']
 })
 export class CertificateComponent {
-  public email = '';
-  public role = 'GUEST';
-  public payUrl = '';
   public certUrl = '';
-  public pendingPayment: {id?: number, amount?: number} = {};
 
   public hasCert = false;
   public certText = '';
   public certObject:any = null;
+  public user$: Observable<DtoPack<JWTModel>>;
 
-  constructor(private authService: AuthService,
+  constructor(
+    @Inject('manifest') private manifestId: BusEmitter,
+    private authService: AuthService,
+    private store$: DataStoreService,
     private router: Router,
     private http: HttpClient) 
   { 
-      this.email = this.authService.getEmail();
-      this.role = this.authService.getRole();
-      this.payUrl = environment.payServiceUrl;
-      this.http.get(environment.host + '/api/payservice/pending/' + this.email).subscribe(result => {
-        this.pendingPayment = (result as any).pending_payment;
-        console.log(this.pendingPayment);
-      });
+      this.user$ = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
   }
 
-  ngOnChanges(): void {
-      console.log('?=> run');
-  }
-  cleanJWT(): void {
-    this.authService.token = null;
-  }
-
-  deletePayment(id?: number): void {
-    this.http.get(environment.host + '/api/payservice/cancel/' + this.email + '/' + id).subscribe(result => {
-      if (this.pendingPayment.id === (result as any).pending_payment.id) {
-        this.pendingPayment = {};
-      }
-    });
-  }
-
-  useCert(): void {
-    this.http.get(environment.host + '/api/payservice/prepaid/' + this.email + '/' + this.getClearedCertText()).subscribe(result => {
+  useCert(email: string): void {
+    this.http.get(environment.host + '/api/payservice/prepaid/' + email + '/' + this.getClearedCertText()).subscribe(result => {
       this.certObject.status = (result as any)['status'];
     });
   }

@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BusError, BusMessage, MixedBusService } from '@soer/mixed-bus';
+import { BusEmitter, BusError, BusMessage, MixedBusService } from '@soer/mixed-bus';
 import { AuthService, AuthEmitter, JWTModel, authUserInfo } from '@soer/sr-auth';
 import { DataStoreService, DtoPack, extractDtoPackFromBus } from '@soer/sr-dto';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
@@ -27,6 +27,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
 
   constructor(
               @Inject('AuthServiceConfig') private authEmitter: AuthEmitter,
+              @Inject('manifest') private manifestId: BusEmitter,
               private auth: AuthService,
               private router: Router,
               private route: ActivatedRoute,
@@ -34,7 +35,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
               private store$: DataStoreService,
               private message: NzMessageService
               ) {
-    this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.authEmitter));
+    this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
   }
 
   ngOnInit(): void {

@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges} from '@angular/core';
+import { Component, Inject, OnChanges} from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
-import { AuthService } from '@soer/sr-auth';
-import { first } from 'rxjs';
+import { AuthService, JWTModel } from '@soer/sr-auth';
+import { first, Observable } from 'rxjs';
+import { BusEmitter } from '@soer/mixed-bus';
+import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
 
 
 @Component({
@@ -12,24 +14,30 @@ import { first } from 'rxjs';
   styleUrls: ['./pay-form.component.scss']
 })
 export class PayFormComponent {
-  public email = '';
-  public role = 'GUEST';
   public payUrl = '';
   public remoteState: {status: string, messages: string[], actions: any[] } = {status: 'loading', messages: [], actions: []};
-
-  constructor(private authService: AuthService,
+  public user: Observable<DtoPack<JWTModel>>;
+  
+  constructor(
+    @Inject('manifest') private manifestId: BusEmitter,
+    private authService: AuthService,
+    private store$: DataStoreService,
     private router: Router,
     private http: HttpClient) 
   { 
-      this.email = this.authService.getEmail();
-      this.role = this.authService.getRole();
+      this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
+      this.user.subscribe(data => {
+        if (data.status === OK) {
+          const userManifest = data.items[0];
+          this.checkRemoteStatus(userManifest.email);
+        }
+      });
       this.payUrl = environment.payServiceUrl;
-      this.checkRemoteStatus();
   }
 
 
-  checkRemoteStatus(): void {
-    this.http.get(environment.host + '/api/seller/order/status/' + this.email)
+  checkRemoteStatus(email: string): void {
+    this.http.get(environment.host + '/api/seller/order/status/' + email)
     .subscribe( result => {
       const status = (result as any).status || 'ok';
       const messages = (result as any).messages || [];
@@ -38,17 +46,16 @@ export class PayFormComponent {
   });
   }
 
-  deletePayment(id?: number): void {
+  deletePayment(id: number, email: string): void {
     this.remoteState.status = 'loading';
-    this.http.get(environment.host + '/api/payservice/cancel/' + this.email + '/' + id).subscribe(result => {
-      this.checkRemoteStatus();
+    this.http.get(environment.host + '/api/payservice/cancel/' + email + '/' + id).subscribe(result => {
+      this.checkRemoteStatus(email);
     });
   }
 
   renewToken(): void {
     this.authService.renewToken().subscribe(
       () => {
-        this.role = this.authService.getRole();
         this.router.navigate(['login']);
       }
     );

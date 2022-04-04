@@ -9,6 +9,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { SrDTOModule } from '@soer/sr-dto';
 
 
 
@@ -27,6 +28,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzInputModule,
     RouterModule,
     FormsModule,
+    SrDTOModule
   ]
 })
 export class CertificateModule { }
