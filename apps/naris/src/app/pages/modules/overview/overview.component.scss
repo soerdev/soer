@@ -1,23 +1,103 @@
-.personal-target {
-    ::ng-deep .ant-card-head {
-        background-color: darkred !important;
-        color: white;
-    }
+::ng-deep .ant-card-head {
+    background-color: darkblue !important;
+    color: white;
+}
 
+::ng-deep .ant-card-bordered {
+    border-radius: 5px;
+}
+
+
+.contacts-level {
     ::ng-deep i.anticon {
-        color: white;
+        color: #1890ff;
+        font-size: 3rem;
+    }
+    
+    .contact {
+        display: flex;
+        flex-direction: row;
+        &_icon {
+            padding: 0 2em 0 0;
+        }
+        &_text {
+            min-height: 6rem;
+            p {
+                font-size: 1.5em;
+                color: rgba(0,0,0,.45);;
+            }
+        }
     }
 }
 
-.user-level {
-    ::ng-deep .ant-card-head {
-        background-color: darkblue !important;
-        color: white;
+.social-level {
+    ::ng-deep i.anticon {
+        color: #1890ff;
+        font-size: 3rem;
     }
 
-    ::ng-deep i.anticon {
-        color: white;
+    .social {
+        display: flex;
+        flex-direction: row;
+        &_icon {
+            padding: 0 2em 0 0;
+        }
+        &_text {
+            min-height: 7rem;
+            p {
+                font-size: 1.1rem;
+                color: rgba(0,0,0,.45);;
+            }
+        }
     }
+}
+
+.metric-level {
+    ::ng-deep .ant-statistic {
+        
+        border: 1px solid #f3f3f3;
+        padding: 0.5rem;
+        border-radius: 10px;
+    }
+
+    ::ng-deep .good .ant-statistic {
+        background-color: #f3fcf4;
+    }
+    ::ng-deep .bad .ant-statistic {
+        background-color: #ffefef;
+    }
+
+    ::ng-deep .ant-statistic:hover {
+        border: 1px solid #a0a0a0;
+    }
+
+
+    
+    ::ng-deep .ant-statistic-content {
+        text-align: center;
+        font-size: 3rem;
+    }
+    
+    .metric {
+        display: flex;
+        flex-direction: row;
+        &_icon {
+            padding: 0 2em 0 0;
+        }
+
+        &_value {
+            text-align: center;
+            color: black;
+            font-size: 4em;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+
+
+.link {
+    text-align: right; 
 }
 
 .general-target {

@@ -10,7 +10,7 @@ export const MAIN_MENU: MenuItem[] = [
           { link: 'qa', icon: 'question', title: 'Вопрос ответ', isPro: false},
           { link: 'workbook', icon: 'solution', title: 'Конспекты', isPro: false},
           { link: 'streams', icon: 'play-circle', title: 'Стримы', isPro: true},
-          { link: 'workshops', icon: 'solution', title: 'Воркшопы', isPro: true},
+          { link: 'workshops', icon: 'experiment', title: 'Воркшопы', isPro: true},
           { link: 'book', icon: 'book', title: 'Книга (главы)', isPro: true},
           { link: 'sources', icon: 'book', title: 'Исходники', isPro: true}
 ];
