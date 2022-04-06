@@ -31,16 +31,17 @@
 }
 
 .social-level {
-    ::ng-deep i.anticon {
-        color: #1890ff;
-        font-size: 3rem;
-    }
+   
 
     .social {
         display: flex;
         flex-direction: row;
         &_icon {
             padding: 0 2em 0 0;
+            ::ng-deep i.anticon {
+                color: #1890ff;
+                font-size: 3rem;
+            }
         }
         &_text {
             min-height: 7rem;
@@ -98,6 +99,10 @@
 
 .link {
     text-align: right; 
+    ::ng-deep i.anticon {
+        color: #1890ff;
+        font-size: 1.5rem;
+    }
 }
 
 .general-target {
