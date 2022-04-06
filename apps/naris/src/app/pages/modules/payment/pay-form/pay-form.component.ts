@@ -54,12 +54,9 @@ export class PayFormComponent {
   }
 
   renewToken(): void {
-    this.authService.renewToken().subscribe(
-      () => {
-        this.router.navigate(['login']);
-      }
-    );
+    this.router.navigate(['login']);
   }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['login']);
