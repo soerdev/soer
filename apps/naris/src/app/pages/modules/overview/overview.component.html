@@ -37,7 +37,7 @@
     </a>
   </div>-->
   <ng-container *ngFor="let metric of metrics">
-      <nz-col [nzSpan]="6" class="metric-level" nzHoverable>
+      <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
         <a [href]="metric['url']">
           <nz-statistic *ngIf="(metric.list$ | async) as list;else loading" [ngClass]="{'good': list.items.length > 0, 'bad': list.items.length < 1}"
             [nzSuffix]="metric['suffix']"
