@@ -1,5 +1,7 @@
-::ng-deep.ant-card-body {
-    min-height: 10em;
-    max-height: 10em;
-    overflow: hidden;
+.personal-target {
+    ::ng-deep .ant-card-body {
+        min-height: 10em;
+        max-height: 10em;
+        overflow: hidden;
+    }
 }

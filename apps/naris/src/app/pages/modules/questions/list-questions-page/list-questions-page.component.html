@@ -20,15 +20,15 @@
         <ng-container *ngIf="questions.length > 0; else empty">
 
         <div *ngIf="showAddButton" nz-row [nzGutter]="[24, 24]" >  
-            <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
                 <button (click)="createQuestion()" nz-button [nzType]="'primary'">Добавить вопрос</button>
             </div>
         </div>
 
         <div nz-row [nzGutter]="[24, 24]" >    
             <ng-container *ngFor="let question of questions">
-                <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
-                    <nz-card [nzActions]="showRemoveButton ? [actionPlay, actionDelete] : [actionPlay]" class="question-card">
+                <div class="question-card" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+                    <nz-card [nzActions]="showRemoveButton ? [actionPlay, actionDelete] : [actionPlay]" >
                             {{question.question}}                                                
                     </nz-card>
                 </div>

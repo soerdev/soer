@@ -1,5 +1,5 @@
 .question-card {
-    ::ng-deep > .ant-card-body {
+    ::ng-deep .ant-card-body {
         min-height: 10rem;
         max-height: 10rem;
         overflow: hidden;
