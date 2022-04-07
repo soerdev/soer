@@ -1,6 +1,6 @@
 <div nz-row [nzGutter]="[24, 24]" >
   
-    <ng-container *ngIf="webFiles.length > 0;else nocontent">
+    <ng-container *ngIf="webFiles && webFiles.length > 0;else nocontent">
         <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let file of webFiles">
           <a [href]="url(file['url'], file['level'])" (click)="download($event, file)">
             <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[downloadIcon]" >

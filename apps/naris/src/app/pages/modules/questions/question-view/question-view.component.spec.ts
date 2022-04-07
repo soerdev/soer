@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ANY_SERVICE } from '@soer/mixed-bus';
 
 import { QuestionViewComponent } from './question-view.component';
 
@@ -8,7 +11,15 @@ describe('QuestionViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QuestionViewComponent ]
+      declarations: [ QuestionViewComponent ],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        {provide: 'question', useValue: ANY_SERVICE},
+        {provide: 'questionsAll', useValue: ANY_SERVICE}
+      ]
     })
     .compileComponents();
   });

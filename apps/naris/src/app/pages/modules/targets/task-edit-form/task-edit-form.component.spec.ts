@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ANY_SERVICE } from '@soer/mixed-bus';
 
 import { TaskEditFormComponent } from './task-edit-form.component';
 
@@ -8,7 +9,11 @@ describe('TaskEditFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskEditFormComponent ]
+      declarations: [ TaskEditFormComponent ],
+      providers: [
+        {provide: 'target', useValue: ANY_SERVICE},
+        {provide: 'template', useValue: ANY_SERVICE},
+      ]
     })
     .compileComponents();
   });

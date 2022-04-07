@@ -26,7 +26,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
   menuItems = MAIN_MENU;
 
   constructor(
-              @Inject('AuthServiceConfig') private authEmitter: AuthEmitter,
               @Inject('manifest') private manifestId: BusEmitter,
               private auth: AuthService,
               private router: Router,

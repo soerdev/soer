@@ -21,7 +21,7 @@ export class RoadmapComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.target = this.route.snapshot.data['target'];
+    this.target = this.route.snapshot.data['target'] || this.target;
     this.target.tasks.forEach(task => task.progress = this.calcProgress(task.children));
     this.total = this.calcProgress(this.target.tasks);
   }

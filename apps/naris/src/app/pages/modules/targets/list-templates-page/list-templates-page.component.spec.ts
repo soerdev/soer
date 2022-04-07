@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ANY_SERVICE } from '@soer/mixed-bus';
 
 import { ListTemplatesPageComponent } from './list-templates-page.component';
 
@@ -8,7 +9,12 @@ describe('ListTemplatesPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListTemplatesPageComponent ]
+      declarations: [ ListTemplatesPageComponent ],
+      providers: [
+        {provide: 'template', useValue: ANY_SERVICE},
+        {provide: 'templates', useValue: ANY_SERVICE},
+
+      ]
     })
     .compileComponents();
   });

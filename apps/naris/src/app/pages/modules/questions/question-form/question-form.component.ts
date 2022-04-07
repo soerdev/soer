@@ -15,7 +15,6 @@ export class QuestionFormComponent {
   form: FormGroup;
 
   constructor(
-    @Inject('questions') private questionsId: BusEmitter,
     @Inject('question') private questionId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService,

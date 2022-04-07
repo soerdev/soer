@@ -1,5 +1,5 @@
 <div nz-row>
-  <ng-container *ngIf="target.tasks.length;else nocontent">
+  <ng-container *ngIf="target.tasks?.length;else nocontent">
     <div style="margin: -18px auto 0 auto;">
       <nz-descriptions  [nzTitle]="target.title" nzBordered nzLayout="vertical">
           <nz-descriptions-item nzTitle="Описание цели" [nzSpan]="2">{{target.overview}}</nz-descriptions-item>
@@ -10,7 +10,7 @@
           <nz-descriptions-item nzTitle="Дорожная карта" [nzSpan]="3">
               <nz-timeline>
                   <nz-timeline-item *ngFor="let task of target.tasks" [nzDot]="task.progress === 100 ? complete : working ">
-                      {{task.title}} 
+                      {{task?.title}} 
                       <nz-progress *ngIf="task.progress < 100" [nzPercent]="task.progress" nzType="circle" [nzWidth]="30"></nz-progress>
                       <ng-container *ngIf="task.children">
                           <p *ngFor="let child of task.children">
