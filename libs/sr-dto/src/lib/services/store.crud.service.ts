@@ -5,7 +5,7 @@ import { isObservable, Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { ChangeDataEvent, CommandCreate, CommandDelete, CommandNew, CommandRead, CommandUpdate, CreateDoneEvent, DeleteDoneEvent, ErrorDataEvent, ReadDoneEvent, UpdateDoneEvent } from '../bus-messages/bus.messages';
 import { CRUD } from '../interfaces/crud.interface';
-import { DtoPack, ERROR, INIT, OK } from '@soer/sr-dto';
+import { DtoPack, ERROR, INIT, OK } from '../interfaces/dto.pack.interface';
 import { UrlBuilderService } from '@soer/sr-url-builder';
 
 @Injectable(
