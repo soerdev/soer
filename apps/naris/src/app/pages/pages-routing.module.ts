@@ -93,7 +93,7 @@ const routes: Routes = [
 
     SrDTOModule.forChild({
       namespace: 'workbook',
-      crudProviders: {
+      crudEmitters: {
         workbook: WORKBOOK_ID,
         workbooks: WORKBOOKS_ID,
       }
@@ -101,7 +101,7 @@ const routes: Routes = [
 
     SrDTOModule.forChild({
       namespace: 'qa',
-      crudProviders: {
+      crudEmitters: {
         questionsAll: QUESTIONS_ALL_ID,
         questions: QUESTIONS_ID,
         question: QUESTION_ID
@@ -109,7 +109,7 @@ const routes: Routes = [
     }),
     SrDTOModule.forChild({
       namespace: 'targets',
-      crudProviders: {
+      crudEmitters: {
         targets: {create: 'json/targets', read: 'json/targets', update: 'json/targets', delete: 'json/targets/:tid'},
         target: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'}
       }
@@ -117,7 +117,7 @@ const routes: Routes = [
 
     SrDTOModule.forChild({
       namespace: 'templates',
-      crudProviders: {
+      crudEmitters: {
         templates: {create: 'json/templates', read: 'json/public/templates', update: 'json/templates', delete: 'json/templates/:tid'},
         template: {create: 'json/templates', read: 'json/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'}
       }

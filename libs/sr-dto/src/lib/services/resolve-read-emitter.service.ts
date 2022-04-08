@@ -1,11 +1,12 @@
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
+import { MixedBusService } from '@soer/mixed-bus';
 import { first } from 'rxjs/operators';
 import { ChangeDataEvent, CommandRead } from '../bus-messages/bus.messages';
+import { CRUDBusEmitter } from '../sr-dto.module';
 
 export class ResolveReadEmitterService implements Resolve<any> {
 
-  constructor(private bus$: MixedBusService, private owner: BusEmitter) { }
+  constructor(private bus$: MixedBusService, private owner: CRUDBusEmitter) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
     this.bus$.publish(new CommandRead(this.owner, {}, route.params));

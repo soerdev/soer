@@ -23,7 +23,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     SrDTOModule.forChild({
       namespace: 'manifest',
-      crudProviders: {
+      crudEmitters: {
         manifest: {create: '', read: 'user/manifest', update: '', delete: ''}
       }
     }),

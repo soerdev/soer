@@ -3,16 +3,20 @@ import { Provider } from "@angular/compiler/src/core";
 import { ModuleWithProviders } from "@angular/compiler/src/core";
 import { NgModule } from "@angular/core";
 import { BusEmitter, MixedBusService } from "@soer/mixed-bus";
+import { isCRUDBusEmitter } from "./dto.helpers";
 import { DtoLastItemPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
 import { HookService } from "./services/hook.service";
 import { ResolveReadEmitterService } from "./services/resolve-read-emitter.service";
 import { StoreCrudService } from "./services/store.crud.service";
 
-export type CRUDMethods = { sid?: symbol, create: string, read: string, update: string, delete: string };
+export type CRUDMethods = { create: string, read: string, update: string, delete: string };
+export interface CRUDBusEmitter extends BusEmitter {
+  schema: CRUDMethods;
+}
 interface CrudOptions {
   namespace: string;
-  crudProviders: { [key: string]: CRUDMethods };
+  crudEmitters: { [key: string]: CRUDBusEmitter | CRUDMethods};
 }
 
 @NgModule({
@@ -28,7 +32,7 @@ export class SrDTOModule {
   static forChild(options: CrudOptions): ModuleWithProviders {
     return {
       ngModule: SrDTOModule,
-      providers: crudProivders(options)
+      providers: createcrudEmitters(options)
     };
   }
 
@@ -40,38 +44,45 @@ export class SrDTOModule {
   }
 }
 
-function crudProivders(options: CrudOptions): Provider[] {
+function createcrudEmitters(options: CrudOptions): Provider[] {
   const result: Provider[] = [];
   const hooks: BusEmitter[] = [];
-  Object.keys(options.crudProviders).forEach(providerName => {
-    const schema: CRUDMethods = options.crudProviders[providerName];
-    const providerSid = schema.sid ?? Symbol(providerName);
+  Object.keys(options.crudEmitters).forEach(emitterName => {
 
-    hooks.push({ sid: providerSid, schema });
+
+    const createCRUDBusEmitterFrom = (schema: CRUDMethods | CRUDBusEmitter, name: string ): CRUDBusEmitter  => {
+      if (isCRUDBusEmitter(schema)) {
+        return schema;
+      }
+      return { sid: Symbol(name), schema };
+    }
+
+    const emitter: CRUDBusEmitter = createCRUDBusEmitterFrom(options.crudEmitters[emitterName], emitterName);
+    hooks.push(emitter);
 
     result.push(
-      createDataEmitterProvider(providerName, providerSid, schema),
-      createCRUDSBusId(providerName, providerSid, schema)
+      createDataEmitter(emitterName, emitter),
+      createCRUDSBusId(emitterName, emitter)
     );
   });
   result.push(createDomain(hooks, options.namespace));
   return result;
 }
 
-function createCRUDSBusId(providerName: string, sid: symbol, methods: CRUDMethods): Provider {
+function createCRUDSBusId(providerName: string, emitter: CRUDBusEmitter): Provider {
   return {
     provide: `${providerName}`,
     useFactory: () => {
-      return { sid, schema: methods };
+      return emitter;
     }
   }
 }
 
-function createDataEmitterProvider(providerName: string, sid: symbol, methods: CRUDMethods): Provider {
+function createDataEmitter(providerName: string, emitter: CRUDBusEmitter): Provider {
   return {
     provide: `${providerName}Emitter`,
     useFactory: (bus$: MixedBusService) => {
-      return new ResolveReadEmitterService(bus$, { sid, schema: methods });
+      return new ResolveReadEmitterService(bus$, emitter);
     },
     deps: [MixedBusService]
   }

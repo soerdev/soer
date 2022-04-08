@@ -1,4 +1,4 @@
-export type BusEmitter = {sid: symbol, schema: {[key: string]: any}};
+export type BusEmitter<T = {[key: string]: any}> = {sid: symbol, schema: T};
 
 export const ANY_SERVICE: BusEmitter = {sid: Symbol('AnyService'), schema: {}};
 
