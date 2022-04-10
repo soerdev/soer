@@ -6,6 +6,7 @@ interface VideoModel {
   youtube_id: string;
   title: string;
   desc: string;
+  video_thumb?: string;
 }
 @Component({
   selector: 'soer-streams',
