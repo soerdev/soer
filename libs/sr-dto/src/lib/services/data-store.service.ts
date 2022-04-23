@@ -17,10 +17,10 @@ export class DataStoreService {
   }
 
   of(owner: BusEmitter): BehaviorSubject<BusMessage> {
-    if (!this.data$.has(owner.sid)) {
-      this.data$.set(owner.sid, new BehaviorSubject<BusMessage>({owner, payload: {status: INIT, items: []}, params: {}}));
+    if (!this.data$.has(owner)) {
+      this.data$.set(owner, new BehaviorSubject<BusMessage>({owner, payload: {status: INIT, items: []}, params: {}}));
     }
-    return this.data$.get(owner.sid);
+    return this.data$.get(owner);
   }
 
   dataEmission(data: BusMessage | BusError): void {
