@@ -1,6 +1,6 @@
 
 export type BusKey = {[key: string]: any};
-export type BusParams = {[param: string]: any};
+export type BusMessageParams = {[param: string]: any};
 
 export type BusEmitter<T = {[key: string]: any}> = {sid: symbol, schema: T, key?: BusKey};
 
@@ -12,7 +12,7 @@ export const ANY_SERVICE: BusEmitter = {sid: Symbol('AnyService'), schema: {}};
  *  середине и конце выполнения
  */
 export class BusEvent {
-    constructor(public owner: BusEmitter = ANY_SERVICE, public payload: any = {}, public params: BusParams = {}) {}
+    constructor(public owner: BusEmitter = ANY_SERVICE, public payload: any = {}, public params: BusMessageParams = {}) {}
 }
 
 /**
@@ -20,7 +20,7 @@ export class BusEvent {
  *   Команды используются для инициирования действия
  */
 export class BusCommand {
-    constructor(public owner: BusEmitter = ANY_SERVICE, public payload: any = {}, public params: BusParams = {} ) {}
+    constructor(public owner: BusEmitter = ANY_SERVICE, public payload: any = {}, public params: BusMessageParams = {} ) {}
 }
 
 /**

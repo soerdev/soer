@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { UrlBuilderOptions } from '../interfaces/url-builder.interface';
+import { BusKey, BusMessageParams }  from '@soer/mixed-bus';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ export class UrlBuilderService {
     console.log('Builder start with ', options);
   }
 
-  build(apiSuffix: string = '', params: {[key: string]: any}): string {
+  build(apiSuffix: string = '', key: BusKey = {}, params: BusMessageParams = {}): string {
     let result = `${this.options.apiRoot}${apiSuffix}`;
-    Object.keys(params).forEach(
-      param => result = result.replace(`:${param}`, params[param])
+    Object.keys(key).forEach(
+      keyName => result = result.replace(`:${keyName}`, key[keyName])
     );
     return result;  
   }

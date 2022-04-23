@@ -4,7 +4,7 @@ import { ModuleWithProviders } from "@angular/compiler/src/core";
 import { NgModule } from "@angular/core";
 import { BusEmitter, MixedBusService } from "@soer/mixed-bus";
 import { isCRUDBusEmitter } from "./dto.helpers";
-import { DtoLastItemPipe } from "./dto.pipes";
+import { DtoLastItemPipe, DeSerializeJsonPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
 import { HookService } from "./services/hook.service";
 import { ResolveReadEmitterService } from "./services/resolve-read-emitter.service";
@@ -20,12 +20,12 @@ interface CrudOptions {
 }
 
 @NgModule({
-  declarations: [DtoLastItemPipe],
+  declarations: [DtoLastItemPipe, DeSerializeJsonPipe],
   imports: [
     CommonModule
   ],
   providers: [],
-  exports: [DtoLastItemPipe]
+  exports: [DtoLastItemPipe, DeSerializeJsonPipe]
 })
 export class SrDTOModule {
 

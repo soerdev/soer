@@ -1,5 +1,6 @@
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { MixedBusService } from '@soer/mixed-bus';
+import { busEmitterFactory, MixedBusService } from '@soer/mixed-bus';
+import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ChangeDataEvent, CommandRead } from '../bus-messages/bus.messages';
 import { CRUDBusEmitter } from '../sr-dto.module';
@@ -9,8 +10,9 @@ export class ResolveReadEmitterService implements Resolve<any> {
   constructor(private bus$: MixedBusService, private owner: CRUDBusEmitter) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
-    this.bus$.publish(new CommandRead(this.owner, {}, route.params));
+    const owner = busEmitterFactory(this.owner, route.params);
+    this.bus$.publish(new CommandRead(owner));
     //TODO: refactor toPromise to firstValueOf
-    return this.bus$.of(ChangeDataEvent, [this.owner]).pipe(first()).toPromise();
+    return of(owner).toPromise();
   }
 }
