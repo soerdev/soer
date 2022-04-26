@@ -6,7 +6,6 @@ import { BusEmitter, MixedBusService } from "@soer/mixed-bus";
 import { isCRUDBusEmitter } from "./dto.helpers";
 import { DtoLastItemPipe, DeSerializeJsonPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
-import { HookService } from "./services/hook.service";
 import { ResolveReadEmitterService } from "./services/resolve-read-emitter.service";
 import { StoreCrudService } from "./services/store.crud.service";
 
@@ -46,7 +45,6 @@ export class SrDTOModule {
 
 function createcrudEmitters(options: CrudOptions): Provider[] {
   const result: Provider[] = [];
-  const hooks: BusEmitter[] = [];
   Object.keys(options.crudEmitters).forEach(emitterName => {
 
 
@@ -58,14 +56,12 @@ function createcrudEmitters(options: CrudOptions): Provider[] {
     }
 
     const emitter: CRUDBusEmitter = createCRUDBusEmitterFrom(options.crudEmitters[emitterName], emitterName);
-    hooks.push(emitter);
 
     result.push(
       createDataEmitter(emitterName, emitter),
       createCRUDSBusId(emitterName, emitter)
     );
   });
-  result.push(createDomain(hooks, options.namespace));
   return result;
 }
 
@@ -83,17 +79,6 @@ function createDataEmitter(providerName: string, emitter: CRUDBusEmitter): Provi
     provide: `${providerName}Emitter`,
     useFactory: (bus$: MixedBusService) => {
       return new ResolveReadEmitterService(bus$, emitter);
-    },
-    deps: [MixedBusService]
-  }
-}
-
-function createDomain(hooks: BusEmitter[], domainName: string): Provider {
-  return {
-    provide: `HookDomain`,
-    multi: true,
-    useFactory: (bus$: MixedBusService) => {
-      return new HookService(domainName, bus$, hooks);
     },
     deps: [MixedBusService]
   }

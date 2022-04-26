@@ -1,7 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MixedBusService } from '@soer/mixed-bus';
-import { HookService } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ComposePage } from '../compose-page';
 
@@ -13,13 +12,12 @@ import { ComposePage } from '../compose-page';
 export class ComposeOnePageComponent extends ComposePage implements OnInit, OnDestroy {
 
   constructor(
-    @Inject('HookDomain') domain: HookService[],
     bus$: MixedBusService,
     router: Router,
     route: ActivatedRoute,
     message: NzMessageService
   ) {
-    super(domain, bus$, router, route, message);
+    super(bus$, router, route, message);
   }
 
   ngOnInit(): void {

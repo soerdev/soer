@@ -41,7 +41,7 @@ export class TemplateCreateComponent  {
       new CommandCreate(
         this.templateId,
         { ...convertToJsonDTO(template, ['id']), accessTag: this.isPublic ? 'ALL' : 'PRIVATE'},
-        {skipInfo: true}
+        {skipRoute: true, skipInfo: true}
       )
     );
   }

@@ -47,6 +47,7 @@ export class EditAbstractePageComponent implements OnDestroy {
               new CommandCreate(
                 this.workbookId,
                 convertToJsonDTO(this.form.value, ['id']),
+                { redirectTo: ['.']}
               )
           );
     } else {

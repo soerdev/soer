@@ -57,7 +57,7 @@ export class StoreCrudService implements CRUD {
         }
         return this.updateData(this.queryCreate(msg.payload, msg.owner, msg.params)
             .pipe(
-                tap((data) => this.bus$.publish(new CreateDoneEvent(msg.owner, data)))
+                tap((data) => this.bus$.publish(new CreateDoneEvent(msg.owner, data, msg.params)))
             ), msg.owner
         );
     }

@@ -26,7 +26,6 @@ describe('ComposeOnePageComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: 'HookDomain', useValue: []},
         {provide: NzMessageService, useClass: MockNzMessageService}
       ]
     })

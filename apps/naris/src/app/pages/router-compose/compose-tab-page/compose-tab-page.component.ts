@@ -4,8 +4,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { MixedBusService } from '@soer/mixed-bus';
 import { ComposePage } from '../compose-page';
-import { HookService } from '@soer/sr-dto';
-
 @Component({
   selector: 'soer-compose-tab-page',
   templateUrl: './compose-tab-page.component.html',
@@ -14,13 +12,13 @@ import { HookService } from '@soer/sr-dto';
 export class ComposeTabPageComponent extends ComposePage implements OnInit, OnDestroy {
 
   public tabs: {title: string, path: string[]}[] = [];
-  constructor( @Inject('HookDomain') domain: HookService[],
+  constructor( 
                bus$: MixedBusService,
                router: Router,
                route: ActivatedRoute,
                message: NzMessageService
   ) {
-    super(domain, bus$, router, route, message);
+    super(bus$, router, route, message);
   }
 
   ngOnInit(): void {

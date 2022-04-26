@@ -26,7 +26,6 @@ describe('ComposeTabPageComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: 'HookDomain', useValue: []},
         {provide: NzMessageService, useClass: MockNzMessageService}
       ]
     })

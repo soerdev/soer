@@ -31,7 +31,8 @@ export class QuestionFormComponent {
       this.bus$.publish(
         new CommandCreate(
           this.questionId,
-          this.form.value
+          this.form.value,
+          { redirectTo: ['.'] }
         )
       );
     } else {

@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusError, BusMessage, BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { CommandCancel, CommandEdit, CommandNew, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, HookService, OK, UpdateDoneEvent } from '@soer/sr-dto';
+import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +14,6 @@ export abstract class ComposePage {
 
 
     constructor(
-        protected domain: HookService[],
         protected bus$: MixedBusService,
         protected router: Router,
         protected route: ActivatedRoute,
@@ -29,18 +28,35 @@ export abstract class ComposePage {
         this.bus$.of(UpdateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно изменен', evtResult))
       ];
 
-      const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
+      this.register();
+      /*const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
       const watchDomain = this.domain.find(d => d.domainName === pathDomain);
       if (!watchDomain) {
         this.message.error('Неверно настроена конфигурация Router-а');
         console.error('You should specify "bus: {list, single}" param in router resolve');
       } else {
         this.register(watchDomain.hooks ?? []);
-      }
+      } */
     }
 
 
     showMessageOrErrors(msg: string, data: BusMessage | BusError): void {
+      
+      const result: any[] = [];
+      function extract(node: any): void {
+          
+          node.children.forEach( (child:any) => {
+            Object.keys(child.snapshot.data).forEach(dataElement => {
+              if (child.snapshot.data[dataElement].sid) {
+                result.push(child.snapshot.data[dataElement])
+              }
+            });
+            extract(child);
+          })
+      }
+      extract(this.router.routerState.root);
+      console.log(result);
+      result.forEach(h => this.bus$.publish(new CommandRead(h)));
 
       if (isBusMessage(data)){
         if (data.payload.status === OK) {
@@ -49,22 +65,22 @@ export abstract class ComposePage {
           this.message.error('Что-то пошло не так...');
         }
       }
+
+      this.onCRUDDone(data);
     }
 
     
 
-    register(hooks: BusEmitter[]): void {
-      if (hooks.length > 0) {
+    register(): void {
         this.subscriptions = [...this.subscriptions,
-          this.bus$.of(CreateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
-          this.bus$.of(DeleteDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
-          this.bus$.of(UpdateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
-          this.bus$.of(CommandCancel, hooks).subscribe(this.onCRUDDone.bind(this)),
-          this.bus$.of(CommandNew, hooks).subscribe(this.onNewWorkbook.bind(this)),
-          this.bus$.of(CommandEdit, hooks).subscribe(this.onEditWorkbook.bind(this)),
-          this.bus$.of(CommandView, hooks).subscribe(this.onViewWorkbook.bind(this))
+//          this.bus$.of(CreateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
+//          this.bus$.of(DeleteDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
+//          this.bus$.of(UpdateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
+          this.bus$.of(CommandCancel).subscribe(this.onCRUDDone.bind(this)),
+          this.bus$.of(CommandNew).subscribe(this.onNewWorkbook.bind(this)),
+          this.bus$.of(CommandEdit).subscribe(this.onEditWorkbook.bind(this)),
+          this.bus$.of(CommandView).subscribe(this.onViewWorkbook.bind(this))
         ];
-      }
     }
 
     composeDestroy(): void {
@@ -72,12 +88,15 @@ export abstract class ComposePage {
     }
 
     onCRUDDone(data: BusMessage | BusError): void {
-      console.log('!!!', data);
+      
       if (data instanceof BusError) { return; }
-        if (data.params?.['skipRoute']) {
-            return;
-        }
-        this.router.navigate([{outlets: {popup: null}}], { relativeTo: this.route });
+      if (data.params?.['skipRoute']) { return; }
+      if (data.params?.['redirectTo']) {
+        this.router.navigate(data.params?.['redirectTo'], { relativeTo: this.route });
+        return;
+      }
+
+      this.router.navigate([{outlets: {popup: null}}], { relativeTo: this.route });
     }
 
     onNewWorkbook(): void {
