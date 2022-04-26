@@ -2,11 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel } from '../../../../api/targets/target.interface';
-import { CommandCancel, CommandCreate, CommandDelete, CommandUpdate } from '@soer/sr-dto';
+import { CommandCancel, CommandDelete, CommandUpdate } from '@soer/sr-dto';
 import { DtoPack } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
 import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -18,13 +19,15 @@ export class TaskEditFormComponent {
   target$: Observable<DtoPack<TargetModel>>;
   public history: {ind: number, title: string}[] = [];
 
+  private targetId;
   constructor(
-    @Inject('target') private targetId: BusEmitter,
-    @Inject('template') private templateId: BusEmitter,
     private bus$: MixedBusService,
-    private store$: DataStoreService
+    private store$: DataStoreService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { 
-    this.target$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetId), 'Targets');
+    this.targetId =  this.route.snapshot.data['target'];
+    this.target$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetId), 'Targets edit');
   }
 
   onSave(target: TargetModel): void {
@@ -57,13 +60,14 @@ export class TaskEditFormComponent {
   }
 
   onCreateTemplate(target: TargetModel): void {
-    this.bus$.publish(
+    this.router.navigate(['/pages/targets', {outlets: {popup: ['target', target.id, 'template', 'create']}}]);
+    /*this.bus$.publish(
       new CommandCreate(
         this.templateId,
         { ...convertToJsonDTO({overview: 'Some text here', target}, ['id']), accessTag: 'ALL'},
         {skipRoute: true, skipInfo: true}
       )
-    );
+    );*/
   }
 
   onCancel(): void {

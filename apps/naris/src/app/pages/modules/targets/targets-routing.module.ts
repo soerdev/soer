@@ -7,6 +7,7 @@ import { ListTargetsPageComponent } from './list-targets-page/list-targets-page.
 import { ListTemplatesPageComponent } from './list-templates-page/list-templates-page.component';
 import { TargetEditFormComponent } from './target-edit-form/target-edit-form.component';
 import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
+import { TemplateCreateComponent } from './template-create/template-create.component';
 
 const routes: Routes = [
   {
@@ -31,11 +32,19 @@ const routes: Routes = [
         }
       },
       {
-        path: 'templates',
-        data: { header: {title: 'Шаблоны', subtitle: 'Выберите стандартную цель для достижения'}},
+        path: 'templates/private',
+        data: { header: {title: 'Мои шаблоны', subtitle: 'Личные шаблоны'}, isEditable: true},
         component: ListTemplatesPageComponent,
         resolve: {
-          templates: 'templatesEmitter'
+          templates: 'templatesEmitter',
+        }
+      },
+      {
+        path: 'templates/public',
+        data: { header: {title: 'Общие шаблоны', subtitle: 'Шаблоны созданные сообществом'}, isEditable: false},
+        component: ListTemplatesPageComponent,
+        resolve: {
+          templates: 'publicTemplatesEmitter',
         }
       },
       {
@@ -46,6 +55,14 @@ const routes: Routes = [
       {
         path: 'target/edit/:tid',
         component: TaskEditFormComponent,
+        resolve: {
+          target: 'targetEmitter'
+        },
+        outlet: 'popup'
+      },
+      {
+        path: 'target/:tid/template/create',
+        component: TemplateCreateComponent,
         resolve: {
           target: 'targetEmitter'
         },

@@ -35,7 +35,6 @@ export class DataStoreService {
     console.log('Update DataStore ==>>', data.owner, data);
     if (data instanceof ChangeDataEvent) {
         const {sid, schema, key} = data.owner;
-
         this.of({sid, schema}).next(data);
         if (key) {
           this.of({sid, schema, key}).next(data);

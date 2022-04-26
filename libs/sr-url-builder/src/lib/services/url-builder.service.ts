@@ -17,6 +17,9 @@ export class UrlBuilderService {
     Object.keys(key).forEach(
       keyName => result = result.replace(`:${keyName}`, key[keyName])
     );
+    Object.keys(params).forEach(
+      paramName => result = result.replace(`:${paramName}`, params[paramName])
+    );
     return result;  
   }
 }

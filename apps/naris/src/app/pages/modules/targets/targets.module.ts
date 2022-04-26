@@ -35,6 +35,9 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { CountOpenTasksPipe } from './count-open-tasks.pipe';
 import { CountClosedTasksPipe } from './count-closed-tasks.pipe';
 import { SrDTOModule } from '@soer/sr-dto';
+import { TemplateCreateComponent } from './template-create/template-create.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { SrDTOModule } from '@soer/sr-dto';
     TaskTreeEditFormComponent,
     CalcProgressPipe,
     CountOpenTasksPipe,
-    CountClosedTasksPipe
+    CountClosedTasksPipe,
+    TemplateCreateComponent
   ],
   imports: [
     CommonModule,
@@ -73,8 +77,11 @@ import { SrDTOModule } from '@soer/sr-dto';
     NzBreadCrumbModule,
     NzNotificationModule,
     NzCollapseModule,
+    NzSwitchModule,
+    NzListModule,
     DumbModule,
-    RouterModule
+    RouterModule,
+    SrDTOModule
   ],
   exports: []
 })

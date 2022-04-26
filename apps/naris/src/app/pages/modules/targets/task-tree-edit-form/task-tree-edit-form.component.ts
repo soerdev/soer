@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TargetModel } from '../../../../api/targets/target.interface';
 import { updateProgress } from '../progress.helper';
 
 @Component({
   selector: 'soer-task-tree-edit-form',
   templateUrl: './task-tree-edit-form.component.html',
-  styleUrls: ['./task-tree-edit-form.component.scss']
+  styleUrls: ['./task-tree-edit-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskTreeEditFormComponent implements OnChanges {
   @Input() target: TargetModel = {
@@ -55,7 +56,6 @@ export class TaskTreeEditFormComponent implements OnChanges {
   onCancelEdit(value: any): void {
     if (value === '') {
       this.onDeleteTask(this.target, this.editTaskByIndex);
-      return;
     }
     this.editTask(-1);
   }
@@ -77,6 +77,14 @@ export class TaskTreeEditFormComponent implements OnChanges {
     this.save.next(this.target);
   }
 
+  onSaveTask(target: TargetModel, item: string): void {
+    if (item.length > 0) {
+      this.save.emit(target)
+      this.editTaskByIndex = -1;
+    } else {
+      this.onDeleteTask(this.target, this.editTaskByIndex);
+    }
+  }
 
   truncateHistory(ind: number): void {
     this.history =  this.history.filter((_, i) => i < ind);

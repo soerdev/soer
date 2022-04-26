@@ -2,32 +2,30 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ANY_SERVICE } from '@soer/mixed-bus';
-import { of } from 'rxjs';
 
-import { ListTemplatesPageComponent } from './list-templates-page.component';
+import { TemplateCreateComponent } from './template-create.component';
 
-describe('ListTemplatesPageComponent', () => {
-  let component: ListTemplatesPageComponent;
-  let fixture: ComponentFixture<ListTemplatesPageComponent>;
+describe('TemplateCreateComponent', () => {
+  let component: TemplateCreateComponent;
+  let fixture: ComponentFixture<TemplateCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListTemplatesPageComponent ],
+      declarations: [ TemplateCreateComponent ],
       imports: [
         RouterTestingModule,
       ],
       providers: [
-        {provide: ActivatedRoute, useValue: {snapshot: {data: {templates: ANY_SERVICE}} }},
+        {provide: ActivatedRoute, useValue: {snapshot: {data: {target: ANY_SERVICE}} }},
         {provide: 'target', useValue: ANY_SERVICE},
         {provide: 'template', useValue: ANY_SERVICE},
-        {provide: 'publicTemplates', useValue: ANY_SERVICE},
       ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListTemplatesPageComponent);
+    fixture = TestBed.createComponent(TemplateCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

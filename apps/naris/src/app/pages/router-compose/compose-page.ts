@@ -72,6 +72,7 @@ export abstract class ComposePage {
     }
 
     onCRUDDone(data: BusMessage | BusError): void {
+      console.log('!!!', data);
       if (data instanceof BusError) { return; }
         if (data.params?.['skipRoute']) {
             return;

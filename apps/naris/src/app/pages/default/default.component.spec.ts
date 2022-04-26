@@ -6,6 +6,7 @@ import { DefaultComponent } from './default.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SrDTOModule } from '@soer/sr-dto';
+import { ANY_SERVICE } from '@soer/mixed-bus';
 
 class MockNzMessageService {
 
@@ -23,7 +24,7 @@ describe('DefaultComponent', () => {
         SrDTOModule
       ],
       providers: [ 
-        {provide: 'manifest', useValue: 'mock'},
+        {provide: 'manifest', useValue: ANY_SERVICE},
         {provide: 'AuthService', useValue: {}},
         {provide: 'AuthServiceConfig', useValue: {}},
         {provide: NzMessageService, useClass: MockNzMessageService}

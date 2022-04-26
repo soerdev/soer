@@ -21,7 +21,7 @@ export class ListTargetsPageComponent  {
       private bus$: MixedBusService,
       private store$: DataStoreService,
   ) {
-    this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets');
+    this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets list');
   }
 
   onDelete(target: TargetModel): void {

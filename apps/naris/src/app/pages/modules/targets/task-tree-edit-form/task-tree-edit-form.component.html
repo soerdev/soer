@@ -30,7 +30,7 @@
                 <nz-timeline *ngIf="activeTarget !== undefined && activeTarget.tasks.length > 0">
                     <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? complete : working ">
                         <p *ngIf="editTaskByIndex !== ind" class="task-item">{{task.title}}</p>
-                        <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="save.emit(target)" (cancel)="onCancelEdit($event)"></sr-text-edit>
+                        <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="onSaveTask(target, $event)" (cancel)="onCancelEdit($event)"></sr-text-edit>
                         <ng-container *ngIf="editTaskByIndex === -1">
                             <button nz-button
                                     nzType="default"
