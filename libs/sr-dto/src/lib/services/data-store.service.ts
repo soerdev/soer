@@ -21,24 +21,24 @@ export class DataStoreService {
       this.dataTree$.set(owner.sid, new Map());
     }
     const schemaMap = this.dataTree$.get(owner.sid);
-    if (!schemaMap.has(owner.schema)) {
-      schemaMap.set(owner.schema, new Map());
+
+    const schemaName = JSON.stringify(owner.schema);
+    if (!schemaMap.has(schemaName)) {
+      schemaMap.set(schemaName, new Map());
     }
+
+    const keyData = schemaMap.get(schemaName);
     const key = JSON.stringify(owner.key);
-    if (!schemaMap.has(key)) {
-      schemaMap.set(key, new BehaviorSubject<BusMessage>({owner, payload: {status: INIT, items: []}, params: {}}));
+    if (!keyData.has(key)) {
+      keyData.set(key, new BehaviorSubject<BusMessage>({owner, payload: {status: INIT, items: []}, params: {}}));
     }
-    return schemaMap.get(key);
+    return keyData.get(key);
   }
 
   dataEmission(data: BusMessage | BusError): void {
     console.log('Update DataStore ==>>', data.owner, data);
     if (data instanceof ChangeDataEvent) {
-        const {sid, schema, key} = data.owner;
-        this.of({sid, schema}).next(data);
-        if (key) {
-          this.of({sid, schema, key}).next(data);
-        }
+        this.of(data.owner).next(data);
     }
   }
 
