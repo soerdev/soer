@@ -6,6 +6,7 @@ import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { DataStoreService } from '@soer/sr-dto';
 import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'soer-view-abstracte-page',
@@ -15,11 +16,13 @@ import { MixedBusService } from '@soer/mixed-bus';
 export class ViewAbstractePageComponent {
 
   public workbook$: Observable<DtoPack<WorkbookModel>>;
+  private workbookId: BusEmitter;
+
   constructor(
-    @Inject('workbook') private workbookId: BusEmitter,
-    private bus$: MixedBusService,
-    private store$: DataStoreService
+    private store$: DataStoreService,
+    private route: ActivatedRoute
   ) {
+    this.workbookId = this.route.snapshot.data['workbook'];
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbookId), 'workbook');
   }
 
