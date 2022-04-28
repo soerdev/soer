@@ -33,10 +33,11 @@ const routes: Routes = [
       },
       {
         path: 'templates/private',
-        data: { header: {title: 'Мои шаблоны', subtitle: 'Личные шаблоны'},
-                isEditable: true,
-                redirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
-              },
+        data: { 
+          header: {title: 'Мои шаблоны', subtitle: 'Личные шаблоны'},
+          isEditable: true,
+          afterCommandDoneRedirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
+        },
         component: ListTemplatesPageComponent,
         resolve: {
           templates: 'templatesEmitter',
@@ -47,7 +48,7 @@ const routes: Routes = [
         data: { 
           header: {title: 'Общие шаблоны', subtitle: 'Шаблоны созданные сообществом'},
           isEditable: false,
-          redirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
+          afterCommandDoneRedirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
         },
         component: ListTemplatesPageComponent,
         resolve: {
