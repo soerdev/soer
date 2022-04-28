@@ -32,7 +32,7 @@ export class QuestionFormComponent {
         new CommandCreate(
           this.questionId,
           this.form.value,
-          { redirectTo: ['.'] }
+          { afterCommandDoneRedirectTo: ['.'] }
         )
       );
     } else {

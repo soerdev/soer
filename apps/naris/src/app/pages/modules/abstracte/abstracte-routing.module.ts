@@ -26,8 +26,7 @@ const routes: Routes = [
       data: { header: {
               title: 'Новый конспект',
               subtitle: 'помощь в осмыслении материалов по программированию'
-            },
-            redirectTo: {create: ['./']}
+            }
       },
       resolve: {
         workbook: 'workbookEmitter'
