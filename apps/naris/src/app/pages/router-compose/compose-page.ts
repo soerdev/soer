@@ -78,9 +78,9 @@ export abstract class ComposePage {
 //          this.bus$.of(DeleteDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
 //          this.bus$.of(UpdateDoneEvent, hooks).subscribe(this.onCRUDDone.bind(this)),
           this.bus$.of(CommandCancel).subscribe(this.onCRUDDone.bind(this)),
-          this.bus$.of(CommandNew).subscribe(this.onNewWorkbook.bind(this)),
-          this.bus$.of(CommandEdit).subscribe(this.onEditWorkbook.bind(this)),
-          this.bus$.of(CommandView).subscribe(this.onViewWorkbook.bind(this))
+          this.bus$.of(CommandNew).subscribe(this.onNewSchema.bind(this)),
+          this.bus$.of(CommandEdit).subscribe(this.onEditSchema.bind(this)),
+          this.bus$.of(CommandView).subscribe(this.onViewSchema.bind(this))
         ];
     }
 
@@ -100,15 +100,15 @@ export abstract class ComposePage {
       this.router.navigate([{outlets: {popup: null}}], { relativeTo: this.route });
     }
 
-    onNewWorkbook(): void {
+    onNewSchema(): void {
       this.router.navigate(['new'], { relativeTo: this.route });
     }
-    onEditWorkbook(data: BusMessage | BusError): void {
+    onEditSchema(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
       this.router.navigate(['edit', data.payload.id], { relativeTo: this.route });
     }
 
-    onViewWorkbook(data: BusMessage | BusError): void {
+    onViewSchema(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
       this.router.navigate(['view', data.payload.id], { relativeTo: this.route });
     }
