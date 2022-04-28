@@ -29,7 +29,7 @@ export class ListTemplatesPageComponent {
       new CommandCreate(
         this.targetId,
         convertToJsonDTO(template, ['id']),
-        {skipRoute: true, skipInfo: true}
+        {redirectTo: this.route.snapshot.data['redirectTo'], skipInfo: true}
       )
     );
    }

@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { CiCircleFill } from '@ant-design/icons-angular/icons';
 import { BusError, BusMessage, BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
 import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, CRUDMethods, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -92,8 +93,16 @@ export abstract class ComposePage {
       
       if (data instanceof BusError) { return; }
       if (data.params?.['skipRoute']) { return; }
-      if (data.params?.['redirectTo']) {
-        this.router.navigate(data.params?.['redirectTo'], { relativeTo: this.route });
+
+      if (data.params?.['afterCommandDoneRedirectTo']) {
+        const redirectTo = data.params?.['afterCommandDoneRedirectTo'];
+        const [item] = data.payload.items;
+
+        const buildedRedirect = item ?
+                JSON.parse(JSON.stringify(redirectTo).replace(':id', item.id)) :
+                redirectTo;
+
+        this.router.navigate(buildedRedirect, { relativeTo: this.route });
         return;
       }
 
