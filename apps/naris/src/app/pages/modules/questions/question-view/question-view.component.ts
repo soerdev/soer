@@ -14,11 +14,11 @@ import { DataStoreService } from '@soer/sr-dto';
 export class QuestionViewComponent {
   public readonly hostUrl = environment.host;
   public question$: Observable<QuestionModel[]>;
-  constructor( @Inject('question') private questionId: BusEmitter,
-               private bus$: MixedBusService,
-               private store$: DataStoreService,
+  private questionId: BusEmitter;
+  constructor( private store$: DataStoreService,
                private route: ActivatedRoute) { 
-                this.question$ = this.store$.of(this.route.snapshot.data?.['bus']?.active || this.questionId).pipe(map<BusMessage, QuestionModel[]>(
+                this.questionId = this.route.snapshot.data['question'];
+                this.question$ = this.store$.of(this.questionId).pipe(map<BusMessage, QuestionModel[]>(
                   (data: BusMessage | null) => {
                     return data?.payload?.items ?? [];
                   }
