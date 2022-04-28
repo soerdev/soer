@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusError, BusMessage, BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
+import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, CRUDMethods, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
@@ -22,21 +22,12 @@ export abstract class ComposePage {
 
     composeInit(): void {
       this.subscriptions = [
-        this.bus$
-          .of(DeleteDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно удален', evtResult)),
+        this.bus$.of(DeleteDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно удален', evtResult)),
         this.bus$.of(CreateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно создан', evtResult)),
         this.bus$.of(UpdateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно изменен', evtResult))
       ];
 
       this.register();
-      /*const pathDomain = (this.route.snapshot.routeConfig?.path || '').split('/').shift();
-      const watchDomain = this.domain.find(d => d.domainName === pathDomain);
-      if (!watchDomain) {
-        this.message.error('Неверно настроена конфигурация Router-а');
-        console.error('You should specify "bus: {list, single}" param in router resolve');
-      } else {
-        this.register(watchDomain.hooks ?? []);
-      } */
     }
 
 
@@ -56,7 +47,17 @@ export abstract class ComposePage {
       }
       extract(this.router.routerState.root);
       console.log(result);
-      result.forEach(h => this.bus$.publish(new CommandRead(h)));
+      result.forEach(h => {
+        console.log(h, data.owner);
+        const isSameSchema = function (a: BusEmitter, b: BusEmitter): boolean {
+          const aStr = JSON.stringify(a.schema);
+          const bStr = JSON.stringify(b.schema);
+          return aStr === bStr;
+        }
+        if (h.sid === data.owner.sid && !isSameSchema(h, data.owner)) {
+          this.bus$.publish(new CommandRead(h));
+        }
+      });
 
       if (isBusMessage(data)){
         if (data.payload.status === OK) {

@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO, parseJsonDTO } from '../../../../api/json.dto.helpers';
-import { WorkbookModel } from '../../../../api/workbook/workbook.model';
+import { EMPTY_WORKBOOK, WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { DataStoreService } from '@soer/sr-dto';
 import { MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate } from '@soer/sr-dto';
 import { BusEmitter } from '@soer/mixed-bus';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'soer-edit-abstracte-page',
@@ -17,13 +18,17 @@ import { Subscription } from 'rxjs';
 export class EditAbstractePageComponent implements OnDestroy {
   form: FormGroup;
   public previewFlag = false;
+  private workbookId: BusEmitter;
   subscriptions: Subscription[] = [];
   constructor(
-    @Inject('workbook') private workbookId: BusEmitter,
     private formBuilder: FormBuilder,
     private bus$: MixedBusService,
-    private store$: DataStoreService
+    private store$: DataStoreService,
+    private route: ActivatedRoute
   ) {
+
+    this.workbookId = this.route.snapshot.data['workbook'];
+
     this.form = this.formBuilder.group({
       id: [null],
       question: [null, [Validators.maxLength(255)]],
@@ -32,7 +37,9 @@ export class EditAbstractePageComponent implements OnDestroy {
     this.subscriptions = [
       parseJsonDTO<WorkbookModel>(this.store$.of(this.workbookId), 'workbook' + Math.random()).subscribe(
         data => {
-          this.form.patchValue(data?.pop() || {});
+          const form = data?.pop() || EMPTY_WORKBOOK;
+          console.log(form)
+          this.form.patchValue(form);
         }
       )
     ];

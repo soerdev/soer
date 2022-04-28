@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { WorkbookModel } from '../../../../api/workbook/workbook.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CommandDelete, CommandEdit, CommandNew, CommandRead, CommandView, DtoPack } from '@soer/sr-dto';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';

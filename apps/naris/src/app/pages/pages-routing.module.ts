@@ -111,7 +111,12 @@ const routes: Routes = [
       namespace: 'targets',
       crudEmitters: {
         targets: {create: 'json/targets', read: 'json/targets', update: 'json/targets', delete: 'json/targets/:tid'},
-        target: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'},
+        target: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'}
+      }
+    }),
+    SrDTOModule.forChild({
+      namespace: 'templates',
+      crudEmitters: {
         templates: {create: 'json/templates', read: 'json/templates', update: 'json/templates', delete: 'json/templates/:tid'},
         publicTemplates: {create: 'json/templates', read: 'json/public/templates', update: 'json/templates', delete: 'json/templates/:tid'},
         template: {create: 'json/templates', read: 'json/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'}

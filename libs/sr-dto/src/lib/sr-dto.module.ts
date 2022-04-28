@@ -45,14 +45,14 @@ export class SrDTOModule {
 
 function createcrudEmitters(options: CrudOptions): Provider[] {
   const result: Provider[] = [];
+  const sid = Symbol(options.namespace);
+
   Object.keys(options.crudEmitters).forEach(emitterName => {
-
-
     const createCRUDBusEmitterFrom = (schema: CRUDMethods | CRUDBusEmitter, name: string ): CRUDBusEmitter  => {
       if (isCRUDBusEmitter(schema)) {
         return schema;
       }
-      return { sid: Symbol(name), schema };
+      return { sid, schema };
     }
 
     const emitter: CRUDBusEmitter = createCRUDBusEmitterFrom(options.crudEmitters[emitterName], emitterName);
