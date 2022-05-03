@@ -5,6 +5,23 @@
 This project was generated using [Nx](https://nx.dev).
 
 Репозиторий создан для организации совместной разработки участников проекта soer.pro
+
+# Install
+
+```
+git clone git@github.com:soerdev/soer.git
+cd soer
+nvm use
+npm install
+npx nx serve naris
+```
+
+# Login
+
+- Открыть браузер http://localhost:4200
+- Выбрать один из доступных методов авторизации
+- Подождать несколько секунд, нажать кнопку "Режим разработчика"
+
 # Проекты
 
 ## Naris
