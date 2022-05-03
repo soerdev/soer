@@ -4,7 +4,7 @@
 
 import { EnvironmentInterface } from './environment.interface';
 
-const HOST = 'http://localhost:4000';
+const HOST = 'https://platform.soer.pro';
 
 export const environment: EnvironmentInterface = {
   production: false,

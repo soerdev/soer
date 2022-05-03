@@ -7,4 +7,9 @@
       <button nz-button (click)="oAuthLogin('patreon')" class="login-form-button login-form-margin" [nzType]="'primary'">Patreon</button>
     </form>
   </ng-container>
-  <ng-template #loggedin><nz-spin nzSimple [nzSize]="'large'"></nz-spin></ng-template>
+  <ng-template #loggedin>
+    <ng-container *ngIf="devJWT$ | async as devJWT">
+      <a nz-button [nzType]="'primary'" *ngIf="devJWT !== ''" [href]="'http://localhost:4200/#!/login?skipchecks=true&jwt=' + devJWT">Режим разработчика</a>
+    </ng-container>
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+  </ng-template>

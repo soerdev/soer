@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@soer/sr-auth';
-import { MEDIUM_TIMEOUT_INTERVAL } from '../../../environments/constants';
+import { MEDIUM_TIMEOUT_INTERVAL, NORMAL_TIMEOUT_INTERVAL } from '../../../environments/constants';
 import { environment } from '../../../environments/environment';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private externalWindow: any;
   public jwt: string | null = null;
+  public devJWT$ = new BehaviorSubject<string>('');
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if (Object.prototype.hasOwnProperty.call(this.validateForm.controls, i)) {
@@ -38,20 +39,13 @@ export class LoginComponent implements OnInit, OnDestroy {
               private router: Router) {}
 
   ngOnInit(): void {
-    
-  /*  const payId = this.route.snapshot.queryParams?.['paymentid'];
-    if (payId) {
-      this.auth.token = null;
-      this.loading = true;
-      this.http.get('http://localhost:4000/api/payservice/thanks/'+payId).subscribe(
-        result => {
-          console.log('Pay result: ', result);
-          this.router.navigate(['login']);
-          this.loading = false;
-        }
-      )
-    }
-     */
+
+    // Для локальной работы с platform.soer.pro через несколько секунд
+    // появится кнопка "Режим разработчика" и через нее можно перейти на localhost
+    setTimeout(
+      () => this.devJWT$.next(this.route.snapshot.queryParams?.['jwt']),
+      NORMAL_TIMEOUT_INTERVAL
+    );
 
     this.isSkipChecks = this.route.snapshot.queryParams?.['skipchecks'] === 'true';
 
