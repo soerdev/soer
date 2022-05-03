@@ -1,12 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BusEmitter, BusError, BusMessage, MixedBusService } from '@soer/mixed-bus';
-import { AuthService, AuthEmitter, JWTModel, authUserInfo } from '@soer/sr-auth';
-import { DataStoreService, DtoPack, extractDtoPackFromBus } from '@soer/sr-dto';
+import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
+import { AuthService, JWTModel } from '@soer/sr-auth';
+import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { MAIN_MENU } from './menu.const';
 
@@ -23,10 +23,12 @@ export class DefaultComponent implements OnInit, OnDestroy {
   isShowOverlay = true;
 
   public user: Observable<DtoPack<JWTModel>>;
+  public helpUs$: Observable<any>;
   menuItems = MAIN_MENU;
 
   constructor(
               @Inject('manifest') private manifestId: BusEmitter,
+              @Inject('issues') private issuesId: BusEmitter,
               private auth: AuthService,
               private router: Router,
               private route: ActivatedRoute,
@@ -35,6 +37,16 @@ export class DefaultComponent implements OnInit, OnDestroy {
               private message: NzMessageService
               ) {
     this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
+    this.helpUs$ = this.store$.of(this.issuesId).pipe(map(data => {
+      if (data.payload?.status === OK) {
+        return data.payload.items.map((item: any) => {
+          const {body, html_url} = item;
+          return {body, html_url};
+        });
+      }
+      console.log(data);
+      return data;
+    }));
   }
 
   ngOnInit(): void {

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import {MixedBusModule} from '@soer/mixed-bus';
+import { MixedBusModule } from '@soer/mixed-bus';
 import { SrUrlBuilderModule, UrlBuilderService } from '@soer/sr-url-builder';
 import { MixedBusService } from '@soer/mixed-bus';
 import { DataStoreService, StoreCrudService } from '@soer/sr-dto';
@@ -22,22 +22,21 @@ import { IconsProviderModule } from '../icons-provider.module';
 import { environment } from '../environments/environment';
 import { AuthInterceptor, AUTH_ID, SrAuthModule } from '@soer/sr-auth';
 
-
 registerLocaleData(ru);
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     MixedBusModule,
     SrAuthModule.forRoot({
       sid: AUTH_ID,
       schema: {
         cookieApi: `${environment.apiUrl}auth/cookie`,
-        renewApi: `${environment.apiUrl}auth/renew`,
-        }
-      }),
-    SrUrlBuilderModule.forRoot({apiRoot: environment.apiUrl}),
+        renewApi: `${environment.apiUrl}auth/renew`
+      }
+    }),
+    SrUrlBuilderModule.forRoot({ apiRoot: environment.apiUrl }),
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -55,14 +54,18 @@ registerLocaleData(ru);
       provide: APP_INITIALIZER,
       multi: true,
       deps: [UrlBuilderService, MixedBusService, DataStoreService, StoreCrudService],
-      useFactory: (UrlBuilderService: UrlBuilderService,
-                   MixedBusService: MixedBusService,
-                   DataStoreService: DataStoreService,
-                   StoreCrudService: StoreCrudService) => () => null
+      useFactory:
+        (
+          UrlBuilderService: UrlBuilderService,
+          MixedBusService: MixedBusService,
+          DataStoreService: DataStoreService,
+          StoreCrudService: StoreCrudService
+        ) =>
+        () =>
+          null
     },
     { provide: NZ_I18N, useValue: ru_RU }
-
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

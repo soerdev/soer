@@ -12,7 +12,8 @@ const routes: Routes = [
           component: DefaultComponent,
           loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
           resolve: {
-            manifest: 'manifestEmitter'
+            manifest: 'manifestEmitter',
+            issues: 'issuesEmitter'
           },
           canActivate: [AuthGuard]},
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
@@ -25,6 +26,12 @@ const routes: Routes = [
       namespace: 'manifest',
       crudEmitters: {
         manifest: {create: '', read: 'user/manifest', update: '', delete: ''}
+      }
+    }),
+    SrDTOModule.forChild({
+      namespace: 'issues',
+      crudEmitters: {
+        issues: {create: '', read: 'github', update: '', delete: ''}
       }
     }),
     

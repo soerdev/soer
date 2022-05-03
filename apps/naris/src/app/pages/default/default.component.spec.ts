@@ -25,6 +25,7 @@ describe('DefaultComponent', () => {
       ],
       providers: [ 
         {provide: 'manifest', useValue: ANY_SERVICE},
+        {provide: 'issues', useValue: ANY_SERVICE},
         {provide: 'AuthService', useValue: {}},
         {provide: 'AuthServiceConfig', useValue: {}},
         {provide: NzMessageService, useClass: MockNzMessageService}

@@ -62,7 +62,9 @@ nz-content {
   background: white;
   max-width: 1440px;
 }
-
+::ng-deep .ant-popover-inner-content {
+  max-width: 20rem;
+}
 @media screen and (min-width: 768px) {
   .menu-sidebar {
     position: relative;
