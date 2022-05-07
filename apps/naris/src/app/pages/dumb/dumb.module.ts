@@ -21,7 +21,8 @@ import { RouterModule } from '@angular/router';
     AccessDeniedComponent,
     UnderDevelopmentComponent,
     AudioPlayerComponent,
-    SrTextEditComponent],
+    SrTextEditComponent
+  ],
   imports: [
     CommonModule,
     YouTubePlayerModule,

@@ -22,6 +22,8 @@
     "@angular/youtube-player": "^13.1.1",
     "@ant-design/icons-angular": "^13.0.1",
     "@nrwl/angular": "13.3.8",
+    "@types/vimeo__player": "^2.16.3",
+    "@vimeo/player": "^2.16.4",
     "ng-zorro-antd": "^13.0.0",
     "ngx-markdown": "^13.0.0",
     "rxjs": "~7.4.0",
