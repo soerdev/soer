@@ -33,7 +33,7 @@ export class ListTemplatesPageComponent {
       )
     );
    }
-   onDelete(template: any): void {
+   onDelete(template: TemplateModel): void {
     this.bus$.publish(
       new CommandDelete({...this.templateId, key:{tid: template.id}})
     );

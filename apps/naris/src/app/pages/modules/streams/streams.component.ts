@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VideoModel } from '../../../api/streams/stream.model';
 
-interface VideoModel {
-  vimeo_id?: string;
-  youtube_id: string;
-  title: string;
-  desc: string;
-  video_thumb?: string;
-}
+
 @Component({
   selector: 'soer-streams',
   templateUrl: './streams.component.html',
@@ -15,12 +10,12 @@ interface VideoModel {
 })
 export class StreamsComponent implements OnInit {
 
-  public streams: any;
+  public streams: VideoModel[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.streams = this.route.snapshot.data?.['streams'];
+    this.streams = this.route.snapshot.data?.['streams'] || [];
   }
 
   showVideo(video: VideoModel): void {
