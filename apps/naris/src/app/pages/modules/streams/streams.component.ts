@@ -32,7 +32,7 @@ export class StreamsComponent implements OnInit {
       videoSource = 'vimeo';
     } 
       this.router.navigate([videoSource, videoId], {relativeTo: this.route})
-      .catch(e => console.error(`
+      .catch(() => console.error(`
         StreamComponent: в RouteModule необходимо указать маршрут для проигрывания видео
           children: [
             {

@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandDelete, DataStoreService, DtoPack } from '@soer/sr-dto';
-import { combineLatest, first, forkJoin, last, merge, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel, TemplateModel } from '../../../../api/targets/target.interface';
 @Component({

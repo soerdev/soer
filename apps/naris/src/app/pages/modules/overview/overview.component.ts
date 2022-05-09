@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BusEmitter, BusMessage } from '@soer/mixed-bus';
+import { DataStoreService, DtoPack } from '@soer/sr-dto';
 import { Observable, of } from 'rxjs';
 import { map } from "rxjs/operators";
-import { BusMessage, BusEmitter } from '@soer/mixed-bus';
 import { parseJsonDTOPack } from '../../../api/json.dto.helpers';
 import { QuestionModel } from '../../../api/questions/question.model';
 import { PersonalTarget } from '../../../api/targets/target.interface';
 import { WorkbookModel } from '../../../api/workbook/workbook.model';
-import { DataStoreService, DtoPack } from '@soer/sr-dto';
 
 
 @Component({
