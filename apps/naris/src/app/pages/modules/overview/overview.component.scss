@@ -63,6 +63,11 @@
         background-color: #ffefef;
     }
 
+    ::ng-deep .warn .ant-statistic {
+        background-color: #fffeef;
+    }
+
+
     ::ng-deep .ant-statistic:hover {
         border: 1px solid #a0a0a0;
     }
