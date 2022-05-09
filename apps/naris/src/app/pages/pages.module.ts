@@ -20,6 +20,8 @@ import { RouterComposeModule } from "./router-compose/router-compose.module";
 import { PaymentModule } from "./modules/payment/payment.module";
 import { CertificateModule } from "./modules/certificate/certificate.module";
 import { SrDTOModule } from "@soer/sr-dto";
+import { NzSkeletonModule } from "ng-zorro-antd/skeleton";
+import { NzImageModule } from "ng-zorro-antd/image";
 
 @NgModule({
   imports: [
