@@ -59,13 +59,13 @@ export class OverviewComponent {
       },
       {
         title: 'Стримы',
-        list$: of({items: {length: 22}}),
+        list$: of({items: this.data['streams']}),
         icon: 'play-circle',
         url: '#!/pages/streams'
       },
       {
         title: 'Воркшопы',
-        list$: of({items: {length: 18}}),
+        list$: of({items: this.data['workshops']}),
         icon: 'experiment',
         url: '#!/pages/workshops'
       },

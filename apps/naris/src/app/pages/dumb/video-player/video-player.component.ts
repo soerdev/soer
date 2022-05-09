@@ -1,5 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Player from '@vimeo/player';
 
 @Component({
@@ -14,8 +13,6 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
   private player: Player | null = null;
   @ViewChild('vimeoPlayer', { static: false }) vimeo!: ElementRef;
-
-  constructor(private _sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     if (this.isLoading && this.videoSource === 'youtube') {
@@ -41,9 +38,5 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
       }
       this.player.on('timeupdate', (data) => localStorage.setItem(vimeo_storage_id, data.seconds + ''));
     }
-  }
-
-  getVimeoId(): SafeUrl {
-    return this._sanitizer.bypassSecurityTrustResourceUrl(`https://player.vimeo.com/video/${this.videoId}?quality=720p`);
   }
 }

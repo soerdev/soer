@@ -18,25 +18,7 @@
 </div>
 
 <nz-divider nzText="Метрики" nzOrientation="left"></nz-divider>
-<div nz-row [nzGutter]="[24, 24]" ><!--
-  <div *ngFor="let metric of metrics" class="metric-level" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
-    <a [href]="metric['url']">
-      <nz-card nzHoverable>
-          <div class="metric">
-            <div class="metric_icon">
-              <i nz-icon [nzType]="metric['icon']"></i>
-            </div>
-            <div class="metric_title">
-              <h2>{{metric['title']}}</h2>
-            </div>
-          </div>
-          <h2 class="metric_value">
-            <ng-container *ngIf="(metric.list$ | async) as list;else loading">{{list.items?.length}}</ng-container>
-          </h2>
-
-      </nz-card>
-    </a>
-  </div>-->
+<div nz-row [nzGutter]="[24, 24]" class="metrics" >
   <ng-container *ngFor="let metric of metrics">
       <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
         <a [href]="metric['url']">

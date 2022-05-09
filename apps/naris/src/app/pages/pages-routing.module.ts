@@ -39,7 +39,9 @@ const routes: Routes = [
           brif: ByRoutePathResolver,
           workbooks: 'workbooksEmitter',
           targets: 'targetsEmitter',
-          questions: 'questionsEmitter'
+          questions: 'questionsEmitter',
+          streams: StreamService,
+          workshops: WorkshopsService
         },
       },
       {
