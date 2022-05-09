@@ -11,6 +11,7 @@ import { UnderDevelopmentComponent } from './under-development/under-development
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { SrTextEditComponent } from './sr-text-edit/sr-text-edit.component';
 import { RouterModule } from '@angular/router';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
     NzIconModule,
     NzResultModule,
     NzButtonModule,
-    RouterModule
+    RouterModule,
+    NzSpinModule
   ],
   exports: [
     VideoPlayerComponent,

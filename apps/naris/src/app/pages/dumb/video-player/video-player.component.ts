@@ -10,7 +10,7 @@ import Player from '@vimeo/player';
 export class VideoPlayerComponent implements OnInit, AfterViewInit {
   @Input() videoId = '';
   @Input() videoSource: 'youtube' | 'vimeo' = 'youtube';
-  apiLoaded = false;
+  public isLoading = true;
 
   private player: Player | null = null;
   @ViewChild('vimeoPlayer', { static: false }) vimeo!: ElementRef;
@@ -18,11 +18,11 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
   constructor(private _sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    if (!this.apiLoaded) {
+    if (this.isLoading && this.videoSource === 'youtube') {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       document.body.appendChild(tag);
-      this.apiLoaded = true;
+      this.isLoading = false;
     }
     
 
@@ -32,6 +32,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     if (this.videoSource === 'vimeo') {
       this.player = new Player(this.vimeo.nativeElement,
         {autoplay: true});
+      this.player.on('loaded', () => this.isLoading = false);
     }
   }
 
