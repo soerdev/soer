@@ -31,8 +31,15 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.videoSource === 'vimeo') {
       this.player = new Player(this.vimeo.nativeElement,
-        {autoplay: true});
+        {autoplay: true, dnt: true});
       this.player.on('loaded', () => this.isLoading = false);
+
+      const vimeo_storage_id = `vimeo_video_${this.videoId}`;
+      const seconds = parseInt(localStorage.getItem(vimeo_storage_id) || '0');
+      if (seconds > 0) {
+        this.player.setCurrentTime(seconds);
+      }
+      this.player.on('timeupdate', (data) => localStorage.setItem(vimeo_storage_id, data.seconds + ''));
     }
   }
 
