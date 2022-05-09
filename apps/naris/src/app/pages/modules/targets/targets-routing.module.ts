@@ -36,7 +36,7 @@ const routes: Routes = [
         data: { 
           header: {title: 'Мои шаблоны', subtitle: 'Личные шаблоны'},
           isEditable: true,
-          afterCommandDoneRedirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
+          afterCommandDoneRedirectTo: [{outlets: {primary: ['list']}}]
         },
         component: ListTemplatesPageComponent,
         resolve: {
@@ -48,7 +48,7 @@ const routes: Routes = [
         data: { 
           header: {title: 'Общие шаблоны', subtitle: 'Шаблоны созданные сообществом'},
           isEditable: false,
-          afterCommandDoneRedirectTo: [{outlets: {primary: ['list'], popup: ['target', 'edit', ':id']}}]
+          afterCommandDoneRedirectTo: [{outlets: {primary: ['list']}}]
         },
         component: ListTemplatesPageComponent,
         resolve: {
