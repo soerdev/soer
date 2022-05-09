@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map } from "rxjs/operators";
 import { parseJsonDTOPack } from '../../../api/json.dto.helpers';
 import { QuestionModel } from '../../../api/questions/question.model';
-import { PersonalTarget } from '../../../api/targets/target.interface';
+import { TargetModel } from '../../../api/targets/target.interface';
 import { WorkbookModel } from '../../../api/workbook/workbook.model';
 
 
@@ -21,7 +21,7 @@ export class OverviewComponent {
   data;
   workbook$: Observable<DtoPack<WorkbookModel>>;
   question$: Observable<DtoPack<QuestionModel>>;
-  target$: Observable<DtoPack<PersonalTarget>>;
+  target$: Observable<DtoPack<TargetModel>>;
   public metrics: {list$: Observable<any>, [key: string]: any}[];
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class OverviewComponent {
   ) {
     this.data = this.route.snapshot.data;
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbooksId), 'workbooks');
-    this.target$ = parseJsonDTOPack<PersonalTarget>(this.store$.of(this.targetsId), 'targets'); 
+    this.target$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'targets'); 
     this.question$ = this.store$.of(this.questionsId).pipe(map<BusMessage, DtoPack<QuestionModel>>(data => {
       return data.payload;
     })); 
@@ -43,7 +43,7 @@ export class OverviewComponent {
         title: 'Цели',
         list$: this.target$,
         icon: 'check-circle',
-        url: '#!/pages/targets'
+        url: '#!/pages/targets/list'
       },
       {
         title: 'Конспекты',

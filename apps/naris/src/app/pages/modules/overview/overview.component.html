@@ -17,6 +17,36 @@
   </div>
 </div>
 
+
+<ng-container *ngIf="(target$ | async) as targets">
+  <nz-divider nzText="Следующий шаг" nzOrientation="left"></nz-divider>
+  <div nz-row [nzGutter]="[24, 24]" class="metrics" >
+    <ng-container  *ngIf="targets.status === 'ok' && targets.items.length > 0; else createFromTemplate">
+          <ng-container  *ngFor="let target of targets.items">
+            <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+              <a [routerLink]="['/', 'pages', 'targets']">
+                <nz-statistic
+                  [ngClass]="{'good': target.progress >= 50, 'bad': target.progress < 50}"
+                  nzSuffix="%"
+                  [nzValue]="target['progress']" [nzTitle]="target['title']"></nz-statistic>
+              </a>
+            </nz-col>
+          </ng-container>
+    </ng-container>
+    <ng-template #createFromTemplate>
+      <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+      <a [routerLink]="['/', 'pages', 'targets', 'templates', 'public']">
+        <nz-statistic
+          class="bad"
+          nzSuffix="..."
+          nzValue=""
+          nzTitle="У вас не создано ни одной цели. Нажмите здесь, чтобы создать из готовых шаблонов."></nz-statistic>
+      </a>
+      </nz-col>
+    </ng-template>
+  </div>
+
+</ng-container>
 <nz-divider nzText="Метрики" nzOrientation="left"></nz-divider>
 <div nz-row [nzGutter]="[24, 24]" class="metrics" >
   <ng-container *ngFor="let metric of metrics">
