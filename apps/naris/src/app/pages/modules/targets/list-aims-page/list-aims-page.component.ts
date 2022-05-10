@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef } from 
 import { NzNotificationComponent, NzNotificationData, NzNotificationDataOptions, NzNotificationRef, NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
-import { TargetModel } from '../../../../api/targets/target.interface';
-import { CommandUpdate, DtoPack } from '@soer/sr-dto';
+import { TargetModel, Visibility } from '../../../../api/targets/target.interface';
+import { CommandUpdate, DtoPack, OK } from '@soer/sr-dto';
 import { DataStoreService } from '@soer/sr-dto';
 import { BusEmitter } from '@soer/mixed-bus';
 import { MixedBusService } from '@soer/mixed-bus';
@@ -18,13 +18,11 @@ import { propagateProgress, updateProgress } from '../progress.helper';
   styleUrls: ['./list-aims-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListAimsPageComponent {
+export class ListAimsPageComponent implements OnInit {
 
   checked = false;
   public targets$: Observable<DtoPack<TargetModel>>;
-  public visibility: any = {
-    targetHeader: {visibility: false}
-  };
+  public visibility: Visibility = {};
 
   public readonly doneProgress = DONE_PROGRESS;
   public readonly undoneProgress = UNDONE_PROGRESS;
@@ -39,6 +37,9 @@ export class ListAimsPageComponent {
       private notification: NzNotificationService
   ) { this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets'); }
 
+  ngOnInit() {
+    this.createTasksVisibility()
+  }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   check(task: TargetModel, target: TargetModel, progress: number = DONE_PROGRESS, template: TemplateRef<{}> | null = null): void {
@@ -64,6 +65,25 @@ export class ListAimsPageComponent {
         this.check(task, target, UNDONE_PROGRESS);
       }
       notify.close();
+  }
 
+  createTasksVisibility(): void {
+    this.targets$.subscribe(
+      (target => {
+        if (target.status === OK) {
+          const visibility = target.items.reduce((acc: Visibility, curr: TargetModel) => {
+            acc[curr.id || 0] = false
+            return acc
+          }, {})
+
+          this.visibility = visibility
+        }
+    }))
+  }
+
+  toggleTaskVisibility(taskId: TargetModel['id']): void {
+    if (taskId) {
+      this.visibility[taskId] = !this.visibility[taskId] 
+    }
   }
 }
