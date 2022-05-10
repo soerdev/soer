@@ -29,27 +29,36 @@
                 <nz-divider *ngIf="target.tasks.length > 0"></nz-divider>
                 <nz-timeline *ngIf="activeTarget !== undefined && activeTarget.tasks.length > 0">
                     <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? complete : working ">
-                        <p *ngIf="editTaskByIndex !== ind" class="task-item">{{task.title}}</p>
                         <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="onSaveTask(target, $event)" (cancel)="onCancelEdit($event)"></sr-text-edit>
-                        <ng-container *ngIf="editTaskByIndex === -1">
-                            <button nz-button
+                        <nz-row *ngIf="editTaskByIndex !== ind">
+                            <nz-col nzFlex="1">
+                                <p class="task-item">{{task.title}}</p>
+                            </nz-col>
+                            <nz-col nzFlex="none">
+                                <button nz-button
                                     nzType="default"
                                     nzSize="small"
                                     nzShape="circle"
                                     (click)="editTask(ind)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-                            <button nz-button
+                                <button *ngIf="task.progress === 100 && !task.tasks.length"
+                                    nz-button
+                                    nzType="default"
+                                    nzSize="small"
+                                    nzShape="circle"
+                                    (click)="onUndoTask(activeTarget, ind)"><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+                                <button nz-button
                                     nzType="default"
                                     nzSize="small"
                                     nzShape="circle"
                                     (click)="onActiveTask(activeTarget, ind)"><i nz-icon nzType="setting" nzTheme="outline"></i></button>
-                            <button nzDanger
+                                <button nzDanger
                                     nz-button
                                     nzType="default"
                                     nzSize="small"
                                     nzShape="circle"
                                     (click)="onDeleteTask(activeTarget, ind)"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-
-                        </ng-container>
+                            </nz-col>
+                        </nz-row>
                     </nz-timeline-item>
                 </nz-timeline>
                 <nz-divider nzDashed [nzText]="text">
