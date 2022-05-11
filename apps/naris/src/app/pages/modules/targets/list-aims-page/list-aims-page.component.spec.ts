@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { ANY_SERVICE, MixedBusModule } from '@soer/mixed-bus';
 import { SrDTOModule } from '@soer/sr-dto';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -21,6 +22,7 @@ describe('ListAimsPageComponent', () => {
       ],
       providers: [
 
+        {provide: ActivatedRoute, useValue: {snapshot: {data: {targets: ANY_SERVICE}}}},
         {provide: 'target', useValue: ANY_SERVICE},
         {provide: 'targets', useValue: ANY_SERVICE},
         {provide: NzNotificationService, useClass: MockNzNotificationService}

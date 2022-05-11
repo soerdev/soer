@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef } from '@angular/core';
-import { NzNotificationComponent, NzNotificationData, NzNotificationDataOptions, NzNotificationRef, NzNotificationService } from 'ng-zorro-antd/notification';
+import { ActivatedRoute } from '@angular/router';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
+import { CommandUpdate, DataStoreService, DtoPack, OK } from '@soer/sr-dto';
+import { NzNotificationComponent, NzNotificationDataOptions, NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel, Visibility } from '../../../../api/targets/target.interface';
-import { CommandUpdate, DtoPack, OK } from '@soer/sr-dto';
-import { DataStoreService } from '@soer/sr-dto';
-import { BusEmitter } from '@soer/mixed-bus';
-import { MixedBusService } from '@soer/mixed-bus';
-import { DONE_PROGRESS, UNDONE_PROGRESS } from '../targets.const';
 import { propagateProgress, updateProgress } from '../progress.helper';
+import { DONE_PROGRESS, UNDONE_PROGRESS } from '../targets.const';
 
 
 
@@ -27,15 +26,19 @@ export class ListAimsPageComponent implements OnInit {
   public readonly doneProgress = DONE_PROGRESS;
   public readonly undoneProgress = UNDONE_PROGRESS;
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
-  public expanderCache: any = {};
+  public expanderCache: Visibility = {};
+
+  private targetsId: BusEmitter;
 
   constructor(
-      @Inject('targets') private targetsId: BusEmitter,
       @Inject('target') private targetId: BusEmitter,
       private bus$: MixedBusService,
       private store$: DataStoreService,
-      private notification: NzNotificationService
-  ) { this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets'); }
+      private notification: NzNotificationService,
+      private route: ActivatedRoute
+  ) { 
+    this.targetsId = this.route.snapshot.data['targets'];
+    this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets'); }
 
   ngOnInit() {
     this.createTasksVisibility()

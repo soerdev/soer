@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -35,12 +35,13 @@ export class ComposeTabPageComponent extends ComposePage implements OnInit, OnDe
       this.route.routeConfig?.children?.forEach( child => {
         if (child.data?.['header']) {
           const newPath = (child.path === undefined || child.path === '') ? '.' : child.path;
-          this.tabs.push({
-            title: child.data?.['header'].title,
-            path: [newPath]
-          });
+          if (!(child.data?.['header']?.['cantBeTab'])) {
+            this.tabs.push({
+              title: child.data?.['header'].title,
+              path: [newPath]
+            });
+          }
         }
-
       });
   }
 

@@ -24,7 +24,7 @@
     <ng-container  *ngIf="targets.status === 'ok' && targets.items.length > 0; else createFromTemplate">
           <ng-container  *ngFor="let target of targets.items">
             <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
-              <a [routerLink]="['/', 'pages', 'targets']">
+              <a [routerLink]="['/', 'pages', 'targets', 'filter', target.id]">
                 <nz-statistic
                   [ngClass]="{'good': target.progress >= 50, 'normal': target.progress < 50, 'bad': target.progress <= 10}"
                   nzSuffix="%"

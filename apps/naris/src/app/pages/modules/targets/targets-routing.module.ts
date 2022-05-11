@@ -24,6 +24,14 @@ const routes: Routes = [
         }
       },
       {
+        path: 'filter/:tid',
+        data: { header: {title: 'Сегодня', subtitle: 'текущие задачи', cantBeTab: true}},
+        component: ListAimsPageComponent,
+        resolve: {
+          targets: 'targetEmitter'
+        }
+      },
+      {
         path: 'list',
         data: { header: {title: 'Цели', subtitle: 'Установите новые цели'}},
         component: ListTargetsPageComponent,
