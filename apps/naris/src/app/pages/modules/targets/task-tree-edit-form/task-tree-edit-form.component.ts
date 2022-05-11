@@ -86,6 +86,12 @@ export class TaskTreeEditFormComponent implements OnChanges {
     }
   }
 
+  onUndoTask(target: TargetModel, ind: number): void {
+    target.tasks[ind].progress = 0
+    updateProgress(this.target);
+    this.save.next(this.target);
+  }
+
   truncateHistory(ind: number): void {
     this.history =  this.history.filter((_, i) => i < ind);
     this.historyChange.next(this.history);
