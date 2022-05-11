@@ -26,7 +26,7 @@
             <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
               <a [routerLink]="['/', 'pages', 'targets']">
                 <nz-statistic
-                  [ngClass]="{'good': target.progress >= 50, 'bad': target.progress < 50}"
+                  [ngClass]="{'good': target.progress >= 50, 'normal': target.progress < 50, 'bad': target.progress <= 10}"
                   nzSuffix="%"
                   [nzValue]="target['progress']" [nzTitle]="target['title']"></nz-statistic>
               </a>
