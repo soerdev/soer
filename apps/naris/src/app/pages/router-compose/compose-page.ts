@@ -47,9 +47,8 @@ export abstract class ComposePage {
           })
       }
       extract(this.router.routerState.root);
-      console.log(result);
       result.forEach(h => {
-        console.log(h, data.owner);
+        
         const isSameSchema = function (a: BusEmitter, b: BusEmitter): boolean {
           const aStr = JSON.stringify(a.schema);
           const bStr = JSON.stringify(b.schema);

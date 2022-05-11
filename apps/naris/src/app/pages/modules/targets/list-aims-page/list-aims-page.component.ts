@@ -50,7 +50,7 @@ export class ListAimsPageComponent implements OnInit {
     updateProgress(target);
     this.bus$.publish(
       new CommandUpdate(
-        this.targetId,
+        this.targetsId.key ? this.targetsId : this.targetId,
         { ...convertToJsonDTO(target, ['id']), id: target.id },
         {skipRoute: true}
       )
