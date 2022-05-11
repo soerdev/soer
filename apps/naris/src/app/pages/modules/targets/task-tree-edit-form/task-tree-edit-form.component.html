@@ -40,7 +40,7 @@
                                     nzSize="small"
                                     nzShape="circle"
                                     (click)="editTask(ind)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-                                <button *ngIf="task.progress === 100 && !task.tasks.length"
+                                <button *ngIf="task.progress === 100 && !task.tasks?.length"
                                     nz-button
                                     nzType="default"
                                     nzSize="small"
