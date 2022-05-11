@@ -35,3 +35,7 @@ export const EmptyTarget: TargetModel = {
     progress: 0,
     tasks: []
 }
+
+export interface Visibility {
+    [id: string]: boolean;
+}
