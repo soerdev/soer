@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Provider } from "@angular/compiler/src/core";
 import { ModuleWithProviders } from "@angular/compiler/src/core";
 import { NgModule } from "@angular/core";
-import { BusEmitter, MixedBusService } from "@soer/mixed-bus";
+import { BusEmitter, BusKey, BusKeys, MixedBusService } from "@soer/mixed-bus";
 import { isCRUDBusEmitter } from "./dto.helpers";
 import { DtoLastItemPipe, DeSerializeJsonPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
@@ -15,7 +15,8 @@ export interface CRUDBusEmitter extends BusEmitter {
 }
 interface CrudOptions {
   namespace: string;
-  crudEmitters: { [key: string]: CRUDBusEmitter | CRUDMethods};
+  schema: CRUDMethods,
+  keys: BusKeys,
 }
 
 @NgModule({
@@ -47,19 +48,19 @@ function createcrudEmitters(options: CrudOptions): Provider[] {
   const result: Provider[] = [];
   const sid = Symbol(options.namespace);
 
-  Object.keys(options.crudEmitters).forEach(emitterName => {
-    const createCRUDBusEmitterFrom = (schema: CRUDMethods | CRUDBusEmitter, name: string ): CRUDBusEmitter  => {
+  Object.keys(options.keys).forEach(keyName => {
+    const createCRUDBusEmitterFrom = (schema: CRUDMethods | CRUDBusEmitter, key: BusKey ): CRUDBusEmitter  => {
       if (isCRUDBusEmitter(schema)) {
         return schema;
       }
-      return { sid, schema };
+      return { sid, schema, key };
     }
 
-    const emitter: CRUDBusEmitter = createCRUDBusEmitterFrom(options.crudEmitters[emitterName], emitterName);
+    const emitter: CRUDBusEmitter = createCRUDBusEmitterFrom(options.schema, options.keys[keyName]);
 
     result.push(
-      createDataEmitter(emitterName, emitter),
-      createCRUDSBusId(emitterName, emitter)
+      createDataEmitter(keyName, emitter),
+      createCRUDSBusId(keyName, emitter)
     );
   });
   return result;

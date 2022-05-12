@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ANY_SERVICE } from '@soer/mixed-bus';
 import { OnlyWithAnaswerPipe } from '../only-with-anaswer.pipe';
@@ -18,7 +19,7 @@ describe('ListQuestionsPageComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        
+        {provide: ActivatedRoute, useValue: {snapshot: {data: {questions: ANY_SERVICE}}}},
         {provide: 'question', useValue: ANY_SERVICE},
         {provide: 'questionsAll', useValue: ANY_SERVICE}
       ]

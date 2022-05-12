@@ -13,13 +13,13 @@ export class UrlBuilderService {
   }
 
   build(apiSuffix: string = '', key: BusKey = {}, params: BusMessageParams = {}): string {
-    let result = `${this.options.apiRoot}${apiSuffix}`;
-    Object.keys(key).forEach(
-      keyName => result = result.replace(`:${keyName}`, key[keyName])
-    );
-    Object.keys(params).forEach(
-      paramName => result = result.replace(`:${paramName}`, params[paramName])
-    );
-    return result;  
+    const urlSegments =  apiSuffix.split('/').map(part => {
+      if (part[0] === ':') {
+        const keyName = part.substring(1);
+        return ((key[keyName] === '?') ? params[keyName] : key[keyName]) || '';
+      }
+      return part;
+    }).filter(value => !!value);
+    return `${this.options.apiRoot}${urlSegments.join('/')}`;  
   }
 }

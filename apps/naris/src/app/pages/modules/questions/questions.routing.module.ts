@@ -13,20 +13,15 @@ const routes: Routes = [
     component: ComposeOnePageComponent,
     data: {
       header: { title: 'Вопросы и ответы', subtitle: 'здесь можно получить аудио-ответ' },
-      bus: {
-        single: QUESTION_ID,
-        list: QUESTIONS_ID
-      }
-    },
-    resolve: {
-      questions: 'questionsEmitter'
     },
     children: [
       { path: '', redirectTo: 'my'},
       {
         path: 'my',
-        data: {bus: {active: QUESTIONS_ID}},
         component: ListQuestionsPageComponent,
+        resolve: {
+          questions: 'questionsEmitter'
+        },
         children: [
           {
             path: 'show/video/:videoId',
@@ -50,9 +45,6 @@ const routes: Routes = [
           component: QuestionViewComponent,
           data: {
             header: {title: 'Ответ на вопрос'},
-            bus: {
-              active: QUESTION_ID
-            }
           },
           resolve: {
             question: 'questionEmitter'
@@ -65,7 +57,6 @@ const routes: Routes = [
           component: ListQuestionsPageComponent,
           data: {
             header: {title: 'Все вопросы', subtitle: 'ответы на все вопросы'},
-            bus: {active: QUESTIONS_ALL_ID},
           },
           resolve: {
             questions: 'questionsAllEmitter'

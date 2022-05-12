@@ -95,33 +95,37 @@ const routes: Routes = [
 
     SrDTOModule.forChild({
       namespace: 'workbook',
-      crudEmitters: {
-        workbook: WORKBOOK_ID,
-        workbooks: WORKBOOKS_ID,
+      schema: WORKBOOK_ID.schema,
+      keys: {
+        workbook: {wid: '?'},
+        workbooks: {wid: ''},
       }
     }),
 
     SrDTOModule.forChild({
       namespace: 'qa',
-      crudEmitters: {
-        questionsAll: QUESTIONS_ALL_ID,
-        questions: QUESTIONS_ID,
-        question: QUESTION_ID
+      schema: QUESTION_ID.schema,
+      keys: {
+        questionsAll: {qid: 'all'},
+        questions: {qid: ''},
+        question: {qid: '?'}
       }
     }),
     SrDTOModule.forChild({
       namespace: 'targets',
-      crudEmitters: {
-        targets: {create: 'json/targets', read: 'json/targets', update: 'json/targets', delete: 'json/targets/:tid'},
-        target: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'}
+      schema: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'},
+      keys: {
+        targets: {tid: ''},
+        target: {tid: '?'}
       }
     }),
     SrDTOModule.forChild({
       namespace: 'templates',
-      crudEmitters: {
-        templates: {create: 'json/templates', read: 'json/templates', update: 'json/templates', delete: 'json/templates/:tid'},
-        publicTemplates: {create: 'json/templates', read: 'json/public/templates', update: 'json/templates', delete: 'json/templates/:tid'},
-        template: {create: 'json/templates', read: 'json/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'}
+      schema: {create: 'json/templates', read: 'json/:access/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'},
+      keys: {
+        templates: {tid: '', access: ''},
+        publicTemplates: {tid: '', access: 'public'},
+        template: {tid: '?', access: ''}
       }
     }),
     QuestionsRoutingModule,

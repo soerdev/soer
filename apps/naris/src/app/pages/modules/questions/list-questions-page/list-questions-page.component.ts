@@ -21,13 +21,12 @@ export class ListQuestionsPageComponent  {
   hostUrl = environment.host;
   question$: Observable<QuestionModel[]> | null;
   selectedQuestion: QuestionModel | null = null;
-  constructor( @Inject('questionsAll') private questionsId: BusEmitter,
-               @Inject('question') private questionId: BusEmitter,
+  constructor( @Inject('question') private questionId: BusEmitter,
                private bus$: MixedBusService,
                private store$: DataStoreService,
                private route: ActivatedRoute
   ) { 
-    this.question$ = this.store$.of(this.route.snapshot.data?.['bus']?.active || this.questionsId).pipe(map<BusMessage, QuestionModel[]>(
+    this.question$ = this.store$.of(this.route.snapshot.data['questions']).pipe(map<BusMessage, QuestionModel[]>(
       (data: BusMessage | null) => {
         return data?.payload?.items ?? [];
       }

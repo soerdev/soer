@@ -16,3 +16,4 @@ export class ResolveReadEmitterService implements Resolve<any> {
     return of(owner).toPromise();
   }
 }
+``

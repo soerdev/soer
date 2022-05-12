@@ -54,7 +54,7 @@ export abstract class ComposePage {
           const bStr = JSON.stringify(b.schema);
           return aStr === bStr;
         }
-        if (h.sid === data.owner.sid && !isSameSchema(h, data.owner)) {
+        if (h.sid === data.owner.sid) {
           this.bus$.publish(new CommandRead(h));
         }
       });
