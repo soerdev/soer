@@ -8,12 +8,10 @@ import { WorkshopsService } from '../api/workshops/workshops.service';
 
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';
-import { WORKBOOKS_ID, WORKBOOK_ID } from './modules/abstracte/abstracte.const';
 import { CertificateComponent } from './modules/certificate/certificate/certificate.component';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
 import { OverviewComponent } from './modules/overview/overview.component';
 import { PayFormComponent } from './modules/payment/pay-form/pay-form.component';
-import { QUESTIONS_ALL_ID, QUESTIONS_ID, QUESTION_ID } from './modules/questions/questions.const';
 import { QuestionsRoutingModule } from './modules/questions/questions.routing.module';
 import { RoadmapComponent } from './modules/roadmap/roadmap.component';
 import { StreamsComponent } from './modules/streams/streams.component';
@@ -95,16 +93,16 @@ const routes: Routes = [
 
     SrDTOModule.forChild({
       namespace: 'workbook',
-      schema: WORKBOOK_ID.schema,
+      schema: {url: 'v2/json/:access/workbook/:wid'},
       keys: {
-        workbook: {wid: '?'},
-        workbooks: {wid: ''},
+        workbook: {wid: '?', access: ''},
+        workbooks: {wid: 'list', access: 'personal'},
       }
     }),
 
     SrDTOModule.forChild({
       namespace: 'qa',
-      schema: QUESTION_ID.schema,
+      schema: {url: 'questions/:qid'},
       keys: {
         questionsAll: {qid: 'all'},
         questions: {qid: ''},
@@ -113,18 +111,18 @@ const routes: Routes = [
     }),
     SrDTOModule.forChild({
       namespace: 'targets',
-      schema: {create: 'json/targets', read: 'json/targets/:tid', update: 'json/targets', delete: 'json/targets/:tid'},
+      schema: {url: 'v2/json/:access/targets/:tid'},
       keys: {
-        targets: {tid: ''},
+        targets: {tid: 'list', access: 'personal'},
         target: {tid: '?'}
       }
     }),
     SrDTOModule.forChild({
       namespace: 'templates',
-      schema: {create: 'json/templates', read: 'json/:access/templates/:tid', update: 'json/templates', delete: 'json/templates/:tid'},
+      schema: {url: 'v2/json/:access/templates/:tid' },
       keys: {
-        templates: {tid: '', access: ''},
-        publicTemplates: {tid: '', access: 'public'},
+        templates: {tid: 'list', access: 'personal'},
+        publicTemplates: {tid: 'list', access: 'public'},
         template: {tid: '?', access: ''}
       }
     }),

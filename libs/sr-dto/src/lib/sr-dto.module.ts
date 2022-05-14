@@ -10,12 +10,13 @@ import { ResolveReadEmitterService } from "./services/resolve-read-emitter.servi
 import { StoreCrudService } from "./services/store.crud.service";
 
 export type CRUDMethods = { create: string, read: string, update: string, delete: string };
+export type UrlSchema = { url: string };
 export interface CRUDBusEmitter extends BusEmitter {
-  schema: CRUDMethods;
+  schema: UrlSchema;
 }
 interface CrudOptions {
   namespace: string;
-  schema: CRUDMethods,
+  schema: UrlSchema,
   keys: BusKeys,
 }
 
@@ -49,10 +50,7 @@ function createcrudEmitters(options: CrudOptions): Provider[] {
   const sid = Symbol(options.namespace);
 
   Object.keys(options.keys).forEach(keyName => {
-    const createCRUDBusEmitterFrom = (schema: CRUDMethods | CRUDBusEmitter, key: BusKey ): CRUDBusEmitter  => {
-      if (isCRUDBusEmitter(schema)) {
-        return schema;
-      }
+    const createCRUDBusEmitterFrom = (schema: UrlSchema, key: BusKey ): CRUDBusEmitter  => {
       return { sid, schema, key };
     }
 

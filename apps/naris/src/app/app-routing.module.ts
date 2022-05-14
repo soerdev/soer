@@ -24,14 +24,14 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     SrDTOModule.forChild({
       namespace: 'manifest',
-      schema: {create: '', read: 'user/manifest', update: '', delete: ''},
+      schema: {url: 'user/manifest'},
       keys: {
         manifest: {}
       }
     }),
     SrDTOModule.forChild({
       namespace: 'issues',
-      schema: {create: '', read: 'github', update: '', delete: ''},
+      schema: {url: 'github'},
       keys: {
         issues: {}
       }

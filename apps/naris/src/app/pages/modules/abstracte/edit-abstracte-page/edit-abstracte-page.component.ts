@@ -29,6 +29,7 @@ export class EditAbstractePageComponent implements OnDestroy {
 
     this.workbookId = this.route.snapshot.data['workbook'];
 
+    console.log(this.workbookId);
     this.form = this.formBuilder.group({
       id: [null],
       question: [null, [Validators.maxLength(255)]],

@@ -21,7 +21,7 @@ const routes: Routes = [
       component: ListAbstractePageComponent,  
     },
     {
-      path: 'new',
+      path: 'create/:wid',
       component: EditAbstractePageComponent,
       data: { header: {
               title: 'Новый конспект',

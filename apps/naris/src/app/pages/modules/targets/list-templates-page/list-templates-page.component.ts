@@ -27,7 +27,7 @@ export class ListTemplatesPageComponent {
    onUse(template: TemplateModel): void {
     this.bus$.publish(
       new CommandCreate(
-        this.targetId,
+        {...this.targetId, key: {tid: 'new'}},
         convertToJsonDTO(template, ['id']),
         {afterCommandDoneRedirectTo: this.route.snapshot.data['afterCommandDoneRedirectTo'], skipInfo: true}
       )

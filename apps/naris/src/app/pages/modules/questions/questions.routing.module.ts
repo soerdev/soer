@@ -5,7 +5,6 @@ import { ComposeVideoPlayerComponent } from '../compose-video-player/compose-vid
 import { ListQuestionsPageComponent } from './list-questions-page/list-questions-page.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { QuestionViewComponent } from './question-view/question-view.component';
-import { QUESTIONS_ALL_ID, QUESTIONS_ID, QUESTION_ID } from './questions.const';
 
 const routes: Routes = [
   {
@@ -31,7 +30,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'new',
+        path: 'create/new',
         component: QuestionFormComponent
       },
       {

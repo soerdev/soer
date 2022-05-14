@@ -63,7 +63,8 @@ export abstract class ComposePage {
         if (data.payload.status === OK) {
           this.message.success(msg);
         } else if(data.payload.status === ERROR) {
-          this.message.error('Что-то пошло не так...');
+          const errors = data.payload.items.join(' ');
+          this.message.error(errors || 'Что-то пошло не так...');
         }
       }
 
@@ -109,7 +110,7 @@ export abstract class ComposePage {
     }
 
     onNewSchema(): void {
-      this.router.navigate(['new'], { relativeTo: this.route });
+      this.router.navigate(['create', 'new'], { relativeTo: this.route });
     }
     onEditSchema(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }

@@ -39,8 +39,8 @@ export class TemplateCreateComponent  {
 
     this.bus$.publish(
       new CommandCreate(
-        this.templateId,
-        { ...convertToJsonDTO(template, ['id']), accessTag: this.isPublic ? 'ALL' : 'PRIVATE'},
+        {...this.templateId, key: {tid: 'new'}},
+        { ...convertToJsonDTO(template, ['id']), accessTag: this.isPublic ? 'PUBLIC' : 'PRIVATE'},
         {skipRoute: true, skipInfo: true}
       )
     );

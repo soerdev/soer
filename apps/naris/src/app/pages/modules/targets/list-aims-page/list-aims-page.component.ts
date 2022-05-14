@@ -48,9 +48,10 @@ export class ListAimsPageComponent implements OnInit {
   check(task: TargetModel, target: TargetModel, progress: number = DONE_PROGRESS, template: TemplateRef<{}> | null = null): void {
     propagateProgress(task, progress);
     updateProgress(target);
+    const tmpTargetId = {...this.targetId, key: {tid: target.id}};
     this.bus$.publish(
       new CommandUpdate(
-        this.targetsId.key ? this.targetsId : this.targetId,
+        tmpTargetId,
         { ...convertToJsonDTO(target, ['id']), id: target.id },
         {skipRoute: true}
       )

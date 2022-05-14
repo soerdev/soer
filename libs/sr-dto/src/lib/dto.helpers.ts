@@ -1,4 +1,4 @@
-import { BusMessage } from "@soer/mixed-bus";
+import { BusEmitter, BusMessage } from "@soer/mixed-bus";
 import { map, Observable } from "rxjs";
 import { DtoPack, OK } from "./interfaces/dto.pack.interface";
 import { SerializedJsonModel } from "./interfaces/serialize-json.model";
@@ -6,8 +6,8 @@ import { CRUDBusEmitter } from "./sr-dto.module";
 
 export const DTO_EMPTY: DtoPack<void> = {status: OK, items: []};
 
-export function isCRUDBusEmitter(value: CRUDBusEmitter | Record<string, unknown>): value is CRUDBusEmitter {
-    return !!value['sid'] && !!value['schema'];
+export function isCRUDBusEmitter(value: CRUDBusEmitter | BusEmitter): value is CRUDBusEmitter {
+    return !!value['sid'] && !!value['schema'] && !!value['schema']['url'];
 }
 
 export function extractDtoPackFromBus<T>(messages$: Observable<BusMessage>): Observable<DtoPack<T>> {
