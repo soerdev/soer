@@ -1,23 +1,21 @@
 import { CommonModule } from "@angular/common";
-import { Provider } from "@angular/compiler/src/core";
-import { ModuleWithProviders } from "@angular/compiler/src/core";
+import { ModuleWithProviders, Provider } from "@angular/compiler/src/core";
 import { NgModule } from "@angular/core";
 import { BusEmitter, BusKey, BusKeys, MixedBusService } from "@soer/mixed-bus";
-import { isCRUDBusEmitter } from "./dto.helpers";
-import { DtoLastItemPipe, DeSerializeJsonPipe } from "./dto.pipes";
+import { DeSerializeJsonPipe, DtoLastItemPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
 import { ResolveReadEmitterService } from "./services/resolve-read-emitter.service";
 import { StoreCrudService } from "./services/store.crud.service";
 
 export type CRUDMethods = { create: string, read: string, update: string, delete: string };
-export type UrlSchema = { url: string };
+export type UrlSchema = { url: string, params?: Record<string, string> };
 export interface CRUDBusEmitter extends BusEmitter {
   schema: UrlSchema;
 }
-interface CrudOptions {
+interface CrudOptions<T extends BusKey> {
   namespace: string;
   schema: UrlSchema,
-  keys: BusKeys,
+  keys: BusKeys<T>,
 }
 
 @NgModule({
@@ -30,10 +28,10 @@ interface CrudOptions {
 })
 export class SrDTOModule {
 
-  static forChild(options: CrudOptions): ModuleWithProviders {
+  static forChild<T extends BusKey = BusKey>(options: CrudOptions<T>): ModuleWithProviders {
     return {
       ngModule: SrDTOModule,
-      providers: createcrudEmitters(options)
+      providers: createcrudEmitters<T>(options)
     };
   }
 
@@ -45,7 +43,7 @@ export class SrDTOModule {
   }
 }
 
-function createcrudEmitters(options: CrudOptions): Provider[] {
+function createcrudEmitters<T extends BusKey>(options: CrudOptions<T>): Provider[] {
   const result: Provider[] = [];
   const sid = Symbol(options.namespace);
 

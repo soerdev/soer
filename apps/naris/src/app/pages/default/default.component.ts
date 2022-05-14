@@ -44,7 +44,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
           return {body, html_url};
         });
       }
-      console.log(data);
       return data;
     }));
   }

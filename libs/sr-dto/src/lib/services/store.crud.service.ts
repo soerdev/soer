@@ -33,8 +33,8 @@ export class StoreCrudService implements CRUD {
         this.updateData({ status: INIT, items: [] }, msg.owner);
     }
     // Create
-    protected queryRead(owner: CRUDBusEmitter, params: any): Observable<DtoPack<any>> {
-        return this.http.get<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, params));
+    protected queryRead(owner: CRUDBusEmitter, routeParams: any): Observable<DtoPack<any>> {
+        return this.http.get<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, routeParams, owner.schema['params']));
     }
 
     public read(msg: BusMessage|BusError): Promise<DtoPack<any>> {
@@ -50,8 +50,8 @@ export class StoreCrudService implements CRUD {
     }
 
     // Create
-    protected queryCreate(data: any, owner: CRUDBusEmitter, params: any): Observable<DtoPack<any>> {
-        return this.http.post<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, params), data);
+    protected queryCreate(data: any, owner: CRUDBusEmitter, routeParams: any): Observable<DtoPack<any>> {
+        return this.http.post<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, routeParams, owner.schema['params']), data);
     }
 
     public create(msg: BusMessage | BusError): Promise<DtoPack<any>> {
@@ -66,8 +66,8 @@ export class StoreCrudService implements CRUD {
     }
 
     // UPDATE
-    protected queryUpdate(data: any, owner: CRUDBusEmitter, params: any): Observable<DtoPack<any>> {
-        return this.http.put<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, params), data);
+    protected queryUpdate(data: any, owner: CRUDBusEmitter, routeParams: any): Observable<DtoPack<any>> {
+        return this.http.put<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, routeParams, owner.schema['params']), data);
     }
 
     public update(msg: BusMessage | BusError): Promise<DtoPack<any>> {
@@ -83,8 +83,8 @@ export class StoreCrudService implements CRUD {
     }
 
     // DELETE
-    protected queryDelete(owner: CRUDBusEmitter, params: any): Observable<DtoPack<any>> {
-        return this.http.delete<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, params));
+    protected queryDelete(owner: CRUDBusEmitter, routeParams: any): Observable<DtoPack<any>> {
+        return this.http.delete<DtoPack<any>>(this.urlBuilder.build(owner.schema['url'], owner.key, routeParams, owner.schema['params']));
     }
 
     public delete(msg: BusMessage | BusError): Promise<DtoPack<any>> {

@@ -1,6 +1,6 @@
 
 export type BusKey = {[key: string]: any};
-export type BusKeys = {[key: string]: BusKey};
+export type BusKeys<T extends BusKey = BusKey> = {[key: string]: T};
 export type BusMessageParams = {[param: string]: any};
 
 export type BusEmitter<T = {[key: string]: any}> = {sid: symbol, schema: T, key?: BusKey};

@@ -43,7 +43,7 @@ export class TargetEditFormComponent implements AfterViewInit {
    if (this.form.value.id === null) {
       this.bus$.publish(
         new CommandCreate(
-          this.targetId,
+          {...this.targetId, key: {tid: 'new'}},
           convertToJsonDTO(this.form.value, ['id'])
         )
       );

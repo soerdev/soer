@@ -8,14 +8,17 @@ import { WorkshopsService } from '../api/workshops/workshops.service';
 
 import { FilesListComponent } from './components/files-list/files-list.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';
+import { WorkbookKey } from './modules/abstracte/abstracte.const';
 import { CertificateComponent } from './modules/certificate/certificate/certificate.component';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
 import { OverviewComponent } from './modules/overview/overview.component';
 import { PayFormComponent } from './modules/payment/pay-form/pay-form.component';
+import { QuestionKey } from './modules/questions/questions.const';
 import { QuestionsRoutingModule } from './modules/questions/questions.routing.module';
 import { RoadmapComponent } from './modules/roadmap/roadmap.component';
 import { StreamsComponent } from './modules/streams/streams.component';
 import { TargetsRoutingModule } from './modules/targets/targets-routing.module';
+import { TargetKey, TemplateKey } from './modules/targets/targets.const';
 
 const routes: Routes = [
       { path: '', redirectTo: 'overview' },
@@ -91,16 +94,16 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
 
-    SrDTOModule.forChild({
+    SrDTOModule.forChild<WorkbookKey>({
       namespace: 'workbook',
-      schema: {url: 'v2/json/:access/workbook/:wid'},
+      schema: {url: 'v2/json/workbook/:wid'},
       keys: {
-        workbook: {wid: '?', access: ''},
-        workbooks: {wid: 'list', access: 'personal'},
+        workbook: {wid: '?'},
+        workbooks: {wid: 'personal'},
       }
     }),
 
-    SrDTOModule.forChild({
+    SrDTOModule.forChild<QuestionKey>({
       namespace: 'qa',
       schema: {url: 'questions/:qid'},
       keys: {
@@ -109,21 +112,21 @@ const routes: Routes = [
         question: {qid: '?'}
       }
     }),
-    SrDTOModule.forChild({
+    SrDTOModule.forChild<TargetKey>({
       namespace: 'targets',
-      schema: {url: 'v2/json/:access/targets/:tid'},
+      schema: {url: 'v2/json/targets/:tid'},
       keys: {
-        targets: {tid: 'list', access: 'personal'},
-        target: {tid: '?'}
+        target: {tid: '?'},
+        targets: {tid: 'personal'},
       }
     }),
-    SrDTOModule.forChild({
+    SrDTOModule.forChild<TemplateKey>({
       namespace: 'templates',
-      schema: {url: 'v2/json/:access/templates/:tid' },
+      schema: {url: 'v2/json/templates/:tid'},
       keys: {
-        templates: {tid: 'list', access: 'personal'},
-        publicTemplates: {tid: 'list', access: 'public'},
-        template: {tid: '?', access: ''}
+        template: {tid: '?'},
+        templates: {tid: 'personal'},
+        publicTemplates: {tid: 'public'},
       }
     }),
     QuestionsRoutingModule,

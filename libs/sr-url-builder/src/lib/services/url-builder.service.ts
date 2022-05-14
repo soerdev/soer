@@ -12,14 +12,24 @@ export class UrlBuilderService {
     console.log('Builder start with ', options);
   }
 
-  build(apiSuffix: string = '', key: BusKey = {}, params: BusMessageParams = {}): string {
+  build(apiSuffix: string = '', key: BusKey = {}, routeParams: BusMessageParams = {}, urlParams: Record<string, string> = {}): string {
     const urlSegments =  apiSuffix.split('/').map(part => {
       if (part[0] === ':') {
         const keyName = part.substring(1);
-        return ((key[keyName] === '?') ? params[keyName] : key[keyName]) || '';
+        return ((key[keyName] === '?') ? routeParams[keyName] : key[keyName]) || '';
       }
       return part;
     }).filter(value => !!value);
-    return `${this.options.apiRoot}${urlSegments.join('/')}`;  
+
+
+
+    const urlMappedParams = Object.keys(urlParams).map(paramName => {
+      if (urlParams[paramName] === '?') {
+        return key[paramName] ? `${paramName}=${key[paramName]}` : '';
+      }
+      return `${paramName}=${urlParams[paramName]}`;
+    }).filter(value => value !== '');
+    const urlResultParams = urlMappedParams.length ? `?${urlMappedParams.join('&')}` : '';
+    return `${this.options.apiRoot}${urlSegments.join('/')}${urlResultParams}`;  
   }
 }
