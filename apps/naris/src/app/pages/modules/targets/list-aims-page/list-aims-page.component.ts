@@ -7,7 +7,7 @@ import { filter, first, Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel, Visibility } from '../../../../api/targets/target.interface';
 import { propagateProgress, updateProgress } from '../progress.helper';
-import { DONE_PROGRESS, UNDONE_PROGRESS } from '../targets.const';
+import { DONE_PROGRESS, TargetKey, UNDONE_PROGRESS } from '../targets.const';
 
 
 
@@ -29,7 +29,7 @@ export class ListAimsPageComponent implements OnInit {
   public expanderCache: Visibility = {};
   public isSingleMode: boolean;
 
-  private targetsId: BusEmitter;
+  private targetsId: BusEmitter<TargetKey>;
 
   constructor(
       @Inject('target') private targetId: BusEmitter,
