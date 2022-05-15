@@ -27,6 +27,7 @@ export class ListAimsPageComponent implements OnInit {
   public readonly undoneProgress = UNDONE_PROGRESS;
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
   public expanderCache: Visibility = {};
+  public isSingleMode: boolean;
 
   private targetsId: BusEmitter;
 
@@ -38,7 +39,9 @@ export class ListAimsPageComponent implements OnInit {
       private route: ActivatedRoute
   ) { 
     this.targetsId = this.route.snapshot.data['targets'];
-    this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets'); }
+    this.targets$ = parseJsonDTOPack<TargetModel>(this.store$.of(this.targetsId), 'Targets'); 
+    this.isSingleMode = this.route.snapshot.params['tid'] !== undefined;
+  }
 
   ngOnInit() {
     this.createTasksVisibility()

@@ -9,7 +9,12 @@ button  {
 nz-progress  {
     margin: 0 0.4rem;
 }
-
+.toolbar {
+    text-align: right;
+    a {
+        margin: 5px;
+    }
+}
 .task {
     padding: 0.5rem 0;
     .tasks_expander i{

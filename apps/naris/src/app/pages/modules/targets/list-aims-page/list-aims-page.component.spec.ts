@@ -22,7 +22,7 @@ describe('ListAimsPageComponent', () => {
       ],
       providers: [
 
-        {provide: ActivatedRoute, useValue: {snapshot: {data: {targets: ANY_SERVICE}}}},
+        {provide: ActivatedRoute, useValue: {snapshot: {params: {}, data: {targets: ANY_SERVICE}}}},
         {provide: 'target', useValue: ANY_SERVICE},
         {provide: 'targets', useValue: ANY_SERVICE},
         {provide: NzNotificationService, useClass: MockNzNotificationService}
