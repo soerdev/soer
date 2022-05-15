@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandUpdate, DataStoreService, DtoPack, OK } from '@soer/sr-dto';
 import { NzNotificationComponent, NzNotificationDataOptions, NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable } from 'rxjs';
+import { filter, first, Observable } from 'rxjs';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel, Visibility } from '../../../../api/targets/target.interface';
 import { propagateProgress, updateProgress } from '../progress.helper';
@@ -75,16 +75,14 @@ export class ListAimsPageComponent implements OnInit {
   }
 
   createTasksVisibility(): void {
-    this.targets$.subscribe(
+    this.targets$.pipe(filter(target => target.status === OK), first()).subscribe(
       (target => {
-        if (target.status === OK) {
-          const visibility = target.items.reduce((acc: Visibility, curr: TargetModel) => {
-            acc[curr.id || 0] = this.isSingleMode;
-            return acc
-          }, {})
+        const visibility = target.items.reduce((acc: Visibility, curr: TargetModel) => {
+          acc[curr.id || 0] = this.isSingleMode;
+          return acc
+        }, {})
 
-          this.visibility = visibility
-        }
+        this.visibility = visibility;
     }))
   }
 
