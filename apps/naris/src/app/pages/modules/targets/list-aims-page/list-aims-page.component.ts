@@ -79,7 +79,7 @@ export class ListAimsPageComponent implements OnInit {
       (target => {
         if (target.status === OK) {
           const visibility = target.items.reduce((acc: Visibility, curr: TargetModel) => {
-            acc[curr.id || 0] = false
+            acc[curr.id || 0] = this.isSingleMode;
             return acc
           }, {})
 
