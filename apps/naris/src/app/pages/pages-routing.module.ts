@@ -7,6 +7,7 @@ import { TasksResolver } from '../api/tasks/tasks.resolver';
 import { WorkshopsService } from '../api/workshops/workshops.service';
 
 import { FilesListComponent } from './components/files-list/files-list.component';
+import { NoContentComponent } from './dumb/no-content/no-content.component';
 import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.module';
 import { WorkbookKey } from './modules/abstracte/abstracte.const';
 import { CertificateComponent } from './modules/certificate/certificate/certificate.component';
@@ -51,6 +52,11 @@ const routes: Routes = [
         data: { header: {title: 'Архитектурные стримы', subtitle: 'грамотно строим работу над приложением'}},
         resolve: {streams: StreamService},
         children: [
+          {
+            path: 'novideo',
+            component: NoContentComponent,
+            data: { header: {title: 'Смотрим стрим...'}}
+          },
           {
             path: ':videoSource/:videoId',
             component: ComposeVideoPlayerComponent,

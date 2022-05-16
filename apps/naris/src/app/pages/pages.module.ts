@@ -36,7 +36,8 @@ import { RouterComposeModule } from "./router-compose/router-compose.module";
     AbstracteModule,
     PaymentModule,
     CertificateModule,
-    SrDTOModule
+    SrDTOModule,
+    NzModalModule
   ],
   declarations: [
     DefaultComponent,

@@ -26,8 +26,11 @@
 <router-outlet></router-outlet>
 <ng-template #folderUp>
   <nz-card nzHoverable [nzCover]="coverTemplate" (click)="onFolderUp()" >
-    <nz-card-meta [nzTitle]="'Назад...'"></nz-card-meta>
+    <nz-card-meta [nzTitle]="back"></nz-card-meta>
 </nz-card>
+<ng-template #back>
+  <i nz-icon nzType="arrow-left"></i>
+</ng-template>
 <ng-template #coverTemplate>
     <div class="card-cover_folder">
       <div class="folder-icon">

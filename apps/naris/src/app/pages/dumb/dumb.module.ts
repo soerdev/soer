@@ -12,6 +12,7 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { SrTextEditComponent } from './sr-text-edit/sr-text-edit.component';
 import { RouterModule } from '@angular/router';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NoContentComponent } from './no-content/no-content.component';
 
 
 
@@ -22,7 +23,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     AccessDeniedComponent,
     UnderDevelopmentComponent,
     AudioPlayerComponent,
-    SrTextEditComponent
+    SrTextEditComponent,
+    NoContentComponent
   ],
   imports: [
     CommonModule,

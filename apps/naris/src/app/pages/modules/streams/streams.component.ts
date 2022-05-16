@@ -14,9 +14,7 @@ export class StreamsComponent implements OnInit, OnDestroy {
   public streams: VideoModel[] = [];
   public isFolderOpen = -1;
   private queryParamsSub: Subscription | null = null;
-  constructor(private route: ActivatedRoute, private router: Router) {
-
-  }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.queryParamsSub = this.route.queryParams.subscribe(params => {
@@ -55,8 +53,14 @@ export class StreamsComponent implements OnInit, OnDestroy {
     if (video.vimeo_id) {
       videoId = video.vimeo_id;
       videoSource = 'vimeo';
-    } 
-      this.router.navigate([videoSource, videoId], {
+    }
+    
+    if (videoId === undefined) {
+      const queryParams = this.route.snapshot.queryParams;
+      this.router.navigate(['novideo'], {relativeTo: this.route, queryParams});
+      return;
+    }
+    this.router.navigate([videoSource, videoId], {
         relativeTo: this.route,
         queryParams:{fid: this.isFolderOpen === -1 ? undefined : this.isFolderOpen}
       }).catch(() => console.error(`
