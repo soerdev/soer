@@ -30,7 +30,7 @@ export class ComposeVideoPlayerComponent implements OnInit, OnDestroy {
   }
 
   onClose(): void {
-    this.router.navigate(['.'], {relativeTo: this.route.parent});
+    this.router.navigate(['.'], {relativeTo: this.route.parent, queryParams: {fid: this.route.snapshot.queryParams['fid']}});
   }
 
 }

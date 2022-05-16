@@ -1,7 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { CiCircleFill } from '@ant-design/icons-angular/icons';
-import { BusError, BusMessage, BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, CRUDMethods, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
+import { BusEmitter, BusError, BusMessage, isBusMessage, MixedBusService } from '@soer/mixed-bus';
+import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 

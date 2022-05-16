@@ -38,7 +38,6 @@ export class EditAbstractePageComponent implements OnDestroy {
       parseJsonDTO<WorkbookModel>(this.store$.of(this.workbookId), 'workbook' + Math.random()).subscribe(
         data => {
           const form = data?.pop() || EMPTY_WORKBOOK;
-          console.log(form)
           this.form.patchValue(form);
         }
       )

@@ -4,5 +4,6 @@ export interface VideoModel {
     thumb_url?: string;
     title: string;
     desc: string;
+    children?: VideoModel[];
 
 }

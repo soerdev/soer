@@ -1,13 +1,22 @@
 <div nz-row [nzGutter]="[24, 24]" >
   
     <ng-container *ngIf="streams.length > 0;else nocontent">
-        <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let video of streams">
-          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="showVideo(video)" >
+        <div *ngIf="isFolderOpen >= 0" class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8">
+          <ng-container *ngTemplateOutlet="folderUp"></ng-container>
+        </div>
+        <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let video of streams; index as i ">
+          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="showVideoOrOpenFolder(video, i)" >
               <nz-card-meta [nzTitle]="video.title" [nzDescription]="video.desc"></nz-card-meta>
           </nz-card>
           <ng-template #coverTemplate>
-              <div class="card-cover_placeholder">
-                <img [src]='video.thumb_url' class="card-cover_image" />
+              <div *ngIf="video.thumb_url && !video.children" class="card-cover_placeholder">
+                <img  [src]='video.thumb_url' class="card-cover_image" />
+              </div>
+              <div *ngIf="video.children" class="card-cover_folder">
+                <div class="folder-icon">
+                  <i nz-icon [nzType]="'folder'" nzTheme="outline"></i>
+                  <div>{{video.children.length}}</div>
+                </div>
               </div>
           </ng-template>
         </div>
@@ -15,8 +24,20 @@
 </div>
 
 <router-outlet></router-outlet>
+<ng-template #folderUp>
+  <nz-card nzHoverable [nzCover]="coverTemplate" (click)="onFolderUp()" >
+    <nz-card-meta [nzTitle]="'Назад...'"></nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+    <div class="card-cover_folder">
+      <div class="folder-icon">
+        <i nz-icon [nzType]="'folder-open'" nzTheme="outline"></i>
+        <div>..</div>
+      </div>
+    </div>
+</ng-template>
 
-
+</ng-template>
 <ng-template #nocontent>
   <soer-access-denied></soer-access-denied>
 </ng-template>

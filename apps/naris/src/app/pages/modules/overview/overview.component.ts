@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map } from "rxjs/operators";
 import { parseJsonDTOPack } from '../../../api/json.dto.helpers';
 import { QuestionModel } from '../../../api/questions/question.model';
+import { VideoModel } from '../../../api/streams/stream.model';
 import { TargetModel } from '../../../api/targets/target.interface';
 import { WorkbookModel } from '../../../api/workbook/workbook.model';
 
@@ -37,7 +38,13 @@ export class OverviewComponent {
       return data.payload;
     })); 
 
-
+    const countVideosIn = (videos: VideoModel[]): {items: {length: number}} => {
+      const length = videos.reduce((acc: number, item) => acc + (item.children ? item.children.length : 1), 0)
+      return {
+        items: {length}
+      };
+    }
+    
     this.metrics = [
       {
         title: 'Цели',
@@ -59,13 +66,13 @@ export class OverviewComponent {
       },
       {
         title: 'Стримы',
-        list$: of({items: this.data['streams']}),
+        list$: of(countVideosIn(this.data['streams'])),
         icon: 'play-circle',
         url: '#!/pages/streams'
       },
       {
         title: 'Воркшопы',
-        list$: of({items: this.data['workshops']}),
+        list$: of(countVideosIn(this.data['workshops'])),
         icon: 'experiment',
         url: '#!/pages/workshops'
       },
