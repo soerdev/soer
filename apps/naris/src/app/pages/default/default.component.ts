@@ -6,7 +6,7 @@ import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-d
 import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MAIN_MENU } from './menu.const';
 
@@ -21,7 +21,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   isMobileView = false;
   title = '';
   subtitle = '';
-  subscriptions: any;
+  subscriptions: Subscription[] = [];
   isShowOverlay = true;
 
   public user: Observable<DtoPack<JWTModel>>;
