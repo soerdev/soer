@@ -120,7 +120,7 @@ const routes: Routes = [
       keys: {
         questionsAll: {qid: 'all'},
         questions: {qid: ''},
-        question: {qid: '?'}
+        question: {qid: '?'} 
       }
     }),
     SrDTOModule.forChild<TargetKey>({
