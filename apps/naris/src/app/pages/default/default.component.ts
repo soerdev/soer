@@ -3,12 +3,13 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
 import { AuthService, JWTModel } from '@soer/sr-auth';
 import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
+import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-
 import { MAIN_MENU } from './menu.const';
+
 
 @Component({
   selector: 'soer-default',
@@ -17,6 +18,7 @@ import { MAIN_MENU } from './menu.const';
 })
 export class DefaultComponent implements OnInit, OnDestroy {
   isCollapsed = false;
+  isMobileView = false;
   title = '';
   subtitle = '';
   subscriptions: any;
@@ -34,7 +36,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private bus$: MixedBusService,
               private store$: DataStoreService,
-              private message: NzMessageService
+              private message: NzMessageService,
+              private breakpointService: NzBreakpointService
               ) {
     this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
     this.helpUs$ = this.store$.of(this.issuesId).pipe(map(data => {
@@ -50,6 +53,9 @@ export class DefaultComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = [
+      this.breakpointService.subscribe(siderResponsiveMap).subscribe(size => {
+        this.isMobileView = ['xs', 'sm', 'md', 'lg'].includes(size);
+      }),
       this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(this.findTitle.bind(this)),
       this.bus$.of(BusError).subscribe(errorMessage => {
@@ -100,7 +106,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
 
   onClose(): void {
-    console.log('CLOSE!!!');
-    
+    console.log('CLOSE!!!');    
   }
 }

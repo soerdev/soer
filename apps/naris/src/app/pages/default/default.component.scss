@@ -77,14 +77,6 @@ nz-content {
 }
 
 @media screen and (max-width: 768px) {
-  ::ng-deep .ant-page-header-heading-sub-title {
-    display: none;
-  }
-
-  ::ng-deep .ant-page-header {
-    padding: 24px 16px 24px 50px;
-  }
-
   .main-content {
     padding: 50px 20px 50px 40px;
     margin: 10px 0;
@@ -97,9 +89,6 @@ nz-content {
 
 
 @media screen and (max-width: 460px) {
-  ::ng-deep .ant-page-header-heading {
-    flex-flow: column-reverse;
-  }
 }
 
 
