@@ -18,12 +18,12 @@
       </ul>
     </nz-sider>
     <nz-layout>
-          <nz-page-header class="site-page-header" [nzTitle]="title" [nzSubtitle]="isMobileView ? undefined : subtitle">
+          <nz-page-header class="site-page-header" [nzTitle]="title" [nzSubtitle]="['md', 'lg', 'xl', 'xxl'].includes(breakpoint) ? subtitle : undefined">
             <nz-page-header-extra>
+              <ng-container *ngTemplateOutlet="role; context: {role: userInfo.role}"></ng-container>
               <ng-container *ngIf="!isMobileView">
                 <a *ngIf="userInfo.role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить уровень</a>
-                <span class="price-label" 
-                [ngClass]="{'pro-label': userInfo.role === 'PRO', 'workshop-label': userInfo.role === 'WORKSHOP', 'stream-label': userInfo.role === 'STREAM'}">{{userInfo.role}}</span>
+
                 <ng-container *ngIf="(helpUs$ | async) as helpUs">
                 <nz-badge *ngIf="helpUs.length > 0" [nzCount]="helpUs.length" [nzOverflowCount]="9">
                   <button nz-button nzTrigger="click" nzType="default" nzShape="circle"
@@ -66,4 +66,9 @@
 
 <ng-template #userError>
   <p>Произошла ошибка идентификации пользователя, обратитесь в тех. поддержку - soersoft@gmail.com</p>
+</ng-template>
+
+<ng-template #role let-role="role">
+  <span class="price-label" 
+  [ngClass]="{'pro-label': role === 'PRO', 'workshop-label': role === 'WORKSHOP', 'stream-label': role === 'STREAM'}">{{role}}</span>
 </ng-template>

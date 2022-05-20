@@ -3,11 +3,12 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
 import { AuthService, JWTModel } from '@soer/sr-auth';
 import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
-import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
+import { BreakpointMap, NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { Visibility } from '../../api/targets/target.interface';
 import { MAIN_MENU } from './menu.const';
 
 
@@ -19,10 +20,17 @@ import { MAIN_MENU } from './menu.const';
 export class DefaultComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   isMobileView = false;
+  breakpoint = '';
   title = '';
   subtitle = '';
   subscriptions: Subscription[] = [];
   isShowOverlay = true;
+  header: Visibility = {
+    pay: true,
+    level: true, 
+    github: true,
+    messages: true
+  }
 
   public user: Observable<DtoPack<JWTModel>>;
   public helpUs$: Observable<any>;
@@ -54,6 +62,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions = [
       this.breakpointService.subscribe(siderResponsiveMap).subscribe(size => {
+        this.breakpoint = size;
         this.isMobileView = ['xs', 'sm', 'md', 'lg'].includes(size);
       }),
       this.router.events.pipe(filter(event => event instanceof NavigationEnd))
