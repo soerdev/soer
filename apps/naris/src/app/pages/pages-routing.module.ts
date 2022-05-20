@@ -71,6 +71,11 @@ const routes: Routes = [
         resolve: {streams: WorkshopsService},
         children: [
           {
+            path: 'novideo',
+            component: NoContentComponent,
+            data: { header: {title: 'Смотрим стрим...'}}
+          },
+          {
             path: ':videoSource/:videoId',
             component: ComposeVideoPlayerComponent,
             data: { header: {title: 'Смотрим воркшоп...'}}
