@@ -21,7 +21,10 @@ export class FilesListComponent implements OnInit {
     this.webFiles = this.route.snapshot.data['webfiles'];
   }
 
-  url(file: any, level: any): string {
+  url(file: string, level: string): string {
+    if (file.match(/^http[s]?:/)) {
+      return file;
+    }
     return `${environment.assetsUrl}${level}/${file}`;
   }
 
