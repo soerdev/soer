@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ANY_SERVICE } from '@soer/mixed-bus';
 
 import { TargetEditFormComponent } from './target-edit-form.component';
@@ -12,6 +13,7 @@ describe('TargetEditFormComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ TargetEditFormComponent ],
       providers: [
+        {provide: ActivatedRoute, useValue: {snapshot: {data: {afterCommandDoneRedirectTo: ''}}}},
         {provide: 'target', useValue: ANY_SERVICE},
         FormBuilder
       ]

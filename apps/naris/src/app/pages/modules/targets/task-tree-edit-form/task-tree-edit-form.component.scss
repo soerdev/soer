@@ -1,5 +1,5 @@
 .task_form {
-    padding: 2em;
+    padding: 1.5em;
     height: 100%;
     overflow: auto;
     width: 100%;
@@ -16,6 +16,9 @@
 
 nz-breadcrumb {
     margin: 0 0 2rem;
+}
+::ng-deep .ant-timeline-item-head-custom {
+    background-color: transparent;
 }
 
 ::ng-deep .ant-breadcrumb-link, ::ng-deep .ant-breadcrumb-separator   {
@@ -54,7 +57,11 @@ header {
 content {
     flex-grow: 1;
     overflow: auto;
-    padding: 5px;
+    padding: 2rem 10px 0rem 10px;
+    margin: 1rem 0;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
 }
 
 footer {

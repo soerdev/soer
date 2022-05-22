@@ -1,14 +1,10 @@
 
 <div class="target_form">
-    <nz-steps [nzCurrent]="1">
-        <nz-step nzTitle="Выполнено" nzDescription="Определить цель"></nz-step>
-        <nz-step nzTitle="Выполняется" nzDescription="Создать цель"></nz-step>
-        <nz-step nzTitle="Ожидается" nzDescription="Определить конкретные шаги"></nz-step>
-    </nz-steps>
     <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" nzLayout="vertical">
-        <nz-form-item>
+        <nz-form-item class="title">
+            <nz-form-label [nzRequired]="true">Цель:</nz-form-label>
             <nz-form-control [nzErrorTip]="titleErrorTpl">
-                <input nz-input formControlName="title"  placeholder="Обязательное поле" #titleElem />
+                <input nz-input formControlName="title"  placeholder="Коротко сформулируйте цель" #titleElem />
                 <ng-template #titleErrorTpl let-control>
                     <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
                     <ng-container *ngIf="control.hasError('maxlength')">Макс. 140 символов</ng-container>
@@ -16,15 +12,16 @@
             </nz-form-control>
         </nz-form-item>
 
-        <nz-form-item>
+        <nz-form-item class="content">
+            <nz-form-label [nzRequired]="false">Мотивация:</nz-form-label>
             <nz-form-control>
                 <nz-textarea-count [nzMaxCharacterCount]="512">
-                    <textarea nz-input rows="8" placeholder="После достижения этой цели я смогу..." formControlName="overview"></textarea>
+                    <textarea nz-input rows="8" placeholder="Опишите почему вы хотите достичь этой цели, это будет ваша мотивация" formControlName="overview"></textarea>
                 </nz-textarea-count>
             </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"  [disabled]="!form.valid">Создать цель</button>
+        <nz-form-item class="footer">
+            <button nz-button  [nzType]="'primary'"  [disabled]="!form.valid">Далее</button>
         </nz-form-item>
     </form>
 </div>

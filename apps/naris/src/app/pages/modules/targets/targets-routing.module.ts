@@ -66,7 +66,10 @@ const routes: Routes = [
       {
         path: 'target/new',
         component: TargetEditFormComponent,
-        outlet: 'popup'
+        outlet: 'popup',
+        data: {
+          afterCommandDoneRedirectTo: [{outlets: {popup: ['target', 'edit', ':id']}}]
+        }
       },
       {
         path: 'target/edit/:tid',

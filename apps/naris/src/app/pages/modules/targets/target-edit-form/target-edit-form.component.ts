@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class TargetEditFormComponent implements AfterViewInit {
     @Inject('target') private targetId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {
       this.form = this.formBuilder.group({
         id: [null],
@@ -44,7 +46,8 @@ export class TargetEditFormComponent implements AfterViewInit {
       this.bus$.publish(
         new CommandCreate(
           {...this.targetId, key: {tid: 'new'}},
-          convertToJsonDTO(this.form.value, ['id'])
+          convertToJsonDTO(this.form.value, ['id']),
+          {afterCommandDoneRedirectTo: this.route.snapshot.data['afterCommandDoneRedirectTo'], skipInfo: true}
         )
       );
     } else {

@@ -1,32 +1,20 @@
 <div class="task_form">
-    <header>
-        <nz-steps [nzCurrent]="2">
-            <nz-step nzTitle="Выполнено" nzDescription="Определить цель"></nz-step>
-            <nz-step nzTitle="Выполнено" nzDescription="Создать цель"></nz-step>
-            <nz-step nzTitle="Выполняется" nzDescription="Определить конкретные шаги"></nz-step>
-        </nz-steps> 
+    <header *ngIf="activeTarget">
+        <h5 class="target-title"
+        nz-typography
+        nzEditable
+        [nzEditTooltip]="null"
+        [(nzContent)]="activeTarget.title"
+        (nzContentChange)="save.emit(target)"></h5>
+    <p class="target-title"
+    nz-typography
+    nzEditable
+    [nzEditTooltip]="null"
+    [(nzContent)]="activeTarget.overview"
+    (nzContentChange)="save.emit(target)"></p>
     </header>
         <ng-container *ngIf="activeTarget">
             <content>
-                <div>
-                    <a class="back"
-                            nzSize="small"
-                            *ngIf="history.length > 0" 
-                            (click)="truncateHistory(history.length - 1)"><i nz-icon nzType="arrow-left" nzTheme="outline"></i></a>
-                    <h5 class="target-title"
-                        nz-typography
-                        nzEditable
-                        [nzEditTooltip]="null"
-                        [(nzContent)]="activeTarget.title"
-                        (nzContentChange)="save.emit(target)"></h5>
-                    <p class="target-title"
-                    nz-typography
-                    nzEditable
-                    [nzEditTooltip]="null"
-                    [(nzContent)]="activeTarget.overview"
-                    (nzContentChange)="save.emit(target)"></p>
-                </div>
-                <nz-divider *ngIf="target.tasks.length > 0"></nz-divider>
                 <nz-timeline *ngIf="activeTarget !== undefined && activeTarget.tasks.length > 0">
                     <nz-timeline-item *ngFor="let task of activeTarget.tasks; let ind = index" [nzDot]="task.progress === 100 ? complete : working ">
                         <sr-text-edit *ngIf="editTaskByIndex === ind" [(srText)]="task.title" (ok)="onSaveTask(target, $event)" (cancel)="onCancelEdit($event)"></sr-text-edit>
@@ -74,21 +62,29 @@
                   </nz-divider>
             </content>
             <footer>
-                <button nz-button nzType="primary"
-                        *ngIf="history.length > 0"
-                        (click)="truncateHistory(history.length - 1)">
-                        <i nz-icon nzType="arrow-left" nzTheme="outline"></i></button>
+                    <button nz-button nzType="primary"
+                            *ngIf="history.length > 0"
+                            (click)="truncateHistory(history.length - 1)">
+                            <i nz-icon nzType="arrow-left" nzTheme="outline"></i></button>
 
-                <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
-                <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="inTemplate.next(target);">В шаблон</button>
-                <button
-                    *ngIf="history.length === 0"
-                    nz-button nzType="default"  nzDanger
-                    nz-popconfirm
-                    nzPopconfirmTitle="Точно удалить?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="delete.next(target)">
-                Удалить</button>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <button *ngIf="history.length === 0" 
+                                nzPopconfirmTitle="Вы уверены, что хотите создать шаблон из этой цели?"
+                                nzPopconfirmPlacement="bottom"
+                                nz-popconfirm
+                                nz-button nzType="primary" (nzOnConfirm)="inTemplate.next(target);">В шаблон</button>
+                            <button
+                                *ngIf="history.length === 0"
+                                nz-button nzType="default"  nzDanger
+                                nz-popconfirm
+                                nzPopconfirmTitle="Точно удалить?"
+                                nzPopconfirmPlacement="bottom"
+                                (nzOnConfirm)="delete.next(target)">
+                            Удалить</button>
+                        </div>
+                        <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
+                    </div>
             </footer>
     </ng-container>
 

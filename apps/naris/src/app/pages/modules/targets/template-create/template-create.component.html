@@ -7,7 +7,7 @@
                 <textarea nz-input rows="8" placeholder="Общее описание цели" [value]="template.overview" #overview></textarea>
         </div>
         <div class="form-item">
-                <nz-switch [(ngModel)]="isPublic"></nz-switch> Публичный шаблон
+                <nz-switch [(ngModel)]="isPublic"></nz-switch> Публичный шаблон (будет виден другим пользователям)
         </div>
         <div class="form-item">
             <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" (click)="createTemplate(titleElem, overview, template)">Создать шаблон</button>
