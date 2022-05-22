@@ -21,33 +21,41 @@ nz-card {
 .targets {
     margin: 1rem auto !important;
 }
-.target {
-    &-card {
+.card {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.5rem;
 
         &_title {
-            width: calc(100% - 90px);
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
             a {
-                display: inline-flex;
+                display: inline-block;
+                width: 100%;
                 overflow: hidden;
-                width: calc(100% - 80px);
+                text-overflow: ellipsis;
             }
-
         }
 
         &_toolbar {
-            width: 90px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
             text-align: right;
             a {
-                margin: 5px;
+                margin: 0 5px;
             }
         }
-    }
-    
+
+        &_progress {
+            width: 50%;
+            margin: 0 auto;
+        }
 }
+
 .task {
     padding: 0.5rem 0 0.5rem 15px;
     .tasks_expander i{
