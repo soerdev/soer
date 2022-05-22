@@ -1,24 +1,34 @@
 <ng-container *ngIf="(targets$ | async)?.items as targets">
     <ng-container *ngIf="targets.length > 0;else nocontent">
+
+        <div nz-row [nzGutter]="[24, 24]" class="targets" >
         <ng-container *ngFor="let target of targets; let index = index">
-            <nz-divider [nzText]="targetHeader"></nz-divider>
-            <ng-template #targetHeader>
-                <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress" nzType="circle" [nzWidth]="30"></nz-progress>
-                <a  [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', target.id]}}]" nz-button nzType="link">{{target.title}}</a>
-            </ng-template>
-            <div class="toolbar">
-                <a nz-button *ngIf="!isSingleMode" [routerLink]="['filter', target.id]"><i nz-icon nzType="pushpin"></i></a> 
-                <a nz-button *ngIf="isSingleMode" [routerLink]="['/', 'pages', 'targets']"><i nz-icon nzType="bars"></i></a>
-                <a nz-button (click)="toggleTaskVisibility(target.id)"><i nz-icon [nzType]="visibility[target.id || 0] ? 'eye' : 'eye-invisible'"></i></a> 
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="isSingleMode ? 24 : 12" style="margin: 0 auto;">
+        <nz-card> 
+            <div class="target-card">
+                <div class="target-card_title">
+                    <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress" nzType="circle" [nzWidth]="60"></nz-progress>
+                    <a [title]="target.title" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', target.id]}}]" nz-button nzType="link">{{target.title}}</a>
+                    </div>
+    
+                <div class="target-card_toolbar">
+                    <a nz-button nzType="link" *ngIf="!isSingleMode" [routerLink]="['filter', target.id]"><i nz-icon nzType="pushpin"></i></a> 
+                    <a nz-button nzType="link" *ngIf="isSingleMode" [routerLink]="['/', 'pages', 'targets']"><i nz-icon nzType="bars"></i></a>
+                    <a nz-button nzType="link" (click)="toggleTaskVisibility(target.id)"><i nz-icon [nzType]="visibility[target.id || 0] ? 'eye' : 'eye-invisible'"></i></a> 
+                </div>
             </div>
+
             <ng-container *ngTemplateOutlet="listTasks; context: {target: target, root: target, visibility: visibility[target.id || 0], taskId: index+''}"></ng-container>
+        </nz-card>
+        </div>
         </ng-container>
+        </div>
     </ng-container>
 
 </ng-container>
 
 <ng-template #done><i nz-icon nzType="check"></i></ng-template>
-<ng-template #nocontent>Нет задач на сегодня</ng-template>
+<ng-template #nocontent><nz-empty nzNotFoundImage="simple"></nz-empty></ng-template>
 
 <ng-template #notify let-notification>
     <div class="ant-notification-notice-content">

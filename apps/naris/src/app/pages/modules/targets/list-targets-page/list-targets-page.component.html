@@ -1,14 +1,9 @@
 <div class="target-panel">
-    <div nz-row [nzGutter]="[24, 24]" >  
-        <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
-            <a nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
-        </div>
-    </div>
-
     <ng-container *ngIf="(targets$ | async)?.items as topics">
+        <ng-container *ngIf="topics.length > 0;else nocontent">
+        <a nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
         <div nz-row [nzGutter]="[24, 24]" >
-            <ng-container *ngIf="topics.length > 0;else nocontent">
-            <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">
+           <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">
                 <nz-card  [nzActions]="[actionEdit, actionDelete]" >
                     <p>{{topic.title}}</p>
                 </nz-card>
@@ -25,13 +20,15 @@
                     </a>
                 </ng-template>
             </div>
-        </ng-container>
+        
         </div>
+        </ng-container>
 
         <ng-template #nocontent>
-        <div  nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8">
-            Нет данных
-        </div>
+            <nz-empty nzNotFoundContent="Нет ни одной цели" nzNotFoundImage="simple"   [nzNotFoundFooter]="footerNoContent"></nz-empty>
+        </ng-template>
+        <ng-template #footerNoContent>
+            <a nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
         </ng-template>
         <ng-template #downloadIcon>скачать</ng-template>
     </ng-container>

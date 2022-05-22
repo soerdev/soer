@@ -38,6 +38,7 @@ import { SrDTOModule } from '@soer/sr-dto';
 import { TemplateCreateComponent } from './template-create/template-create.component';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
     NzCollapseModule,
     NzSwitchModule,
     NzListModule,
+    NzEmptyModule,
     DumbModule,
     RouterModule,
     SrDTOModule

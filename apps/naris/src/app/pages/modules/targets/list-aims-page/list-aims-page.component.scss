@@ -9,18 +9,57 @@ button  {
 nz-progress  {
     margin: 0 0.4rem;
 }
-.toolbar {
-    text-align: right;
-    a {
-        margin: 5px;
+
+::ng-deep .ant-btn>span {
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+nz-card {
+    height: 100%;
+}
+.targets {
+    margin: 1rem auto !important;
+}
+.target {
+    &-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        &_title {
+            width: calc(100% - 90px);
+            a {
+                display: inline-flex;
+                overflow: hidden;
+                width: calc(100% - 80px);
+            }
+
+        }
+
+        &_toolbar {
+            width: 90px;
+            text-align: right;
+            a {
+                margin: 5px;
+            }
+        }
     }
+    
 }
 .task {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0 0.5rem 15px;
     .tasks_expander i{
         margin: 0 0.5rem 0 0;
     }
     .aim {
+        &_card {
+            
+            .ant-btn>span {
+                display: inline;
+            }
+        }
        padding: 0.5rem 1.85rem;
     }
     .task_statistic {
