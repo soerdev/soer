@@ -20,7 +20,7 @@
 
 <ng-container *ngIf="(target$ | async) as targets">
   <nz-divider nzText="Следующий шаг" nzOrientation="left"></nz-divider>
-  <div nz-row [nzGutter]="[24, 24]" class="metrics" >
+  <div nz-row [nzGutter]="[24, 24]" class="steps metrics" >
     <ng-container  *ngIf="targets.status === 'ok' && targets.items.length > 0; else createFromTemplate">
           <ng-container  *ngFor="let target of targets.items">
             <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">

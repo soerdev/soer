@@ -2,6 +2,20 @@
     border-radius: 5px;
 }
 
+.steps {
+    ::ng-deep { 
+        .ant-statistic-title {
+            height: 2.8rem;
+            min-height: 2.8rem;
+            overflow: hidden;
+        }
+        .ant-statistic-title:hover {
+            height: auto;
+            overflow: visible;
+        }
+    }
+
+}
 
 .contacts-level {
     ::ng-deep i.anticon {
