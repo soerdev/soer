@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { ModuleWithProviders, Provider } from "@angular/compiler/src/core";
-import { NgModule } from "@angular/core";
+
+import { ModuleWithProviders, NgModule, Provider } from "@angular/core";
 import { BusEmitter, BusKey, BusKeys, MixedBusService } from "@soer/mixed-bus";
 import { DeSerializeJsonPipe, DtoLastItemPipe } from "./dto.pipes";
 import { DataStoreService } from "./services/data-store.service";
@@ -28,14 +28,14 @@ interface CrudOptions<T extends BusKey> {
 })
 export class SrDTOModule {
 
-  static forChild<T extends BusKey = BusKey>(options: CrudOptions<T>): ModuleWithProviders {
+  static forChild<T extends BusKey = BusKey>(options: CrudOptions<T>): ModuleWithProviders<SrDTOModule> {
     return {
       ngModule: SrDTOModule,
       providers: createcrudEmitters<T>(options)
     };
   }
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SrDTOModule> {
     return {
       ngModule: SrDTOModule,
       providers: [StoreCrudService, DataStoreService]
