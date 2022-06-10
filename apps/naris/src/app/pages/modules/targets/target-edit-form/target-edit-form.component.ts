@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
@@ -18,12 +18,12 @@ export class TargetEditFormComponent implements AfterViewInit {
   @ViewChild('titleElem') titleElem: any;
 
   log = console.log;
-  form: FormGroup;
+  form: UntypedFormGroup;
   constructor(
     @Inject('target') private targetId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute
   ) {
       this.form = this.formBuilder.group({

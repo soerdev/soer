@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@soer/sr-auth';
 import { MEDIUM_TIMEOUT_INTERVAL, NORMAL_TIMEOUT_INTERVAL } from '../../../environments/constants';
@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  validateForm!: FormGroup;
+  validateForm!: UntypedFormGroup;
   subscriptions: Subscription[] = [];
 
   loading = false;
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
               private http: HttpClient,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private auth: AuthService,
               private route: ActivatedRoute,
               private router: Router) {}

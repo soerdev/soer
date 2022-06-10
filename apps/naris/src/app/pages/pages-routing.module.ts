@@ -22,7 +22,7 @@ import { TargetsRoutingModule } from './modules/targets/targets-routing.module';
 import { TargetKey, TemplateKey } from './modules/targets/targets.const';
 
 const routes: Routes = [
-      { path: '', redirectTo: 'overview' },
+      { path: '', redirectTo: 'overview', pathMatch: 'prefix' },
       {
         path: 'certificate',
         data: { header: {title: 'Подарочный сертификат', subtitle: 'использовать сертификат'}},

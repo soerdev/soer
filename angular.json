@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "mixed-bus": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/mixed-bus",
       "sourceRoot": "libs/mixed-bus/src",
@@ -9,7 +10,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/mixed-bus"],
+          "outputs": [
+            "coverage/libs/mixed-bus"
+          ],
           "options": {
             "jestConfig": "libs/mixed-bus/jest.config.js",
             "passWithNoTests": true
@@ -28,6 +31,7 @@
       "tags": []
     },
     "naris": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/naris",
       "sourceRoot": "apps/naris/src",
@@ -35,7 +39,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/naris",
             "index": "apps/naris/src/index.html",
@@ -120,7 +126,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/naris"],
+          "outputs": [
+            "coverage/apps/naris"
+          ],
           "options": {
             "jestConfig": "apps/naris/jest.config.js",
             "passWithNoTests": true
@@ -130,6 +138,7 @@
       "tags": []
     },
     "naris-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/naris-e2e",
       "sourceRoot": "apps/naris-e2e/src",
       "projectType": "application",
@@ -148,16 +157,23 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/naris-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/naris-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["naris"]
+      "implicitDependencies": [
+        "naris"
+      ]
     },
     "sr-auth": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/sr-auth",
       "sourceRoot": "libs/sr-auth/src",
@@ -165,7 +181,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/sr-auth"],
+          "outputs": [
+            "coverage/libs/sr-auth"
+          ],
           "options": {
             "jestConfig": "libs/sr-auth/jest.config.js",
             "passWithNoTests": true
@@ -184,6 +202,7 @@
       "tags": []
     },
     "sr-dto": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/sr-dto",
       "sourceRoot": "libs/sr-dto/src",
@@ -191,7 +210,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/sr-dto"],
+          "outputs": [
+            "coverage/libs/sr-dto"
+          ],
           "options": {
             "jestConfig": "libs/sr-dto/jest.config.js",
             "passWithNoTests": true
@@ -210,6 +231,7 @@
       "tags": []
     },
     "sr-url-builder": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/sr-url-builder",
       "sourceRoot": "libs/sr-url-builder/src",
@@ -217,7 +239,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/sr-url-builder"],
+          "outputs": [
+            "coverage/libs/sr-url-builder"
+          ],
           "options": {
             "jestConfig": "libs/sr-url-builder/jest.config.js",
             "passWithNoTests": true

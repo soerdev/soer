@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO, parseJsonDTO } from '../../../../api/json.dto.helpers';
 import { EMPTY_WORKBOOK, WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { DataStoreService } from '@soer/sr-dto';
@@ -16,12 +16,12 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditAbstractePageComponent implements OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   public previewFlag = false;
   private workbookId: BusEmitter;
   subscriptions: Subscription[] = [];
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private bus$: MixedBusService,
     private store$: DataStoreService,
     private route: ActivatedRoute

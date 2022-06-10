@@ -14,7 +14,7 @@ const routes: Routes = [
       header: { title: 'Вопросы и ответы', subtitle: 'здесь можно получить аудио-ответ' },
     },
     children: [
-      { path: '', redirectTo: 'my'},
+      { path: '', redirectTo: 'my', pathMatch: 'prefix'},
       {
         path: 'my',
         component: ListQuestionsPageComponent,

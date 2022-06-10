@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
@@ -12,13 +12,13 @@ import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
 export class QuestionFormComponent {
 
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
     @Inject('question') private questionId: BusEmitter,
     private bus$: MixedBusService,
     private store$: DataStoreService,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {
     this.form = this.formBuilder.group({
       id: [null],
