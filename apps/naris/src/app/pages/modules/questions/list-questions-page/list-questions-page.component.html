@@ -19,33 +19,37 @@
 <ng-template #listQuestions let-showAddButton="showAddButton" let-showRemoveButton="showRemoveButton" let-questions="questions" let-empty="empty" let-target="target">
         <ng-container *ngIf="questions.length > 0; else empty">
 
-        <div *ngIf="showAddButton" nz-row [nzGutter]="[24, 24]" >  
+        <div *ngIf="showAddButton" nz-row [nzGutter]="[24, 24]" >
             <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
                 <button (click)="createQuestion()" nz-button [nzType]="'primary'">Добавить вопрос</button>
             </div>
         </div>
 
-        <div nz-row [nzGutter]="[24, 24]" >    
-            <ng-container *ngFor="let question of questions">
-                <div class="question-card" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
-                    <nz-card [nzActions]="showRemoveButton ? [actionPlay, actionDelete] : [actionPlay]" >
-                            {{question.question}}                                                
-                    </nz-card>
-                </div>
+        <nz-list nzItemLayout="horizontal">
+            <nz-list-item *ngFor="let question of questions">
+                <nz-list-item-meta
+                    [nzAvatar]="actionPlay">
+                    <nz-list-item-meta-title>
+                      {{question.question}}
+                    </nz-list-item-meta-title>
+                </nz-list-item-meta>
+              <ul nz-list-item-actions *ngIf="showRemoveButton">
+                <nz-list-item-action><ng-container  *ngTemplateOutlet="actionDelete"></ng-container></nz-list-item-action>
+              </ul>
                 <ng-template #actionPlay>
                     <ng-container *ngIf="question.url;else noans">
-    
+
                         <span [ngSwitch]="(question.url | fileExtension)">
-                            <a *ngSwitchCase="'yt'" [routerLink]="['show','video', question.url | ytFromUrl]"><i nz-icon nzType="play-square"></i></a>
-                            <a *ngSwitchDefault [routerLink]="['/pages/qa', {outlets: { primary: [target], popup: ['show', 'answer', question.id]}}]"><i nz-icon nzType="play-square"></i></a>
+                            <a nz-button nzType="default" *ngSwitchCase="'yt'" [routerLink]="['show','video', question.url | ytFromUrl]"><i nz-icon nzType="play-square"></i></a>
+                            <a nz-button nzType="default" *ngSwitchDefault [routerLink]="['/pages/qa', {outlets: { primary: [target], popup: ['show', 'answer', question.id]}}]"><i nz-icon nzType="play-square"></i></a>
                         </span>
                     </ng-container>
                 </ng-template>
                 <ng-template #actionDelete>
-                    <i nz-icon nzType="delete" (click)="questionDelete(question)"></i>
+                    <button  nz-button nzType="default"><i nz-icon nzType="delete" (click)="questionDelete(question)"></i></button>
                 </ng-template>
-            </ng-container> 
-        </div>
+            </nz-list-item>
+        </nz-list>
         </ng-container>
 </ng-template>
 
