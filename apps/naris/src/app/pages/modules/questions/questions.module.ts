@@ -21,6 +21,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzListModule } from "ng-zorro-antd/list";
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzTypographyModule } from "ng-zorro-antd/typography";
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import { FileExtensionPipe } from './file-extension.pipe';
 import { YtFromUrlPipe } from './yt-from-url.pipe';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -58,7 +60,9 @@ import { OnlyWithAnaswerPipe } from './only-with-anaswer.pipe';
     NzTabsModule,
     DumbModule,
     RouterModule,
-    NzListModule
+    NzListModule,
+    NzTypographyModule,
+    NzToolTipModule
   ],
   providers: [],
   exports: [QuestionFormComponent]
