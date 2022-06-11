@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, UntypedFormBuilder} from '@angular/forms';
 import { ANY_SERVICE } from '@soer/mixed-bus';
 
 import { QuestionFormComponent } from './question-form.component';
@@ -14,7 +14,8 @@ describe('QuestionFormComponent', () => {
       providers: [
         FormBuilder,
         {provide: 'questions', useValue: ANY_SERVICE},
-        {provide: 'question', useValue: ANY_SERVICE}
+        {provide: 'question', useValue: ANY_SERVICE},
+        UntypedFormBuilder
       ]
     })
     .compileComponents();
