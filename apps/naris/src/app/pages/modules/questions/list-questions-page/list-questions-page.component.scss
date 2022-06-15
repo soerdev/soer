@@ -1,7 +1,4 @@
-.question-card {
-    ::ng-deep .ant-card-body {
-        min-height: 10rem;
-        max-height: 10rem;
-        overflow: hidden;
-    }
+.qa-list-item {
+  min-height: 5rem;
+  align-items: baseline;
 }

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ANY_SERVICE, MixedBusModule } from '@soer/mixed-bus';
@@ -23,7 +23,8 @@ describe('EditAbstractePageComponent', () => {
       providers: [
         FormBuilder,
         {provide: ActivatedRoute, useValue: {snapshot: {data: {workbook: ANY_SERVICE}} }},
-        {  provide: 'workbook', useValue: ANY_SERVICE }
+        {  provide: 'workbook', useValue: ANY_SERVICE },
+        UntypedFormBuilder
       ]
     })
     .compileComponents();
