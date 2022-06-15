@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ANY_SERVICE } from '@soer/mixed-bus';
+import { PersonalActivityService } from '../../../api/progress/personal-activity.service';
 import { DemoNgZorroAntdModule } from '../../demo.module';
 
 import { OverviewComponent } from './overview.component';
@@ -20,6 +21,8 @@ describe('OverviewComponent', () => {
         DemoNgZorroAntdModule
       ],
       providers: [
+        {provide: 'activity', useValue: {}},
+        PersonalActivityService,
         {provide: ActivatedRoute, useValue: {snapshot: {data: {
               workshops: [],
               streams: [], 
@@ -27,6 +30,7 @@ describe('OverviewComponent', () => {
             }
           } 
         }},
+        PersonalActivityService,
         {provide: 'workbooks', useValue: ANY_SERVICE},
         {provide: 'targets', useValue: ANY_SERVICE},
         {provide: 'questions', useValue: ANY_SERVICE},

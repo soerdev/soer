@@ -5,6 +5,7 @@ import { DataStoreService, DtoPack } from '@soer/sr-dto';
 import { Observable, of } from 'rxjs';
 import { map } from "rxjs/operators";
 import { parseJsonDTOPack } from '../../../api/json.dto.helpers';
+import { PersonalActivityService, VideoIdModel } from '../../../api/progress/personal-activity.service';
 import { QuestionModel } from '../../../api/questions/question.model';
 import { VideoModel } from '../../../api/streams/stream.model';
 import { TargetModel } from '../../../api/targets/target.interface';
@@ -29,6 +30,7 @@ export class OverviewComponent {
     @Inject('workbooks') private workbooksId: BusEmitter,
     @Inject('targets') private targetsId: BusEmitter,
     @Inject('questions') private questionsId: BusEmitter,
+    public personalActivity: PersonalActivityService,
     private store$: DataStoreService
   ) {
     this.data = this.route.snapshot.data;
@@ -38,8 +40,14 @@ export class OverviewComponent {
       return data.payload;
     })); 
 
-    const countVideosIn = (videos: VideoModel[]): {items: {length: number}} => {
-      const length = videos.reduce((acc: number, item) => acc + (item.children ? item.children.length : 1), 0)
+    const videosFlatMap = (videos: VideoModel[]): VideoModel[] => {
+      return videos.reduce((acc: VideoModel[], item: VideoModel) => [...acc, ...(item.children || [])], []);
+    }
+
+    const countVideosIn = (videos: VideoModel[], watchedVideos: VideoIdModel[]): {items: {length: number}} => {
+      const onlyIds = watchedVideos.map(video => video.videoId)
+      const onlyWatchedVideos = videos.filter(video => onlyIds.includes(video.vimeo_id || video.youtube_id || ''));
+      const length = onlyWatchedVideos.reduce((acc: number, item) => acc + (item.children ? item.children.length : 1), 0)
       return {
         items: {length}
       };
@@ -66,13 +74,13 @@ export class OverviewComponent {
       },
       {
         title: 'Стримы',
-        list$: of(countVideosIn(this.data['streams'])),
+        list$: of(countVideosIn(videosFlatMap(this.data['streams']), this.personalActivity.getWatchedVideos())),
         icon: 'play-circle',
         url: '#!/pages/streams'
       },
       {
         title: 'Воркшопы',
-        list$: of(countVideosIn(this.data['workshops'])),
+        list$: of(countVideosIn(videosFlatMap(this.data['workshops']), this.personalActivity.getWatchedVideos())),
         icon: 'experiment',
         url: '#!/pages/workshops'
       },
