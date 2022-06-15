@@ -83,8 +83,10 @@
                                 (nzOnConfirm)="delete.next(target)">
                             Удалить</button>
                         </div>
-                        <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Сохранить</button>
-                        <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
+                        <div>
+                            <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Сохранить</button>
+                            <button *ngIf="history.length === 0" nz-button nzType="primary" (click)="cancel.next(true);">Закрыть</button>
+                        </div>
                     </div>
             </footer>
     </ng-container>
