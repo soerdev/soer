@@ -15,6 +15,12 @@ export interface PersonalActivity {
   };
 }
 
+
+const EMPTY_ACTIVITY: PersonalActivity = {
+  watched: {
+    videos: []
+  }
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -24,17 +30,13 @@ export class PersonalActivityService {
   public activity$: Observable<DtoPack<PersonalActivity>>;
 
   constructor(public store$: DataStoreService, public bus$: MixedBusService, @Inject('activity') private activityId: BusEmitter) { 
-    this.activity = {
-      watched: {
-        videos: []
-      }
-    }
+    this.activity =  EMPTY_ACTIVITY;
 
 
     this.activity$ = parseJsonDTOPack<PersonalActivity>(this.store$.of(this.activityId), 'activity');
     this.activity$.subscribe(data => {
       if (data.status === OK) {
-        this.activity = data.items[0];
+        this.activity = data.items[0] || this.activity;
       }
     });
 
