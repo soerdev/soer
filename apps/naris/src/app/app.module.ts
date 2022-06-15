@@ -50,7 +50,7 @@ registerLocaleData(ru);
       namespace: 'activity',
       schema: {url: 'v2/json/activity/:aid'},
       keys: {
-        activity: {aid: 'personal'},
+        activity: {aid: '?'},
       }
     }),
   ],

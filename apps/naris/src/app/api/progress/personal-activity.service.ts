@@ -36,44 +36,52 @@ export class PersonalActivityService {
     this.activity$ = parseJsonDTOPack<PersonalActivity>(this.store$.of(this.activityId), 'activity');
     this.activity$.subscribe(data => {
       if (data.status === OK) {
-        this.activity = data.items[0] || this.activity;
+        if (data.items.length === 0) {
+          this.updateRemoteState(EMPTY_ACTIVITY);
+        } else {
+          this.activity = data.items[0];
+        }
       }
     });
 
-    bus$.publish(new CommandRead(activityId));
+    bus$.publish(new CommandRead(activityId, {}, {aid: 'personal'}));
 
     bus$.of(WatchVideoEvent).subscribe(watchVideoEvent => {
       if (isBusMessage(watchVideoEvent)) {
-        this.watchVideo(watchVideoEvent.payload.videoId);
-        this.updateRemoteState();
+        const activity = JSON.parse(JSON.stringify(this.activity));
+        this.updateRemoteState(
+          this.watchVideo(watchVideoEvent.payload.videoId, activity)
+        );
       }
     });
   }
 
-  private updateRemoteState(): void {
-    if (this.activity.id) {
+  private updateRemoteState(activity: PersonalActivity): void {
+    if (activity.id) {
       this.bus$.publish(
         new CommandUpdate(
-          {...this.activityId, key: {aid: this.activity.id}},
-          {...convertToJsonDTO(this.activity, ['id']), id: this.activity.id}
+          this.activityId,
+          {...convertToJsonDTO(activity, ['id']), id: activity.id},
+          {aid: activity.id}
         )
       );
-
     } else {
       this.bus$.publish(
         new CommandCreate(
-          {...this.activityId, key: {aid: 'new'}},
-          convertToJsonDTO(this.activity, ['id']),
+          this.activityId,
+          convertToJsonDTO(activity, ['id']),
+          {aid: 'new'}
         )
       );
 
     }
   }
-  public watchVideo(id: string): void {
-    if (this.activity.watched.videos.find(item => item.videoId === id)) {
-      return;
+  public watchVideo(id: string, activity: PersonalActivity): PersonalActivity {
+    if (!activity.watched.videos.find(item => item.videoId === id)) {
+      activity.watched.videos.push({videoId: id});
     }
-    this.activity.watched.videos.push({videoId: id});
+    
+    return activity;
   }
 
   public getWatchedVideos(): VideoIdModel[] {
