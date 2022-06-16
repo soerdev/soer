@@ -1,15 +1,11 @@
-import { Injectable } from '@angular/core';
 import {
-    HttpRequest,
-    HttpHandler,
-    HttpEvent,
-    HttpInterceptor,
-    HttpErrorResponse
+    HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusError, MixedBusService } from '@soer/mixed-bus';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -25,8 +21,10 @@ export class AuthInterceptor implements HttpInterceptor {
             return of(err.message);
         }
         if (err.status === 401 || err.status === 403) {
-            this.auth.logout();
-            this.router.navigateByUrl(`/login`);
+            if (!(document.location + '').indexOf('login?skipchecks=true')) {
+                this.auth.logout();
+                this.router.navigateByUrl(`/login`);
+            }
             return of(err.message);
         }
         return throwError(err);
