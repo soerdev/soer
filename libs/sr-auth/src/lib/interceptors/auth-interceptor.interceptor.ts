@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return of(err.message);
         }
         if (err.status === 401 || err.status === 403) {
-            if (!(document.location + '').indexOf('login?skipchecks=true')) {
+            if ((document.location + '').indexOf('login?skipchecks=true') === -1) {
                 this.auth.logout();
                 this.router.navigateByUrl(`/login`);
             }
