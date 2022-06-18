@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { ANY_SERVICE, MixedBusService } from '@soer/mixed-bus';
-import { SrDTOModule } from '@soer/sr-dto';
-import { WatchVideoEvent } from './events/watch-video.event';
+import { ChangeDataEvent, DataStoreService, OK, SrDTOModule } from '@soer/sr-dto';
 
 import { PersonalActivity, PersonalActivityService } from './personal-activity.service';
 
 describe('PersonalActivityService', () => {
   let personalActivityService: PersonalActivityService;
   const bus$ = new MixedBusService();
+  const store$ = new DataStoreService(bus$);
 
   const fakePersonalActivity: PersonalActivity = {
     watched: {
@@ -19,6 +19,7 @@ describe('PersonalActivityService', () => {
     TestBed.configureTestingModule({ imports: [SrDTOModule],
       providers: [
         {provide: MixedBusService, useValue: bus$},
+        {provide: DataStoreService, useValue: store$},
         PersonalActivityService,
         {provide: 'activity', useValue: ANY_SERVICE},
         
@@ -36,10 +37,12 @@ describe('PersonalActivityService', () => {
   });
 
 
-  it('should recive WatchVideoEvent and save only uniq values', () => {
-    bus$.publish(new WatchVideoEvent(ANY_SERVICE, fakePersonalActivity.watched.videos[0]));
-    bus$.publish(new WatchVideoEvent(ANY_SERVICE, fakePersonalActivity.watched.videos[1]));
-    bus$.publish(new WatchVideoEvent(ANY_SERVICE, fakePersonalActivity.watched.videos[1]));
+  it('should recive ChangeDataEvent with full state of activity', () => {
+    bus$.publish(
+      new ChangeDataEvent(ANY_SERVICE, {status: OK, items:[
+        {json: JSON.stringify(fakePersonalActivity)}
+      ]})
+    );
     expect(personalActivityService.getWatchedVideos()).toMatchObject(fakePersonalActivity.watched.videos);
   });
 
