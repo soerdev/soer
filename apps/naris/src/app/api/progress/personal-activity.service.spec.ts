@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ANY_SERVICE, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { ChangeDataEvent, CommandCreate, DataStoreService, OK, SrDTOModule } from '@soer/sr-dto';
+import { ChangeDataEvent, CommandCreate, CommandUpdate, DataStoreService, OK, SrDTOModule } from '@soer/sr-dto';
 import { WatchVideoEvent } from './events/watch-video.event';
 
 import { PersonalActivity, PersonalActivityService } from './personal-activity.service';
@@ -51,7 +51,23 @@ describe('PersonalActivityService', () => {
 
   
   it('should recive WatchVideoEvent', () => {
+    //TODO: Create fake CRUD server
     const sub = bus$.of(CommandCreate).subscribe(data => {
+      if (isBusMessage(data)){
+        bus$.publish(
+          new ChangeDataEvent(
+              ANY_SERVICE, 
+              {
+                status: OK, 
+                items:[
+                  {id: 1, ...data.payload}
+                ]
+              }
+          )
+        );
+      }
+    });
+    const sub2 = bus$.of(CommandUpdate).subscribe(data => {
       if (isBusMessage(data)){
         bus$.publish(
           new ChangeDataEvent(
@@ -70,6 +86,7 @@ describe('PersonalActivityService', () => {
     bus$.publish(new WatchVideoEvent(ANY_SERVICE, fakePersonalActivity.watched.videos[1]));
     bus$.publish(new WatchVideoEvent(ANY_SERVICE, fakePersonalActivity.watched.videos[1]));
     sub.unsubscribe();
+    sub2.unsubscribe();
     expect(personalActivityService.getWatchedVideos()).toMatchObject(fakePersonalActivity.watched.videos);
   });
 });
