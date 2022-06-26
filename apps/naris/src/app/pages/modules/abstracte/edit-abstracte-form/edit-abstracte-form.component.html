@@ -1,0 +1,35 @@
+<nz-form-item>
+    <nz-form-control>
+        <button nz-button [nzType]="'primary'" (click)="save.next(workbook)"><i nz-icon nzType="save" nzTheme="outline"></i></button>
+        <button (click)="previewFlag = !previewFlag" nz-button [nzType]="'primary'" type="button"><i nz-icon
+                [nzType]="previewFlag ? 'eye-invisible' : 'eye'" nzTheme="outline"></i> Preview</button>
+    </nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+    <nz-form-control>
+        <input nz-input [(ngModel)]="workbook.question" placeholder="Тема" nzSize="large" />
+    </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+    <nz-form-control>
+        <div *ngIf="previewFlag;else blocks" style="padding: 1.5em;">
+            <markdown *ngFor="let block of workbook.blocks;">{{block.text}}</markdown>
+        </div>
+    </nz-form-control>
+</nz-form-item>
+
+
+<ng-template #blocks>
+    <ng-container *ngFor="let block of this.workbook.blocks; index as bIndex">
+        <soer-inline-markdown-block *ngIf="block.type === 'markdown'" [(markdownText)]="block.text"
+            [isEdit]="bIndex === editIndex"
+            [localIndex]="bIndex"
+            (moveDown)="move($event, $event + 1)"
+            (moveUp)="move($event, $event - 1)"
+            (removeBlock)="removeBlock($event)"
+            (addBlock)="addBlockMarkdown($event)">
+        </soer-inline-markdown-block>
+        
+    </ng-container>
+</ng-template>

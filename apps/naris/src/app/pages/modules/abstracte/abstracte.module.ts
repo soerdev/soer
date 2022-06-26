@@ -18,12 +18,18 @@ import { DumbModule } from '../../dumb/dumb.module';
 import { EditAbstractePageComponent } from './edit-abstracte-page/edit-abstracte-page.component';
 import { ListAbstractePageComponent } from './list-abstracte-page/list-abstracte-page.component';
 import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte-page.component';
-
-
-
+import { InlineMarkdownBlockComponent } from './inline-markdown-block/inline-markdown-block.component';
+import { SrDTOModule } from '@soer/sr-dto';
+import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte-form.component';
 
 @NgModule({
-  declarations: [ListAbstractePageComponent, EditAbstractePageComponent, ViewAbstractePageComponent],
+  declarations: [
+    ListAbstractePageComponent,
+    EditAbstractePageComponent,
+    ViewAbstractePageComponent,
+    InlineMarkdownBlockComponent,
+    EditAbstracteFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -43,6 +49,7 @@ import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte
     DumbModule,
     RouterModule,
     MarkdownModule.forRoot(),
-  ]
+    SrDTOModule,
+  ],
 })
-export class AbstracteModule { }
+export class AbstracteModule {}

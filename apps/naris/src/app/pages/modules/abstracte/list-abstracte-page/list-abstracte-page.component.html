@@ -10,7 +10,8 @@
         <ng-container *ngFor="let workbook of workbooks.items">
             <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
                 <nz-card [nzTitle]="workbook.question" [nzActions]="[actionEdit, actionView, actionDelete]">
-                    <p>{{workbook.text}}</p>
+                    <p *ngIf="workbook.text">{{workbook.text}}</p>
+                    <p *ngIf="workbook.blocks && workbook.blocks.length > 0">{{workbook.blocks[0].text}}</p>
                 </nz-card>
             </div>
             <ng-template #actionEdit>

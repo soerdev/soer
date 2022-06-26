@@ -1,22 +1,9 @@
-<h1>Конспект</h1>
-<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" nzLayout="vertical">
-    <nz-form-item>
-        <nz-form-control>
-            <input nz-input formControlName="question" placeholder="Тема" nzSize="large" />
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <nz-form-control>
-        <button (click)="previewFlag = !previewFlag" nz-button [nzType]="'primary'" type="button"><i nz-icon [nzType]="previewFlag ? 'eye-invisible' : 'eye'" nzTheme="outline"></i> Preview</button>
-        <nz-textarea-count *ngIf="!previewFlag" [nzMaxCharacterCount]="10000">
-            <textarea rows="8" formControlName="text" nz-input></textarea>
-        </nz-textarea-count>
-        <div *ngIf="previewFlag" style="padding: 1.5em;">
-            <markdown>{{form.get('text')?.value}}</markdown>
-        </div>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <button nz-button [nzType]="'primary'">Создать или сохранить</button>
-    </nz-form-item>
-</form>
+
+<ng-container *ngIf="workbook$ | async as workbooks">
+    <ng-container *ngIf="workbooks.length > 0; else loading">
+        <soer-edit-abstracte-form *ngFor="let w of workbooks" (save)="onSave($event)" [workbook]="w"></soer-edit-abstracte-form>
+    </ng-container>
+</ng-container>
+<ng-template #loading>
+    Loading...
+</ng-template>

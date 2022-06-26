@@ -1,0 +1,25 @@
+.markdown-block {
+    margin: 0.2rem 1rem;
+    min-height: 2.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid gray;
+    background-color: rgb(247, 247, 247);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    .info {
+        flex-grow: 0;
+    }
+    .edit {
+        flex-basis: 100%;
+        glex-grow: 1;
+    }
+    .help {
+        font-size: 0.7rem;
+        font-style: italic;
+        color: gray;
+    }
+}

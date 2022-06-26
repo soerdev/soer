@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { convertToJsonDTO, parseJsonDTO } from '../../../../api/json.dto.helpers';
-import { EMPTY_WORKBOOK, WorkbookModel } from '../../../../api/workbook/workbook.model';
-import { DataStoreService } from '@soer/sr-dto';
-import { MixedBusService } from '@soer/mixed-bus';
-import { CommandCreate, CommandUpdate } from '@soer/sr-dto';
-import { BusEmitter } from '@soer/mixed-bus';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
+import { CommandCreate, CommandUpdate, DataStoreService, deSerializeJson, extractDtoPackFromBus, SerializedJsonModel } from '@soer/sr-dto';
+import { map, Observable } from 'rxjs';
+import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
+import { EMPTY_WORKBOOK, WorkbookModel } from '../../../../api/workbook/workbook.model';
 
 @Component({
   selector: 'soer-edit-abstracte-page',
@@ -15,54 +12,50 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-abstracte-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditAbstractePageComponent implements OnDestroy {
-  form: UntypedFormGroup;
-  public previewFlag = false;
+export class EditAbstractePageComponent {
+  public workbook$: Observable<WorkbookModel[]>;
   private workbookId: BusEmitter;
-  subscriptions: Subscription[] = [];
   constructor(
-    private formBuilder: UntypedFormBuilder,
     private bus$: MixedBusService,
     private store$: DataStoreService,
     private route: ActivatedRoute
   ) {
-
     this.workbookId = this.route.snapshot.data['workbook'];
-
-    this.form = this.formBuilder.group({
-      id: [null],
-      question: [null, [Validators.maxLength(255)]],
-      text: [null, [Validators.maxLength(255)]]
-    });
-    this.subscriptions = [
-      parseJsonDTO<WorkbookModel>(this.store$.of(this.workbookId), 'workbook' + Math.random()).subscribe(
-        data => {
-          const form = data?.pop() || EMPTY_WORKBOOK;
-          this.form.patchValue(form);
-        }
-      )
-    ];
+    this.workbook$ = deSerializeJson<WorkbookModel>(
+      extractDtoPackFromBus<SerializedJsonModel>(this.store$.of(this.workbookId)),
+      EMPTY_WORKBOOK
+    ).pipe(map<WorkbookModel[], WorkbookModel[]>(data => {
+        //TODO: Конвертировать все Workbook в формат без text
+        // и убрать этот pipe
+        data.forEach(w => {
+          if (!w.blocks && w.text) {
+            w.blocks = [{ text: w.text || '', type: 'markdown' }];
+            w.text = '';
+          }
+        });
+        return data;
+      })
+    )
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-  onSubmit(): void {
-    if (this.form.value.id === null) {
-          this.bus$.publish(
-              new CommandCreate(
-                this.workbookId,
-                convertToJsonDTO(this.form.value, ['id']),
-                { afterCommandDoneRedirectTo: ['.']}
-              )
-          );
+  onSave(workbook: WorkbookModel): void {
+    if (workbook.id === null) {
+      this.bus$.publish(
+        new CommandCreate(
+          this.workbookId,
+          convertToJsonDTO(workbook, ['id']),
+          { afterCommandDoneRedirectTo: ['.'] }
+        )
+      );
     } else {
       this.bus$.publish(
         new CommandUpdate(
           this.workbookId,
-          {...convertToJsonDTO(this.form.value, ['id']), id: this.form.value.id}
+          { ...convertToJsonDTO(workbook, ['id']), id: workbook.id }
         )
-    );
+      );
     }
   }
+
+
 }

@@ -1,6 +1,6 @@
 import { BusEmitter, BusMessage } from "@soer/mixed-bus";
 import { map, Observable } from "rxjs";
-import { DtoPack, OK } from "./interfaces/dto.pack.interface";
+import { DtoPack, INIT, OK } from "./interfaces/dto.pack.interface";
 import { SerializedJsonModel } from "./interfaces/serialize-json.model";
 import { CRUDBusEmitter } from "./sr-dto.module";
 
@@ -22,11 +22,15 @@ export function extractDtoPackFromBus<T>(messages$: Observable<BusMessage>): Obs
 }
 
 
-export function deSerializeJson<T>(pack: Observable<DtoPack<SerializedJsonModel>>): Observable<T[]> {
+export function deSerializeJson<T>(pack: Observable<DtoPack<SerializedJsonModel>>, empty?: T): Observable<T[]> {
     return pack.pipe(map<DtoPack<SerializedJsonModel>, T[]>( data => {
         const result: T[] = [];
         if (data?.status === OK) {
-            data.items.forEach(serializedData => result.push(JSON.parse(serializedData.json) as T))
+            if (data.items.length > 0) {
+            data.items.forEach(serializedData => result.push({...JSON.parse(serializedData.json), id: serializedData.id} as T))
+            } else if (empty) {
+                result.push(JSON.parse(JSON.stringify(empty)));
+            }
         }
         return result;
     })

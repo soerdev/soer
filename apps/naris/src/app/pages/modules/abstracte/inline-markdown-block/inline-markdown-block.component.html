@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="info">MD&nbsp;[{{isEdit ? '*': '&nbsp;'}}]</div>
+    <div class="edit">
+        <ng-container *ngIf="isEdit">
+            <textarea class="markdown-block" [(ngModel)]="markdownText" (blur)="onEndEdit()" [rows]="lines()"
+                (ngModelChange)="markdownTextChange.emit($event)" (keydown)="command($event)" #edit></textarea>
+            <p class="help">(EDIT:{{localIndex}}) 
+                Alt-Enter - новый блок,
+                Alt-Backspace - удалить блок,
+                Alt-Up/Down - сдвинуть блок,
+                Esc - конец редактирования
+            </p>
+        </ng-container>
+
+        <ng-container *ngIf="!isEdit">
+            <div class="markdown-block" (click)="isEdit = true">
+                <markdown *ngIf="markdownText; else HelpText">{{markdownText}}</markdown>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<ng-template #HelpText>
+    <p class="help">Нажмите по этой области для вставки текста</p>
+</ng-template>

@@ -1,3 +1,9 @@
 <ng-container *ngIf="(workbook$ | async) as workbooks">
-    <markdown *ngFor="let workbook of workbooks.items">{{workbook.text}}</markdown>
+    <ng-container *ngFor="let workbook of workbooks.items">
+        <markdown *ngIf="workbook.text && workbook.text.length > 0">{{workbook.text}}</markdown>
+        <ng-container *ngIf="workbook.blocks && workbook.blocks.length > 0">
+            <markdown *ngFor="let block of workbook.blocks">
+                {{block.text}}</markdown>
+        </ng-container>
+    </ng-container>
 </ng-container>
