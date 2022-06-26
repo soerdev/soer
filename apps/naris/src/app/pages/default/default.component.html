@@ -16,7 +16,7 @@
         <ng-container *ngFor="let item of menuItems">
           <li *ngIf="item.children" nz-submenu [nzTitle]="item.title" [nzIcon]="item.icon">
             <ul>
-              <li *ngFor="let childItem of item.children" nz-menu-item> <a [routerLink]="childItem.link" (click)="check(mmenu)"><i nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
+              <li *ngFor="let childItem of item.children" nzMatchRouter nz-menu-item> <a [routerLink]="childItem.link" (click)="check(mmenu)"><i nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
                 {{childItem.title}} <img *ngIf="childItem.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
                   style="margin-top: -8px;" /></a></li>
             </ul>
