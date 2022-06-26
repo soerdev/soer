@@ -23,10 +23,6 @@ export class InlineMarkdownBlockComponent {
  
   @Output() markdownTextChange = new EventEmitter<string>();
 
-  lines(): number {
-    return this.markdownText.split('\n').length;
-  }
-
   command($event: KeyboardEvent): void {
     if ($event.altKey && $event.code === 'Enter') {
       this.endEdit.next(this.localIndex);
