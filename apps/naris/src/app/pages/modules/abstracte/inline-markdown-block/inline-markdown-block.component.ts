@@ -8,7 +8,6 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 })
 export class InlineMarkdownBlockComponent {
   @ViewChild("edit") set editRef(ref: ElementRef) {
-    console.log('!!!', ref, this.isEdit, this.localIndex); 
     if (ref) {
       ref.nativeElement.focus();
     }

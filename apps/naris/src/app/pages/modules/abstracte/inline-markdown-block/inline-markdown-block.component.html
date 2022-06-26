@@ -2,9 +2,11 @@
     <div class="info">MD&nbsp;[{{isEdit ? '*': '&nbsp;'}}]</div>
     <div class="edit">
         <ng-container *ngIf="isEdit">
-            <textarea class="markdown-block" [(ngModel)]="markdownText" (blur)="onEndEdit()" [rows]="lines()"
-                (ngModelChange)="markdownTextChange.emit($event)" (keydown)="command($event)" #edit></textarea>
-            <p class="help">(EDIT:{{localIndex}}) 
+            <textarea class="markdown-block" [(ngModel)]="markdownText" (blur)="onEndEdit()"
+                (ngModelChange)="markdownTextChange.emit($event)" (keydown)="command($event)" #edit
+                soerAutoresize></textarea>
+
+            <p class="help">(EDIT:{{localIndex}})
                 Alt-Enter - новый блок,
                 Alt-Backspace - удалить блок,
                 Alt-Up/Down - сдвинуть блок,

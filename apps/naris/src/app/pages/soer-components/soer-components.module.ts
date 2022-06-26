@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopicsListComponent } from './topics-list/topics-list.component';
+import { NgModule } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { TextareaAutoresizeDirective } from './textarea-autoresize.directive';
+import { TopicsListComponent } from './topics-list/topics-list.component';
 
 
 
 @NgModule({
-  declarations: [TopicsListComponent],
+  declarations: [TopicsListComponent, TextareaAutoresizeDirective],
   imports: [
     CommonModule,
     NzButtonModule,
@@ -19,6 +20,6 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     NzIconModule,
     NzCardModule
   ],
-  exports: [TopicsListComponent]
+  exports: [TopicsListComponent, TextareaAutoresizeDirective]
 })
 export class SoerComponentsModule { }

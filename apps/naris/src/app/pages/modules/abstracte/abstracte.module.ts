@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { SrDTOModule } from '@soer/sr-dto';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -10,18 +11,18 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { MarkdownModule } from 'ngx-markdown';
 import { DumbModule } from '../../dumb/dumb.module';
+import { SoerComponentsModule } from '../../soer-components/soer-components.module';
+import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte-form.component';
 import { EditAbstractePageComponent } from './edit-abstracte-page/edit-abstracte-page.component';
+import { InlineMarkdownBlockComponent } from './inline-markdown-block/inline-markdown-block.component';
 import { ListAbstractePageComponent } from './list-abstracte-page/list-abstracte-page.component';
 import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte-page.component';
-import { InlineMarkdownBlockComponent } from './inline-markdown-block/inline-markdown-block.component';
-import { SrDTOModule } from '@soer/sr-dto';
-import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte-form.component';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     EditAbstractePageComponent,
     ViewAbstractePageComponent,
     InlineMarkdownBlockComponent,
-    EditAbstracteFormComponent,
+    EditAbstracteFormComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +53,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     RouterModule,
     MarkdownModule.forRoot(),
     SrDTOModule,
+    SoerComponentsModule
   ],
 })
 export class AbstracteModule {}
