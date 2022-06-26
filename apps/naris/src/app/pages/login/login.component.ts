@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loading = false;
   private isSkipChecks = false;
+  private devMode = false;
 
   private externalWindow: any;
   public jwt: string | null = null;
@@ -48,6 +49,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     this.isSkipChecks = this.route.snapshot.queryParams?.['skipchecks'] === 'true';
+    this.devMode = this.route.snapshot.queryParams?.['devmode'] === 'true'; 
+
+    if (this.devMode) {
+      this.checkJWT(this.route.snapshot.queryParams?.['jwt']);
+    }
 
     if (!this.isSkipChecks) {
       this.subscriptions = [ this.auth.tokenUpdate$.subscribe(() => {
@@ -73,7 +79,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   checkJWT(defaultToken = undefined, isRedirect = true) {
-
     if (defaultToken) {
       this.auth.token  = this.jwt = defaultToken;
     } else {
