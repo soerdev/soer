@@ -21,7 +21,12 @@
                 <i nz-icon nzType="eye" (click)="workbookView(workbook)"></i>
             </ng-template>
             <ng-template #actionDelete>
-                <i nz-icon nzType="delete" (click)="workbookDelete(workbook)"></i>
+                <button 
+                                nzPopconfirmTitle="Вы уверены, что хотите удалить этот документ?"
+                                nzPopconfirmPlacement="bottom"
+                                nz-popconfirm
+                                nz-button nzType="primary" nzDanger (nzOnConfirm)="workbookDelete(workbook)"><i nz-icon nzType="delete"></i></button>
+                
             </ng-template>
         </ng-container> 
     </div>

@@ -21,6 +21,7 @@ import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte
 import { InlineMarkdownBlockComponent } from './inline-markdown-block/inline-markdown-block.component';
 import { SrDTOModule } from '@soer/sr-dto';
 import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte-form.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte
     NzGridModule,
     NzFormModule,
     NzInputModule,
+    NzPopconfirmModule,
     DumbModule,
     RouterModule,
     MarkdownModule.forRoot(),
