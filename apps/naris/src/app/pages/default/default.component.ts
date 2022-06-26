@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
 import { AuthService, JWTModel } from '@soer/sr-auth';
 import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
-import { BreakpointMap, NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
+import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subscription } from 'rxjs';
