@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+.ant-popover-inner {
+  max-height: 95vh;
+  overflow-y: scroll;
+}
