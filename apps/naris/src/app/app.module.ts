@@ -21,6 +21,7 @@ import { ActivityKey } from './api/progress/progress.const';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { ApplicationService } from './services/application.service';
 
 registerLocaleData(ru);
 
@@ -72,7 +73,8 @@ registerLocaleData(ru);
         () =>
           null
     },
-    { provide: NZ_I18N, useValue: ru_RU }
+    { provide: NZ_I18N, useValue: ru_RU },
+    ApplicationService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SrDTOModule } from '@soer/sr-dto';
 import { ByRoutePathResolver } from '../api/by-route-path.resolver';
-import { PersonalActivityService } from '../api/progress/personal-activity.service';
 import { StreamService } from '../api/streams/stream.service';
 import { TasksResolver } from '../api/tasks/tasks.resolver';
 import { WorkshopsService } from '../api/workshops/workshops.service';

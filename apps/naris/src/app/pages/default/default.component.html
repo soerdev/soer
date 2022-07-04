@@ -1,89 +1,89 @@
 <nz-layout *ngIf="(user | async | dtoLastItem) as userInfo; else userError" class="app-layout">
-    <nz-sider class="menu-sidebar"
-              nzCollapsible
-              nzBreakpoint="lg"
-              [nzCollapsedWidth]="0"
-              [nzCollapsed]="isCollapsed"
-              #mmenu>
-      <div class="sidebar-logo">
-        <a [routerLink]="['/']">
-          <img src="assets/soerpro.svg" alt="logo">
-        </a>
-      </div>
+  <nz-sider *ngIf="breakpoint !== 'xs'" class="menu-sidebar" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0"
+    [nzCollapsed]="isCollapsed" #mmenu>
+    <div class="sidebar-logo">
+      <a [routerLink]="['/']">
+        <img src="assets/soerpro.svg" alt="logo">
+      </a>
+    </div>
 
-      <ul nz-menu nzTheme="dark" nzMode="inline">
+    <ul nz-menu nzTheme="dark" nzMode="inline">
 
-        <ng-container *ngFor="let item of menuItems">
-          <li *ngIf="item.children" nz-submenu [nzTitle]="item.title" [nzIcon]="item.icon">
-            <ul>
-              <li *ngFor="let childItem of item.children" nzMatchRouter nz-menu-item> <a [routerLink]="childItem.link" (click)="check(mmenu)"><i nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
+      <ng-container *ngFor="let item of menuItems">
+        <li *ngIf="item.children" nz-submenu [nzTitle]="item.title" [nzIcon]="item.icon">
+          <ul>
+            <li *ngFor="let childItem of item.children" nzMatchRouter nz-menu-item> <a [routerLink]="childItem.link"
+                (click)="check(mmenu)"><i nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
                 {{childItem.title}} <img *ngIf="childItem.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
                   style="margin-top: -8px;" /></a></li>
-            </ul>
-          </li>
-          <li *ngIf="!item.children" nz-menu-item nzMatchRouter nzIcon="dashboard">
-            <a [routerLink]="item.link" (click)="check(mmenu)"><i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
-              {{item.title}} <img *ngIf="item.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
-                style="margin-top: -8px;" /></a>
-          </li>
+          </ul>
+        </li>
+        <li *ngIf="!item.children" nz-menu-item nzMatchRouter nzIcon="dashboard">
+          <a [routerLink]="item.link" (click)="check(mmenu)"><i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+            {{item.title}} <img *ngIf="item.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
+              style="margin-top: -8px;" /></a>
+        </li>
+      </ng-container>
+    </ul>
+
+  </nz-sider>
+  <nz-layout style="overflow: hidden;">
+    <nz-page-header *ngIf="breakpoint !== 'xs'" class="site-page-header" [nzTitle]="title"
+      [nzSubtitle]="['md', 'lg', 'xl', 'xxl'].includes(breakpoint) ? subtitle : undefined">
+      <nz-page-header-extra>
+        <ng-container *ngTemplateOutlet="role; context: {role: userInfo.role}"></ng-container>
+        <ng-container *ngIf="!isMobileView">
+          <a *ngIf="userInfo.role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить
+            уровень</a>
+
+          <ng-container *ngIf="(helpUs$ | async) as helpUs">
+            <nz-badge *ngIf="helpUs.length > 0" [nzCount]="helpUs.length" [nzOverflowCount]="9">
+              <button nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-popover
+                nzPopoverTitle="Нужна помощь" nzPopoverTrigger="click" [nzPopoverContent]="contribHelp"
+                [nzPopoverArrowPointAtCenter]="false" nzPopoverPlacement="leftTop"><i nz-icon nzType="github"
+                  nzTheme="outline"></i></button>
+            </nz-badge>
+
+            <ng-template #contribHelp>
+              <div *ngFor="let message of helpUs">
+                <p>{{message.body}}</p>
+                <a [href]="message.html_url" target="_blank">Подробнее</a>
+                <nz-divider></nz-divider>
+              </div>
+            </ng-template>
+
+          </ng-container>
+          <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="bell"
+              nzTheme="outline"></i></button>
         </ng-container>
-        </ul>
-        
-        </nz-sider>
-        <nz-layout>
-          <nz-page-header class="site-page-header" [nzTitle]="title"
-            [nzSubtitle]="['md', 'lg', 'xl', 'xxl'].includes(breakpoint) ? subtitle : undefined">
-            <nz-page-header-extra>
-              <ng-container *ngTemplateOutlet="role; context: {role: userInfo.role}"></ng-container>
-              <ng-container *ngIf="!isMobileView">
-                <a *ngIf="userInfo.role === 'GUEST'" [routerLink]="['/', 'pages', 'pay']" nz-button nzType="primary">Улучшить
-                  уровень</a>
-        
-                <ng-container *ngIf="(helpUs$ | async) as helpUs">
-                  <nz-badge *ngIf="helpUs.length > 0" [nzCount]="helpUs.length" [nzOverflowCount]="9">
-                    <button nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-popover
-                      nzPopoverTitle="Нужна помощь" nzPopoverTrigger="click" [nzPopoverContent]="contribHelp"
-                      [nzPopoverArrowPointAtCenter]="false" nzPopoverPlacement="leftTop"><i nz-icon nzType="github"
-                        nzTheme="outline"></i></button>
-                  </nz-badge>
-        
-                  <ng-template #contribHelp>
-                    <div *ngFor="let message of helpUs">
-                      <p>{{message.body}}</p>
-                      <a [href]="message.html_url" target="_blank">Подробнее</a>
-                      <nz-divider></nz-divider>
-                    </div>
-                  </ng-template>
-        
-                </ng-container>
-                <button nz-button nzTrigger="click" nzType="default" nzShape="circle"><i nz-icon nzType="bell"
-                    nzTheme="outline"></i></button>
-              </ng-container>
-              <button class="menu-button" nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-dropdown
-                [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="menu"></i></button>
-              <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu>
-                  <li *ngIf="userInfo.role === 'GUEST' && isMobileView" nz-menu-item><a
-                      [routerLink]="['/', 'pages', 'pay']">Улучшить уровень</a></li>
-                  <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
-                  <li (click)="logout()" nz-menu-item>Выход</li>
-                </ul>
-              </nz-dropdown-menu>
-            </nz-page-header-extra>
-          </nz-page-header>
-          <nz-content>
-            <div class="main-content">
-              <router-outlet></router-outlet>
-            </div>
-          </nz-content>
-        </nz-layout>
-        </nz-layout>
-        
-        <ng-template #userError>
-          <p>Произошла ошибка идентификации пользователя, обратитесь в тех. поддержку - soersoft@gmail.com</p>
-        </ng-template>
-        
-        <ng-template #role let-role="role">
-          <span class="price-label"
-            [ngClass]="{'pro-label': role === 'PRO', 'workshop-label': role === 'WORKSHOP', 'stream-label': role === 'STREAM'}">{{role}}</span>
-        </ng-template>
+        <button class="menu-button" nz-button nzTrigger="click" nzType="default" nzShape="circle" nz-dropdown
+          [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'"><i nz-icon nzType="menu"></i></button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngIf="userInfo.role === 'GUEST' && isMobileView" nz-menu-item><a
+                [routerLink]="['/', 'pages', 'pay']">Улучшить уровень</a></li>
+            <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
+            <li (click)="logout()" nz-menu-item>Выход</li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-page-header-extra>
+    </nz-page-header>
+    <nz-content>
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <soer-mobile-menu *ngIf="breakpoint === 'xs'" [userInfo]="userInfo" [menuItems]="menuItems" (check)="check($event)" (logout)="logout()">
+    </soer-mobile-menu>
+
+  </nz-layout>
+</nz-layout>
+
+<ng-template #userError>
+  <p>Произошла ошибка идентификации пользователя, обратитесь в тех. поддержку - soersoft@gmail.com</p>
+</ng-template>
+
+<ng-template #role let-role="role">
+  <span class="price-label"
+    [ngClass]="{'pro-label': role === 'PRO', 'workshop-label': role === 'WORKSHOP', 'stream-label': role === 'STREAM'}">{{role}}</span>
+</ng-template>

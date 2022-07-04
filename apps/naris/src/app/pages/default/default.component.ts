@@ -9,6 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Visibility } from '../../api/targets/target.interface';
+import { ApplicationService } from '../../services/application.service';
 import { MAIN_MENU } from './menu.const';
 
 
@@ -39,6 +40,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   constructor(
               @Inject('manifest') private manifestId: BusEmitter,
               @Inject('issues') private issuesId: BusEmitter,
+              private applicationService: ApplicationService,
               private auth: AuthService,
               private router: Router,
               private route: ActivatedRoute,
