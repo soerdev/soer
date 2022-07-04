@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { WorkbookModel } from '../../../../api/workbook/workbook.model';
-import { Observable, tap } from 'rxjs';
-import { CommandDelete, CommandEdit, CommandNew, CommandRead, CommandView, DtoPack } from '@soer/sr-dto';
-import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
-import { DataStoreService } from '@soer/sr-dto';
+import { CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
+import { Observable } from 'rxjs';
+import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
+import { WorkbookModel } from '../../../../api/workbook/workbook.model';
+import { ApplicationService } from '../../../../services/application.service';
+import { MenuControl } from '../../../../services/menu/MenuControl.class';
 
 
 @Component({
@@ -20,9 +21,18 @@ export class ListAbstractePageComponent {
   constructor(
     @Inject('workbook') private workbookId: BusEmitter,
     @Inject('workbooks') private workbooksId: BusEmitter,
+
+    private app: ApplicationService,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) {
+    const add = new MenuControl('Добавить конспект', 'plus', () => {
+      this.createWorkbook();
+    });
+    
+    this.app.pageControls([
+      add
+    ]);
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbooksId), 'workbooks');
   }
 

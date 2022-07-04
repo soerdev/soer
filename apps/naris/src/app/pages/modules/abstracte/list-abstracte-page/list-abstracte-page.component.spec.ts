@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ANY_SERVICE, MixedBusModule } from '@soer/mixed-bus';
 import { SrDTOModule } from '@soer/sr-dto';
+import { ApplicationService } from 'apps/naris/src/app/services/application.service';
 
 import { ListAbstractePageComponent } from './list-abstracte-page.component';
 
@@ -16,6 +17,7 @@ describe('ListAbstractePageComponent', () => {
         SrDTOModule
       ],
       providers: [
+        {provide: ApplicationService, useValue: {}},
         {provide: 'workbooks', useValue: ANY_SERVICE},
         {provide: 'workbook', useValue: ANY_SERVICE},
       ]

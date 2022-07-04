@@ -1,8 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
-import { AuthService, JWTModel } from '@soer/sr-auth';
-import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
+import { DataStoreService, OK } from '@soer/sr-dto';
 import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -10,6 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Visibility } from '../../api/targets/target.interface';
 import { ApplicationService } from '../../services/application.service';
+import { MenuControl } from '../../services/menu/MenuControl.class';
 import { MAIN_MENU } from './menu.const';
 
 
@@ -33,15 +33,13 @@ export class DefaultComponent implements OnInit, OnDestroy {
     messages: true
   }
 
-  public user: Observable<DtoPack<JWTModel>>;
+
   public helpUs$: Observable<any>;
   menuItems = MAIN_MENU;
 
   constructor(
-              @Inject('manifest') private manifestId: BusEmitter,
               @Inject('issues') private issuesId: BusEmitter,
-              private applicationService: ApplicationService,
-              private auth: AuthService,
+              public app: ApplicationService,
               private router: Router,
               private route: ActivatedRoute,
               private bus$: MixedBusService,
@@ -49,7 +47,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
               private message: NzMessageService,
               private breakpointService: NzBreakpointService
               ) {
-    this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
     this.helpUs$ = this.store$.of(this.issuesId).pipe(map(data => {
       if (data.payload?.status === OK) {
         return data.payload.items.map((item: any) => {
@@ -62,6 +59,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.subscriptions = [
       this.breakpointService.subscribe(siderResponsiveMap).subscribe(size => {
         this.breakpoint = size;
@@ -83,7 +81,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.auth.logout();
+    this.app.auth.logout();
     this.router.navigate(['login']);
   }
 

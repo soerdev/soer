@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ApplicationService } from 'apps/naris/src/app/services/application.service';
+import { MenuControl } from 'apps/naris/src/app/services/menu/MenuControl.class';
 import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
 
 @Component({
@@ -12,7 +14,14 @@ export class EditAbstracteFormComponent  {
   public previewFlag = false;
   public editIndex = -1;
 
-  constructor(private cdp: ChangeDetectorRef) {}
+  constructor(private cdp: ChangeDetectorRef,
+    private app: ApplicationService
+    ) {
+      const save = new MenuControl('Save', 'save', () => {this.save.next(this.workbook)});
+      const preview = new MenuControl('Preview', 'eye', () => {this.previewFlag = !this.previewFlag;});
+
+      this.app.pageControls([ preview, save]);
+    }
 
   move(from: number, to: number): void {
     const blocks = this.workbook.blocks;

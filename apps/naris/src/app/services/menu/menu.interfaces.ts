@@ -13,5 +13,6 @@ export interface IMenuControl {
     fire: EventEmitter<Record<string, any>>;
     title: string;
     icon: string;
+    cb: () => void;
 }
 export type ApplicationMenu = [MenuTree | IMenuControl];

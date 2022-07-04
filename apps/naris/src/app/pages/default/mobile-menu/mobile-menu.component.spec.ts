@@ -17,7 +17,7 @@ describe('MobileMenuComponent', () => {
 
     fixture = TestBed.createComponent(MobileMenuComponent);
     component = fixture.componentInstance;
-    component.userInfo = {role: 'GUEST'};
+    component.userInfo = {id: 1, role: 'GUEST', email: 'test@test.com'};
     fixture.detectChanges();
   });
 

@@ -1,4 +1,4 @@
-<nz-layout *ngIf="(user | async | dtoLastItem) as userInfo; else userError" class="app-layout">
+<nz-layout *ngIf="(app.user$ | async | dtoLastItem) as userInfo; else userError" class="app-layout">
   <nz-sider *ngIf="breakpoint !== 'xs'" class="menu-sidebar" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0"
     [nzCollapsed]="isCollapsed" #mmenu>
     <div class="sidebar-logo">
@@ -73,7 +73,12 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <soer-mobile-menu *ngIf="breakpoint === 'xs'" [userInfo]="userInfo" [menuItems]="menuItems" (check)="check($event)" (logout)="logout()">
+    <soer-mobile-menu 
+      *ngIf="breakpoint === 'xs'"
+      [userInfo]="app.user"
+      [applicationMenu]="app.mainMenu"
+      [controls]="app.control$ | async" (check)="check($event)" 
+      (logout)="logout()">
     </soer-mobile-menu>
 
   </nz-layout>
