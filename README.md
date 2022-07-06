@@ -9,7 +9,8 @@ This project was generated using [Nx](https://nx.dev).
 # Install
 
 ```
-git clone git@github.com:soerdev/soer.git
+Fork repository
+git clone git@github.com:<YourUserName>/soer.git
 cd soer
 nvm use
 npm install
