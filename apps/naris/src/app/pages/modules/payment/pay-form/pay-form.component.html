@@ -17,7 +17,7 @@
               <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
             </ul>
             <nz-divider></nz-divider>
-            <a href="{{payUrl}}stream/{{userManifest.email}}" 
+            <a href="{{payUrl}}/order/stream/{{userManifest.email}}" 
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           <div class="proposal">
@@ -32,7 +32,7 @@
               <li><i nz-icon nzType="check-circle"></i>  Воркшопы</li>
             </ul>
             <nz-divider></nz-divider>
-            <a  href="{{payUrl}}workshop/{{userManifest.email}}" 
+            <a  href="{{payUrl}}/order/workshop/{{userManifest.email}}" 
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           <div class="proposal">
@@ -48,7 +48,7 @@
               <li><i nz-icon nzType="check-circle"></i>  "Исходники"</li>
             </ul>
             <nz-divider></nz-divider>
-            <a  href="{{payUrl}}pro/{{userManifest.email}}" 
+            <a  href="{{payUrl}}/order/pro/{{userManifest.email}}" 
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           
@@ -67,9 +67,15 @@
       <li *ngFor="let message of remoteState.messages"><i nz-icon nzType="check-circle"></i> {{message}}</li>
     </ul>
     <ul class="features-list" *ngFor="let action of remoteState.actions">
-      <li *ngIf="action.continue">Ранее вы пытались оплатить тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей, вы можете <a href="{{payUrl}}stream/{{userManifest.email}}">продолжить оплату</a></li>
-      <li *ngIf="action.delete">Если вы не хотите продолжать оплату, то <a (click)="deletePayment(action.delete.id, userManifest.email)">удалите платеж</a></li>
-      <li *ngIf="action.logout && action.logout.role !== userManifest.role">Вам необходимо <a (click)="renewToken()">обновить</a> токен или  <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
+      <li *ngIf="action.continue">В обработке находится тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей,
+        <br /> если вы не проводили платеж, то можете <a href="{{payUrl}}/continue/{{action.continue.payment.id}}">продолжить оплату</a>
+      </li>
+
+      <li *ngIf="action.renew">Если оплата произведена и деньги списаны со счета, то можете <a (click)="renew(action.renew.payment.id)">проверить статус</a> оплаты.</li>
+
+      <li *ngIf="action.delete">Если вы начинали оплату давно, или просто передумали, то <a (click)="deletePayment(action.delete.payment.id, userManifest.email)">удалите платеж</a>
+      <br/> Внимание! Удаляйте платеж только если деньги не списаны со счета.</li>
+      <li *ngIf="action.logout && action.logout.role !== userManifest.role">Вам необходимо  <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
     </ul>
   </ng-template>
 </ng-container>
