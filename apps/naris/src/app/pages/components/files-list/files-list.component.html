@@ -3,8 +3,8 @@
     <ng-container *ngIf="webFiles && webFiles.length > 0;else nocontent">
         <div class="video-info" nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let file of webFiles">
           <a [href]="url(file['url'], file['level'])" (click)="download($event, file)" class="files-card__link">
-            <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[downloadIcon]" class="files-card" >
-                <nz-card-meta [nzTitle]="file['title']" [nzDescription]="overview" class="files-card__meta"></nz-card-meta>
+            <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[downloadIcon]" class="files-card">
+                <nz-card-meta [nzTitle]="file['title']" [nzDescription]="overview"></nz-card-meta>
             </nz-card>
          </a>
 
