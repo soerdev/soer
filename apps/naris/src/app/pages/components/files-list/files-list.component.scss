@@ -1,3 +1,25 @@
+.files-card {
+    &,
+    &__link,
+    ::ng-deep.ant-card-meta,
+    ::ng-deep.ant-card-meta-detail,
+    ::ng-deep.ant-card-meta-description {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    &__desc,
+    ::ng-deep.ant-card-body {
+        flex-grow: 1;
+    }
+
+    ::ng-deep.ant-card-meta-title {
+        margin-bottom: 0;
+        padding-bottom: 8px;
+    }
+}
+
 .file-icon {
     width: 100%;
     font-size: 5em;
