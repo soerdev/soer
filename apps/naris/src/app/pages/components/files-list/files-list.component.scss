@@ -1,6 +1,6 @@
 .files-card {
     &,
-    &__link,
+    &-link,
     ::ng-deep.ant-card-meta,
     ::ng-deep.ant-card-meta-detail,
     ::ng-deep.ant-card-meta-description {
@@ -9,7 +9,7 @@
         height: 100%;
     }
 
-    &__desc,
+    &_desc,
     ::ng-deep.ant-card-body {
         flex-grow: 1;
     }

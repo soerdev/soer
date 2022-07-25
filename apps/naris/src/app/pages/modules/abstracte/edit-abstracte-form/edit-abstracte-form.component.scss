@@ -1,11 +1,11 @@
 .ant-btn {
-    &__save,
-    &__return {
+    &-save,
+    &-return {
         vertical-align: -4px;
         float: right;
     }
 
-    &__return {
+    &-return {
         margin-right: 12px;
     }
 }
