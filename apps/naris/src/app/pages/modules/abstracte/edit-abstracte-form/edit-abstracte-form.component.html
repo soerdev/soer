@@ -3,6 +3,7 @@
         <button style="margin-left: 0;" (click)="previewFlag = !previewFlag" nz-button [nzType]="'primary'" type="button"><i nz-icon
                 [nzType]="previewFlag ? 'eye-invisible' : 'eye'" nzTheme="outline"></i> Preview</button>
         <button style="vertical-align: -4px;" nz-button [nzType]="'primary'" (click)="save.next(workbook)"><i nz-icon nzType="save" nzTheme="outline"></i></button>
+        <button style="vertical-align: -4px;" nz-button [nzType]="'primary'" (click)="onFolderUp()"><i nz-icon nzType="rollback" nzTheme="outline"></i></button>
     </nz-form-control>
 </nz-form-item>
 
