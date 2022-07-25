@@ -1,9 +1,9 @@
 <nz-form-item>
     <nz-form-control>
-        <button style="margin-left: 0;" (click)="previewFlag = !previewFlag" nz-button [nzType]="'primary'" type="button"><i nz-icon
+        <button class="ant-btn__preview" (click)="previewFlag = !previewFlag" nz-button [nzType]="'primary'" type="button"><i nz-icon
                 [nzType]="previewFlag ? 'eye-invisible' : 'eye'" nzTheme="outline"></i> Preview</button>
-        <button style="vertical-align: -4px;" nz-button [nzType]="'primary'" (click)="save.next(workbook)"><i nz-icon nzType="save" nzTheme="outline"></i></button>
-        <button style="vertical-align: -4px;" nz-button [nzType]="'primary'" (click)="onFolderUp()"><i nz-icon nzType="rollback" nzTheme="outline"></i></button>
+        <button class="ant-btn__save" nz-button [nzType]="'primary'" (click)="save.next(workbook)"><i nz-icon nzType="save" nzTheme="outline"></i></button>
+        <button class="ant-btn__return" nz-button [nzType]="'primary'" (click)="onFolderUp()"><i nz-icon nzType="rollback" nzTheme="outline"></i></button>
     </nz-form-control>
 </nz-form-item>
 
