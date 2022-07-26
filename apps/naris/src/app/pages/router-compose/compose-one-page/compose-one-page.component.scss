@@ -1,3 +1,9 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 .player-container {
     background: #fff;
     margin: 0 auto;
