@@ -1,3 +1,9 @@
 .target-panel {
     padding: 16px 0 0 0;
 }
+
+.ant-btn {
+    &-create {
+        margin-bottom: 12px;
+    }
+}
