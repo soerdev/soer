@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { SrDTOModule } from '@soer/sr-dto';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 
 
@@ -30,6 +32,8 @@ import { SrDTOModule } from '@soer/sr-dto';
     NzIconModule,
     NzCheckboxModule,
     NzInputModule,
+    NzPopconfirmModule,
+    NzStatisticModule,
     NzSpinModule,
     RouterModule,
     FormsModule,
