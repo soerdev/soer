@@ -17,7 +17,8 @@
               <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
             </ul>
             <nz-divider></nz-divider>
-            <a href="{{payUrl}}/order/stream/{{userManifest.email}}" 
+            <a 
+              (click)="order(userManifest.email, 'stream')" 
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           <div class="proposal">
@@ -32,7 +33,7 @@
               <li><i nz-icon nzType="check-circle"></i>  Воркшопы</li>
             </ul>
             <nz-divider></nz-divider>
-            <a  href="{{payUrl}}/order/workshop/{{userManifest.email}}" 
+            <a (click)="order(userManifest.email, 'workshop')"
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           <div class="proposal">
@@ -48,7 +49,8 @@
               <li><i nz-icon nzType="check-circle"></i>  "Исходники"</li>
             </ul>
             <nz-divider></nz-divider>
-            <a  href="{{payUrl}}/order/pro/{{userManifest.email}}" 
+            <a  
+              (click)="order(userManifest.email, 'pro')"
               nzSize="large" nz-button nzType="primary">Оплатить</a>
           </div>
           
@@ -68,10 +70,10 @@
     </ul>
     <ul class="features-list" *ngFor="let action of remoteState.actions">
       <li *ngIf="action.continue">В обработке находится тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей,
-        <br /> если вы не проводили платеж, то можете <a href="{{payUrl}}/continue/{{action.continue.payment.id}}">продолжить оплату</a>
+        <br /> если вы не проводили платеж, то можете <a href="{{payUrl}}/order/{{action.continue.payment.id}}">продолжить оплату</a>
       </li>
 
-      <li *ngIf="action.renew">Если оплата произведена и деньги списаны со счета, то можете <a (click)="renew(action.renew.payment.id)">проверить статус</a> оплаты.</li>
+      <li *ngIf="action.renew">Если оплата произведена и деньги списаны со счета, то можете <a href="{{payUrl}}/order/{{action.renew.payment.id}}">проверить статус</a> оплаты.</li>
 
       <li *ngIf="action.delete">Если вы начинали оплату давно, или просто передумали, то <a (click)="deletePayment(action.delete.payment.id, userManifest.email)">удалите платеж</a>
       <br/> Внимание! Удаляйте платеж только если деньги не списаны со счета.</li>

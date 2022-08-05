@@ -88,7 +88,7 @@ export class PayFormComponent {
 
   deletePayment(id: number, email: string): void {
     this.remoteState.status = 'loading';
-    this.http.get(environment.host + '/api/payservice/cancel/' + email + '/' + id).subscribe(result => {
+    this.http.get(environment.host + '/api/v2/seller/cancel/' + id).subscribe(result => {
       this.checkRemoteStatus(email);
     });
   }
@@ -114,6 +114,22 @@ export class PayFormComponent {
         messages.push('Результат проверки: платеж не проведен, свяжитесь с поддержкой soersoft@gmail.com');
       }
       this.remoteState = { status, messages, actions };
+    });
+  }
+
+  order(email: string, role: string): void {
+    this.http.post<DtoPack<Record<string, {id: string}>>>(environment.host + '/api/v2/seller/order', {
+      email,
+      role
+    })
+    .subscribe(result=> {
+      if (result.status === OK) {
+        if (result.items.length === 1) {
+          const [order] = result.items;
+          window.location.href =  environment.host + '/api/v2/seller/order/' + order['id'];
+        }
+      }
+      console.log(result, '???');
     });
   }
 
