@@ -32,7 +32,7 @@ export class CertificateComponent {
   }
 
   useCert(email: string): void {
-    this.http.get(environment.host + '/api/payservice/prepaid/' + email + '/' + this.getClearedCertText()).subscribe(result => {
+    this.http.get(environment.host + '/api/v2/seller/prepaid/' + email + '/' + this.getClearedCertText()).subscribe(result => {
       this.certObject.status = (result as any)['status'];
     });
   }
@@ -46,7 +46,7 @@ export class CertificateComponent {
         exp: new Date(cert.exp * 1000)
       }
 
-      this.http.get(environment.host + '/api/payservice/prepaid_status/' + this.getClearedCertText()).subscribe(result => {
+      this.http.get(environment.host + '/api/v2/seller/prepaid_status/' + this.getClearedCertText()).subscribe(result => {
         this.certObject.status = (result as any)['status'];
       });
     } 

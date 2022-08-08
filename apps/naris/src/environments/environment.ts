@@ -4,8 +4,8 @@
 
 import { EnvironmentInterface } from './environment.interface';
 
-const HOST = 'http://localhost:4000';
-
+// const HOST = 'http://localhost:4000';
+const HOST = 'https://stage.s0er.ru';
 export const environment: EnvironmentInterface = {
   production: false,
   host: HOST,

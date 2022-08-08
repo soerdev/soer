@@ -3,22 +3,23 @@
   <ng-template #main>
     <div class="gird-layout pricing-blocks">
       <!-- Роль сейчач -->
-      <div *ngIf="userManifest.role !== 'GUEST'" class="proposal">
-        <h1 class="price-label" [ngClass]="{
-          'gray-label': userManifest.role === 'STREAM',
-          'blue-label': userManifest.role === 'WORKSHOP',
-          'red-label': userManifest.role === 'PRO'
-        }">{{userManifest.role}}</h1>
-        <nz-countdown [nzValue]="deadline" [nzTitle]="'Истекает через'" [nzFormat]="'D дней HH:mm:ss'"></nz-countdown>
-        <p><strong>{{userManifest.expired | date}}</strong></p>
-        <nz-divider></nz-divider>
-        <div class="features-list">
-          <p>У вас оплачен доступ к сайту до <b>{{userManifest.expired | date}}</b>.</p>
-          <p>На сайте отсутствует возможность апгрейда выбранного тарифа,
-             поэтому апгрейд возможен только через отмену подписки.</p>
-             <p>Для возврата средств обратитесь <a href="emailto: soersoft@gmail.com">soersoft@gmail.com</a></p>
-        </div>   
-    </div>
+        <div *ngFor="let ns of userManifest.namespaces" class="proposal">
+          <h1 class="price-label" [ngClass]="{
+            'gray-label': ns.namespace === 'STREAM',
+            'blue-label': ns.namespace === 'WORKSHOP',
+            'red-label': ns.namespace === 'PRO'
+          }">{{ns.namespace}}</h1>
+          <nz-countdown [nzValue]="ns.deadlineMs" [nzTitle]="'Истекает через'" [nzFormat]="'D дней HH:mm:ss'"></nz-countdown>
+          <p><strong>{{ns.expired | date}}</strong></p>
+          <nz-divider></nz-divider>
+          <div class="features-list">
+            <p>У вас оплачен доступ к сайту до <b>{{ns.expired | date}}</b>.</p>
+            <p>На сайте отсутствует возможность апгрейда выбранного тарифа,
+              поэтому апгрейд возможен только через отмену подписки.</p>
+              <p>Для возврата средств обратитесь <a href="emailto: soersoft@gmail.com">soersoft@gmail.com</a></p>
+          </div>   
+      </div>
+
 
     <!-- Начатые платежи -->
     <div *ngFor="let pendingOrder of pendingOrders" class="proposal">
