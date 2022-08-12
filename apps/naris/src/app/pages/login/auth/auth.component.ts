@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
       this.redirectToHome();
       return;
     } 
-    // this.redirectToLogin();
+    this.redirectToLogin();
   }
 
   redirectToHome(): void {
