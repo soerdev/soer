@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { LoginRoutesModule } from './login-routing.module';
 import { HttpClient } from '@angular/common/http';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzSpinModule
   ],
   providers: [HttpClient],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, AuthComponent],
   exports: [LoginComponent]
 })
 export class LoginModule { }

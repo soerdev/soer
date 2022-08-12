@@ -8,6 +8,7 @@ import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { PersonalActivityService } from '../../api/progress/personal-activity.service';
 import { Visibility } from '../../api/targets/target.interface';
 import { MAIN_MENU } from './menu.const';
 
@@ -45,7 +46,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
               private bus$: MixedBusService,
               private store$: DataStoreService,
               private message: NzMessageService,
-              private breakpointService: NzBreakpointService
+              private breakpointService: NzBreakpointService,
+              private personalActivtiy: PersonalActivityService
               ) {
     this.user = extractDtoPackFromBus<JWTModel>(this.store$.of(this.manifestId));
     this.helpUs$ = this.store$.of(this.issuesId).pipe(map(data => {

@@ -98,6 +98,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 	'yandex': environment.yandexAuthUrl
     };
  
+    document.location = urls[provider];
+    return;
+    
     const externalWindow = this.popupCenter({
       url: urls[provider],
       title: '',

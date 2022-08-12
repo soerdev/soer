@@ -60,14 +60,13 @@ registerLocaleData(ru);
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [UrlBuilderService, MixedBusService, DataStoreService, StoreCrudService, PersonalActivityService],
+      deps: [UrlBuilderService, MixedBusService, DataStoreService, StoreCrudService],
       useFactory:
         (
           UrlBuilderService: UrlBuilderService,
           MixedBusService: MixedBusService,
           DataStoreService: DataStoreService,
           StoreCrudService: StoreCrudService,
-          personalActivityService: PersonalActivityService
         ) =>
         () =>
           null
