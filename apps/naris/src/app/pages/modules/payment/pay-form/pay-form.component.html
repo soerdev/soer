@@ -9,7 +9,7 @@
             'blue-label': ns.namespace === 'WORKSHOP',
             'red-label': ns.namespace === 'PRO'
           }">{{ns.namespace}}</h1>
-          <nz-countdown [nzValue]="ns.deadlineMs" [nzTitle]="'Истекает через'" [nzFormat]="'D дней HH:mm:ss'"></nz-countdown>
+          <nz-countdown [nzValue]="ns.deadlineMs" [nzTitle]="'Истекает через'" [nzFormat]="'D дней HH:mm:ss'" (nzCountdownFinish)="updateManifest()"></nz-countdown>
           <p><strong>{{ns.expired | date}}</strong></p>
           <nz-divider></nz-divider>
           <div class="features-list">

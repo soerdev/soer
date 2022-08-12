@@ -97,31 +97,38 @@ export class LoginComponent implements OnInit, OnDestroy {
 	'google': environment.googleAuthUrl,
 	'yandex': environment.yandexAuthUrl
     };
-console.log(urls[provider]);
-    this.externalWindow = this.popupCenter({
+ 
+    const externalWindow = this.popupCenter({
       url: urls[provider],
       title: '',
       w: 500,
       h: 500
     });
 
+    let countChecks = 100;
     const uid = setInterval(() => {
       try{
-        const href = this.externalWindow?.['location']?.['href'] + '';
+        if (countChecks-- < 1) {
+          clearInterval(uid);
+          externalWindow.close(); 
+          return;
+        }
+
+        const href = externalWindow?.['location']?.['href'] + '';
         if (href) {
           this.jwt = href.split('jwt=')[1];
           if (this.jwt) {
             this.loading = true;
             this.auth.token = this.jwt;
-            if (this.externalWindow) {
-              this.externalWindow.close();
+            if (externalWindow) {
+              externalWindow.close();
             }
             clearInterval(uid);
             this.redirectToHome();
           }
         }
       }catch (e) { 
-        console.log('Something goes wrong.');
+        console.log('Something goes wrong.', e);
       }
     }, MEDIUM_TIMEOUT_INTERVAL);
   }

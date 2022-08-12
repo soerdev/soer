@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BusEmitter } from '@soer/mixed-bus';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { AuthService, JWTModel } from '@soer/sr-auth';
-import { DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
+import { CommandRead, DataStoreService, DtoPack, extractDtoPackFromBus, OK } from '@soer/sr-dto';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 
@@ -25,6 +25,7 @@ export class PayFormComponent {
   constructor(
     @Inject('manifest') private manifestId: BusEmitter,
     private authService: AuthService,
+    private bus$: MixedBusService,
     private store$: DataStoreService,
     private router: Router,
     private http: HttpClient) {
@@ -41,6 +42,10 @@ export class PayFormComponent {
     this.payUrl = environment.payServiceUrl;
   }
 
+  updateManifest(): void {
+    this.remoteState.status = 'loading';
+    this.bus$.publish(new CommandRead(this.manifestId));
+  }
 
   checkRemoteStatus(): void {
     this.http.get<DtoPack<{subs: any[], goods: any[], pending: any[]}>>(environment.host + '/api/v2/seller/shelf/roles')
@@ -52,7 +57,6 @@ export class PayFormComponent {
         this.goods = shelf.goods;
         this.pendingOrders = shelf.pending;
       }
-      console.log(result);
     });
 
     /*this.http.get(environment.host + '/api/v2/seller/status/' + email)
