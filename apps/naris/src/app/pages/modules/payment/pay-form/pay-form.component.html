@@ -1,76 +1,105 @@
 <ng-container *ngIf="(user | async | dtoLastItem) as userManifest;else noemail">
-  <nz-spin *ngIf="remoteState.status === 'loading'" nzSimple [nzSize]="'large'"></nz-spin>
-  <div>
-      <div class="warning-message">
-          <nz-alert *ngIf="remoteState.status === 'ok'" nzType="warning" [nzMessage]="warning"></nz-alert>
-          <nz-alert *ngIf="remoteState.status === 'error'" nzType="error" [nzMessage]="pendingPaymentMessage"></nz-alert>
+  <nz-spin *ngIf="remoteState.status === 'loading';else main" nzSimple [nzSize]="'large'"></nz-spin>
+  <ng-template #main>
+    <div class="gird-layout pricing-blocks">
+      <!-- Роль сейчач -->
+        <div *ngFor="let ns of userManifest.namespaces" class="proposal">
+          <h1 class="price-label" [ngClass]="{
+            'gray-label': ns.namespace === 'STREAM',
+            'blue-label': ns.namespace === 'WORKSHOP',
+            'red-label': ns.namespace === 'PRO'
+          }">{{ns.namespace}}</h1>
+          <nz-countdown [nzValue]="ns.deadlineMs" [nzTitle]="'Истекает через'" [nzFormat]="'D дней HH:mm:ss'" (nzCountdownFinish)="updateManifest()"></nz-countdown>
+          <p><strong>{{ns.expired | date}}</strong></p>
+          <nz-divider></nz-divider>
+          <div class="features-list">
+            <p>У вас оплачен доступ к сайту до <b>{{ns.expired | date}}</b>.</p>
+            <p>На сайте отсутствует возможность апгрейда выбранного тарифа,
+              поэтому апгрейд возможен только через отмену подписки.</p>
+              <p>Для возврата средств обратитесь <a href="emailto: soersoft@gmail.com">soersoft@gmail.com</a></p>
+          </div>   
       </div>
-      <div *ngIf="remoteState.status === 'ok'" class="gird-layout pricing-blocks">
-          <div class="proposal">
-            <h1 class="price-label gray-label">Stream</h1>
-            <h2><strong>350₽</strong> / 30 дней.</h2>
-            <nz-divider></nz-divider>
-            <ul class="features-list">
-              <li><i nz-icon nzType="check-circle"></i>  Цели</li>
-              <li><i nz-icon nzType="check-circle"></i>  Вопрос / ответ</li>
-              <li><i nz-icon nzType="check-circle"></i>  Конспекты</li>
-              <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
-            </ul>
-            <nz-divider></nz-divider>
-            <a href="{{payUrl}}stream/{{userManifest.email}}" 
-              nzSize="large" nz-button nzType="primary">Оплатить</a>
-          </div>
-          <div class="proposal">
-            <h1 class="price-label blue-label">Workshop</h1>
-            <h2><strong>700₽</strong> / 30 дней.</h2>
-            <nz-divider></nz-divider>
-            <ul class="features-list">
-              <li><i nz-icon nzType="check-circle"></i>  Цели</li>
-              <li><i nz-icon nzType="check-circle"></i>  Вопрос / ответ</li>
-              <li><i nz-icon nzType="check-circle"></i>  Конспекты</li>
-              <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
-              <li><i nz-icon nzType="check-circle"></i>  Воркшопы</li>
-            </ul>
-            <nz-divider></nz-divider>
-            <a  href="{{payUrl}}workshop/{{userManifest.email}}" 
-              nzSize="large" nz-button nzType="primary">Оплатить</a>
-          </div>
-          <div class="proposal">
-            <h1 class="price-label red-label">PRO</h1>
-            <h2><strong>2500₽</strong> / 30 дней.</h2>
-            <nz-divider></nz-divider>
-            <ul class="features-list">
-              <li><i nz-icon nzType="check-circle"></i>  Цели</li>
-              <li><i nz-icon nzType="check-circle"></i>  Вопрос / ответ</li>
-              <li><i nz-icon nzType="check-circle"></i>  Конспекты</li>
-              <li><i nz-icon nzType="check-circle"></i>  Архитектурные стримы</li>
-              <li><i nz-icon nzType="check-circle"></i>  Воркшопы</li>
-              <li><i nz-icon nzType="check-circle"></i>  "Исходники"</li>
-            </ul>
-            <nz-divider></nz-divider>
-            <a  href="{{payUrl}}pro/{{userManifest.email}}" 
-              nzSize="large" nz-button nzType="primary">Оплатить</a>
-          </div>
+
+
+    <!-- Начатые платежи -->
+    <div *ngFor="let pendingOrder of pendingOrders" class="proposal">
+        <h2>Незавершенный платеж</h2>
+        <h1>Попыток: {{pendingOrder.tries}}</h1>
+        <h2><strong>{{pendingOrder.amount}}₽</strong> / 30 дней.</h2>
+        <nz-divider></nz-divider>
+        <div class="features-list">
+          <p>Вы начали оплату этого тарифа <b>{{pendingOrder.createdAt | date}}</b>,
+            если с этой даты прошло много времени, то удалите платеж и начните оплату заново.</p>
+        </div>
+        <nz-divider></nz-divider>
+        <a
+          href="{{payUrl}}/order/{{pendingOrder.id}}"
+          nzSize="large" nz-button nzType="primary">Продолжить</a>
+          <a (nzOnConfirm)="deletePayment(pendingOrder.id)"
+          nzPopconfirmTitle="Вы уверены, что не оплачивали заказ и хотите его удалить заказ?"
+                                nzOkText="Да"
+                                nzCancelText="Нет, деньги списаны"
+                                nzPopconfirmPlacement="bottom"
+                                nz-popconfirm 
+          nz-button nzType="link" nzDanger
+          >Удалить</a>
           
       </div>
-  </div>
+
+      <!-- Подписки -->
+      <div *ngFor="let paidOrder of periodicOrders" class="proposal">
+        <h1 class="price-label blue-label">Подписка</h1>
+        <h2><strong>{{paidOrder.amount}}₽</strong> / 30 дней.</h2>
+        <nz-divider></nz-divider>
+        <div class="features-list">
+          <p>У вас есть действующая подписка, текущий период истекает <b>{{userManifest['expired'] | date}}</b>. 
+            За день до окончания тарифа будет сделана автопролонгация.</p>
+          <p>Чтобы сменить тариф, нужно 
+            отказаться от текущей подписки, дождаться окончания действующего тарифа и 
+            подписаться на новый тариф.
+          </p>
+        </div>
+        <nz-divider></nz-divider>
+        <a 
+          (nzOnConfirm)="cancelSubscription(paidOrder.id)"
+          nzPopconfirmTitle="Вы уверены, что хотите отказаться от подписки?"
+                                nzPopconfirmPlacement="bottom"
+                                nz-popconfirm 
+          nzSize="large" nz-button nzType="primary">Отказаться</a>
+      </div>
+    </div>
+
+    <!-- Предложения -->
+    <ng-container *ngIf="goods.length > 0" >
+      <div class="warning-message">
+        <nz-alert *ngIf="remoteState.status === 'ok'" nzType="warning" [nzMessage]="warning"></nz-alert>
+      </div>
+      <div class="gird-layout pricing-blocks">
+          <div *ngFor="let good of goods" class="proposal">
+            <h1 class="price-label" [ngClass]="{
+              'gray-label': good.role === 'STREAM',
+              'blue-label': good.role === 'WORKSHOP',
+              'red-label': good.role === 'PRO'
+            }">{{good.role}}</h1>
+            <h2><strong>{{good.amount}}₽</strong> / 30 дней.</h2>
+            <nz-divider></nz-divider>
+            <ul class="features-list">
+              <li *ngFor="let option of good.options"><i nz-icon nzType="check-circle"></i>  {{option}}</li>
+            </ul>
+            <nz-divider></nz-divider>
+            <a 
+              (click)="order(userManifest.email, good.role)" 
+              nzSize="large" nz-button nzType="primary">Оплатить</a>
+          </div>        
+      </div>
+      </ng-container>
+  </ng-template>
 
   <ng-template #warning>
       <p><b>Внимание!</b> Подписка будет оформлена на email:&nbsp;<b>{{userManifest.email}}</b> и привязана к аккаунту, 
         через который вы вошли. </p>
       <p><i>Обратите внимание после выбора и оплаты конкретного тарифа, его можно будет изменить только после окончания действия тарифа.</i></p>
       <p><i>Вместо оплаты можно использовать <a [routerLink]="['/', 'pages', 'certificate']">сертификат</a>.</i></p>
-  </ng-template>
-
-  <ng-template #pendingPaymentMessage>
-    <ul class="features-list">
-      <li *ngFor="let message of remoteState.messages"><i nz-icon nzType="check-circle"></i> {{message}}</li>
-    </ul>
-    <ul class="features-list" *ngFor="let action of remoteState.actions">
-      <li *ngIf="action.continue">Ранее вы пытались оплатить тариф на сумму <b>{{action.continue.payment.amount}}</b> рублей, вы можете <a href="{{payUrl}}stream/{{userManifest.email}}">продолжить оплату</a></li>
-      <li *ngIf="action.delete">Если вы не хотите продолжать оплату, то <a (click)="deletePayment(action.delete.id, userManifest.email)">удалите платеж</a></li>
-      <li *ngIf="action.logout && action.logout.role !== userManifest.role">Вам необходимо <a (click)="renewToken()">обновить</a> токен или  <a (click)="logout()">выйти</a> и повторно зайти на платформу</li>
-    </ul>
   </ng-template>
 </ng-container>
 

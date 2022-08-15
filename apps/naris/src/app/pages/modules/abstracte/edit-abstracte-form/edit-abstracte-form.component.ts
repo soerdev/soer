@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { ApplicationService } from 'apps/naris/src/app/services/application.service';
 import { MenuControl } from 'apps/naris/src/app/services/menu/MenuControl.class';
 import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'soer-edit-abstracte-form',
@@ -14,14 +15,7 @@ export class EditAbstracteFormComponent  {
   public previewFlag = false;
   public editIndex = -1;
 
-  constructor(private cdp: ChangeDetectorRef,
-    private app: ApplicationService
-    ) {
-      const save = new MenuControl('Save', 'save', () => {this.save.next(this.workbook)});
-      const preview = new MenuControl('Preview', 'eye', () => {this.previewFlag = !this.previewFlag;});
-
-      this.app.pageControls([ preview, save]);
-    }
+  constructor(private cdp: ChangeDetectorRef, private _location: Location) {}
 
   move(from: number, to: number): void {
     const blocks = this.workbook.blocks;
@@ -37,6 +31,7 @@ export class EditAbstracteFormComponent  {
     }
 
   }
+
   addBlockMarkdown(from: number): void {
     this.editIndex = from + 1;
     const left = this.workbook.blocks.slice(0, this.editIndex);
@@ -44,8 +39,13 @@ export class EditAbstracteFormComponent  {
     
     this.workbook.blocks = [...left, {text: '', type: 'markdown'}, ...right];
   }
+
   removeBlock(removeIndex: number): void {
     this.workbook.blocks = this.workbook.blocks.filter( (el, index) => removeIndex !== index);
     this.editIndex = -1;
+  }
+  
+  onFolderUp() {
+      this._location.back();
   }
 }

@@ -13,7 +13,7 @@ const routes: Routes = [
           loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
           resolve: {
             manifest: 'manifestEmitter',
-            issues: 'issuesEmitter'
+            issues: 'issuesEmitter',
           },
           canActivate: [AuthGuard]},
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },

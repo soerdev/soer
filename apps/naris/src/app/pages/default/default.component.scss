@@ -67,9 +67,10 @@ nz-content {
   max-width: 20rem;
 }
 
-::ng-deep .ant-btn {
-  margin-left: 12px;
+.ant-btn {
+    margin-left: 12px;
 }
+
 @media screen and (min-width: 768px) {
   .menu-sidebar {
     position: relative;

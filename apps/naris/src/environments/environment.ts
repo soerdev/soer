@@ -4,8 +4,8 @@
 
 import { EnvironmentInterface } from './environment.interface';
 
-const HOST = 'https://platform.soer.pro';
-
+// const HOST = 'http://localhost:4000';
+const HOST = 'https://stage.s0er.ru';
 export const environment: EnvironmentInterface = {
   production: false,
   host: HOST,
@@ -15,7 +15,7 @@ export const environment: EnvironmentInterface = {
   apiUrl: HOST + '/api/',
   assetsUrl: HOST + '/assets/',
   privateAssetsUrl: HOST + '/assets/private/',
-  payServiceUrl: HOST + '/api/seller/order/'
+  payServiceUrl: HOST + '/api/v2/seller'
 };
 
 /*

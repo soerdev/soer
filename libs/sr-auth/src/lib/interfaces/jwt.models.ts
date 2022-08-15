@@ -2,6 +2,8 @@ export interface JWTModel {
     id: number;
     email: string;
     role: string;
+    expired?: Date;
+    namespaces?: any[];
     iat: number;
     exp: number;
   }

@@ -1,7 +1,7 @@
 <div class="target-panel">
     <ng-container *ngIf="(targets$ | async)?.items as topics">
         <ng-container *ngIf="topics.length > 0;else nocontent">
-        <a nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
+        <a class="ant-btn-create" nz-button nzType="primary" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'new']}}]">Создать</a>
         <div nz-row [nzGutter]="[24, 24]" >
            <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngFor="let topic of topics">
                 <nz-card  [nzActions]="[actionEdit, actionDelete]" >

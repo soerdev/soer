@@ -14,7 +14,11 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private auth: AuthService, private router: Router, private bus$: MixedBusService) { }
 
     private handleAuthError(err: HttpErrorResponse): Observable<any> {
-        this.bus$.publish(new BusError(undefined, [err.message]));
+        if (err.error && err.error.status === 'error' && err.error.items) {
+            this.bus$.publish(new BusError(undefined, err.error.items));
+        } else {
+            this.bus$.publish(new BusError(undefined, [err.message]));
+        }
         if (err.status === 426) {
             this.auth.renewToken().subscribe(() => console.log('Token upgraded'));
             this.router.navigateByUrl(`/login`);

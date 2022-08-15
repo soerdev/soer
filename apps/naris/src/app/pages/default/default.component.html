@@ -63,6 +63,7 @@
             <li *ngIf="userInfo.role === 'GUEST' && isMobileView" nz-menu-item><a
                 [routerLink]="['/', 'pages', 'pay']">Улучшить уровень</a></li>
             <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
+            <li nz-menu-item><a [routerLink]="['/', 'pages','pay']">Платежи</a></li>
             <li (click)="logout()" nz-menu-item>Выход</li>
           </ul>
         </nz-dropdown-menu>
@@ -77,7 +78,8 @@
       *ngIf="breakpoint === 'xs'"
       [userInfo]="app.user"
       [applicationMenu]="app.mainMenu"
-      [controls]="app.control$ | async" (check)="check($event)" 
+      [controls]="app.control$ | async" 
+      (check)="check($event)" 
       (logout)="logout()">
     </soer-mobile-menu>
 
