@@ -1,8 +1,6 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApplicationService } from 'apps/naris/src/app/services/application.service';
-import { MenuControl } from 'apps/naris/src/app/services/menu/MenuControl.class';
-import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
 import { Location } from '@angular/common';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
 
 @Component({
   selector: 'soer-edit-abstracte-form',
