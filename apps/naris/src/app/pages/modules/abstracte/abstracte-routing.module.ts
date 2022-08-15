@@ -11,7 +11,10 @@ const routes: Routes = [
   path: WORKBOOK_TAG,
   component: ComposeOnePageComponent,
   data: { 
-    header: {title: 'Конспекты', subtitle: 'помощь в осмыслении материалов по программированию'}
+    header: {title: 'Конспекты', subtitle: 'помощь в осмыслении материалов по программированию'},
+    controls: [
+      {title: 'Добавить', path: ['create', 'new'], icon: 'plus'},
+    ]
   },
   resolve: {
     workbooks: 'workbooksEmitter'
@@ -26,7 +29,13 @@ const routes: Routes = [
       data: { header: {
               title: 'Новый конспект',
               subtitle: 'помощь в осмыслении материалов по программированию'
-            }
+            },
+            controls: [
+              {title: 'Просмотр', path: ['.'], toggle: 'preview', icon: 'eye/eye-invisible'},
+              {title: 'Сохранить', path: ['.'], action: 'save', icon: 'save'},
+              {title: 'Назад', path: ['../..'], icon: 'rollback'},
+            ]
+        
       },
       resolve: {
         workbook: 'workbookEmitter'
@@ -38,7 +47,13 @@ const routes: Routes = [
       data: { header: {
               title: 'Изменить конспект',
               subtitle: 'помощь в осмыслении материалов по программированию'
-            }
+            },
+            controls: [
+              {title: 'Просмотр', path: ['.'], toggle: 'preview', icon: 'eye/eye-invisible'},
+              {title: 'Сохранить', path: ['.'], action: 'save', icon: 'save'},
+              {title: 'Назад', path: ['../..'], icon: 'rollback'},
+            ]
+
       },
       resolve: {
         workbook: 'workbookEmitter'

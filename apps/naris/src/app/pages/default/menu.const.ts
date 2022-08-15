@@ -1,3 +1,5 @@
+import { IMenuControl } from "../../services/menu/menu.interfaces";
+
 export interface MenuItem {
     title: string;
     icon: string;
@@ -23,3 +25,8 @@ export const MAIN_MENU: MenuItem[] = [
     },
     { link: 'sources', icon: 'book', title: 'Исходники', isPro: true }
 ];
+
+
+export interface ISubMenuControls {
+    controls(): IMenuControl[];
+}

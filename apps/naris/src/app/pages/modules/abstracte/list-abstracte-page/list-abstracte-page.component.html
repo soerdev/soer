@@ -1,11 +1,5 @@
 <ng-container *ngIf="(workbook$ | async) as workbooks">
     <ng-container *ngIf="workbooks.items.length > 0; else emptylist">
-    <div nz-row [nzGutter]="[24, 24]" >  
-        <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
-            <button (click)="createWorkbook()" nz-button [nzType]="'primary'">Добавить конспект</button>
-        </div>
-    </div>
-
     <div nz-row [nzGutter]="[24, 24]" >    
         <ng-container *ngFor="let workbook of workbooks.items">
             <div class="personal-target" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">

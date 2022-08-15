@@ -26,6 +26,7 @@ export class ErrorDataEvent extends BusEvent {
 }
 
 
+export class CommandAction extends BusCommand {}
 export class CommandNew extends BusCommand {}
 export class CommandEdit extends BusCommand {}
 export class CommandView extends BusCommand {}

@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
-import { CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
+import { BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
+import { CommandAction, CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
 import { Observable } from 'rxjs';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { ApplicationService } from '../../../../services/application.service';
-import { MenuControl } from '../../../../services/menu/MenuControl.class';
 
 
 @Component({
@@ -17,22 +16,13 @@ import { MenuControl } from '../../../../services/menu/MenuControl.class';
 export class ListAbstractePageComponent {
 
   workbook$: Observable<DtoPack<WorkbookModel>>;
-
   constructor(
     @Inject('workbook') private workbookId: BusEmitter,
     @Inject('workbooks') private workbooksId: BusEmitter,
 
-    private app: ApplicationService,
     private bus$: MixedBusService,
     private store$: DataStoreService
   ) {
-    const add = new MenuControl('Добавить конспект', 'plus', () => {
-      this.createWorkbook();
-    });
-    
-    this.app.pageControls([
-      add
-    ]);
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbooksId), 'workbooks');
   }
 
@@ -71,5 +61,4 @@ export class ListAbstractePageComponent {
         )
     );
   }
-
 }

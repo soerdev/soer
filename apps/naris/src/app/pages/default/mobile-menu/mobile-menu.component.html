@@ -1,39 +1,39 @@
-<div class="main-menu">
-  <button nz-button nz-dropdown nzTrigger="click" nzSize="large" nzType="primary" [nzDropdownMenu]="menu"><i nz-icon
-      nzType="menu" nzTheme="outline"></i></button>
-  <nz-dropdown-menu #menu="nzDropdownMenu">
-    <ul nz-menu>
-      <ng-container *ngFor="let item of applicationMenu">
-        <li *ngIf="item.children" nz-submenu [nzTitle]="item.title" [nzIcon]="item.icon">
-          <ul>
-            <li *ngFor="let childItem of item.children" nzMatchRouter nz-menu-item> <a [routerLink]="childItem.link"><i
-                  nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
-                {{childItem.title}} <img *ngIf="childItem.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
-                  style="margin-top: -8px;" /></a></li>
-          </ul>
+<div class="menu-container" [ngClass]="{'mobile-menu': isMobile, 'desktop-menu': !isMobile}">
+  <div class="main-menu">
+    <button *ngIf="isMobile" nz-button nz-dropdown nzTrigger="click" nzSize="large" nzType="primary" [nzDropdownMenu]="menu"><i nz-icon
+        nzType="menu" nzTheme="outline"></i></button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <ng-container *ngFor="let item of applicationMenu">
+          <li *ngIf="item.children" nz-submenu [nzTitle]="item.title" [nzIcon]="item.icon">
+            <ul>
+              <li *ngFor="let childItem of item.children" nzMatchRouter nz-menu-item> <a
+                  [routerLink]="childItem.link"><i nz-icon [nzType]="childItem.icon" nzTheme="outline"></i>
+                  {{childItem.title}} <img *ngIf="childItem.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
+                    style="margin-top: -8px;" /></a></li>
+            </ul>
+          </li>
+          <li *ngIf="!item.children" nz-menu-item nzMatchRouter nzIcon="dashboard">
+            <a [routerLink]="item.link"><i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+              {{item.title}} <img *ngIf="item.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
+                style="margin-top: -8px;" /></a>
+          </li>
+        </ng-container>
+        <li nz-menu-divider></li>
+        <li *ngIf="userInfo.role === 'GUEST'" nz-menu-item><a [routerLink]="['/', 'pages', 'pay']">Улучшить уровень</a>
         </li>
-        <li *ngIf="!item.children" nz-menu-item nzMatchRouter nzIcon="dashboard">
-          <a [routerLink]="item.link"><i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
-            {{item.title}} <img *ngIf="item.isPro" src="/assets/favicons/favicon-194x194.png" width="16"
-              style="margin-top: -8px;" /></a>
-        </li>
-      </ng-container>
-      <li nz-menu-divider></li>
-      <li *ngIf="userInfo.role === 'GUEST'" nz-menu-item><a [routerLink]="['/', 'pages', 'pay']">Улучшить уровень</a>
-      </li>
-      <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
-      <li (click)="logout.next(true)" nz-menu-item>Выход</li>
+        <li nz-menu-item><a [routerLink]="['/', 'pages','certificate']">Сертификат</a></li>
+        <li (click)="logout.next(true)" nz-menu-item>Выход</li>
 
-    </ul>
-  </nz-dropdown-menu>
-</div>
+      </ul>
+    </nz-dropdown-menu>
+  </div>
 
-<div class="controls" *ngIf="controls">
-  <div class="control" *ngFor="let control of controls">
-    <button nz-button nzSize="large" nzShape="circle"
-    (click)="control.cb()"
-    >
-      <i nz-icon [nzType]="control.icon" nzTheme="outline"></i>
-    </button>
+  <div class="controls" *ngIf="controls">
+    <div class="control" *ngFor="let control of controls">
+      <button nz-button nzSize="large" nzShape="circle" (click)="control.cb()">
+        <i nz-icon [nzType]="control.icon" nzTheme="outline"></i>
+      </button>
+    </div>
   </div>
 </div>

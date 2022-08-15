@@ -1,15 +1,17 @@
+import { query } from '@angular/animations';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
-import { DataStoreService, OK } from '@soer/sr-dto';
+import { ANY_SERVICE, BusEmitter, BusError, MixedBusService } from '@soer/mixed-bus';
+import { CommandAction, CommandNew, DataStoreService, OK } from '@soer/sr-dto';
 import { NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { NzSiderComponent } from 'ng-zorro-antd/layout';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { PersonalActivityService } from '../../api/progress/personal-activity.service';
 import { Visibility } from '../../api/targets/target.interface';
 import { ApplicationService } from '../../services/application.service';
+import { IMenuControl } from '../../services/menu/menu.interfaces';
 import { MenuControl } from '../../services/menu/MenuControl.class';
 import { MAIN_MENU } from './menu.const';
 
@@ -22,6 +24,7 @@ import { MAIN_MENU } from './menu.const';
 export class DefaultComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   isMobileView = false;
+  controls$ = new BehaviorSubject<IMenuControl[]>([]);
   breakpoint = '';
   title = '';
   subtitle = '';
@@ -104,6 +107,34 @@ export class DefaultComponent implements OnInit, OnDestroy {
     const data = child.snapshot.data;
     this.title = (data['header'] || {}).title;
     this.subtitle = (data['header'] || {}).subtitle;
+
+    const controls = child.snapshot.data['controls'];
+    if (controls && Array.isArray(controls)) {
+      const renderIcon = (ctrl: any): string  => {
+        if(ctrl.toggle) {
+          const value = child.snapshot.queryParams[ctrl['toggle']] === 'true';
+          return ctrl.icon.split('/')[value ? 1 : 0] || '';
+        }
+        return ctrl['icon'];
+      }
+      const controlsMenu = controls.map(ctrl => new MenuControl(ctrl['title'], renderIcon(ctrl), () => {
+        const queryParams = {...child.snapshot.queryParams};
+        if (ctrl['action']) {
+          queryParams['action'] = ctrl['action'];
+        }
+
+        if (ctrl['toggle']) {
+          queryParams[ctrl['toggle']] = !(child.snapshot.queryParams[ctrl['toggle']] === 'true') ? 'true' : undefined; 
+        }
+
+        this.router.navigate(ctrl.path, {relativeTo: child, queryParams});
+      })
+      );
+    this.controls$.next(controlsMenu);
+    } else {
+      this.controls$.next([]);
+    }
+
   }
 
   check(sider: NzSiderComponent): void {

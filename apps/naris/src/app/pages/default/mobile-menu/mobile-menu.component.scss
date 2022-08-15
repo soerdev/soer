@@ -1,4 +1,10 @@
-:host {
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.mobile-menu {
     z-index: 500;
     position: fixed;
     left:0;
@@ -6,10 +12,16 @@
     bottom:0;
     background-color: rgba(255,255,255,0.9);
     padding: 5px;
+}
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.desktop-menu {
+    z-index: 500;
+    position: fixed;
+    right:25px;
+    bottom:25px;
+    padding: 2px 0 2px 1em;
+    border-radius: 5%;
+    background-color:rgba($color: #000000, $alpha: 0.3); 
 }
 
 .main-menu {
@@ -22,4 +34,7 @@
     flex-direction: row;
     flex-grow: 1;
     justify-content: flex-end;
+    .control {
+        margin: 2px;
+    }
 }

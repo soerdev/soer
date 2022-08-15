@@ -75,10 +75,10 @@
       </div>
     </nz-content>
     <soer-mobile-menu 
-      *ngIf="breakpoint === 'xs'"
+      [isMobile]="isMobileView"
       [userInfo]="app.user"
       [applicationMenu]="app.mainMenu"
-      [controls]="app.control$ | async" 
+      [controls]="controls$ | async" 
       (check)="check($event)" 
       (logout)="logout()">
     </soer-mobile-menu>

@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
 
 @Component({
@@ -13,7 +14,19 @@ export class EditAbstracteFormComponent  {
   public previewFlag = false;
   public editIndex = -1;
 
-  constructor(private cdp: ChangeDetectorRef, private _location: Location) {}
+  constructor(
+      private cdp: ChangeDetectorRef,
+      private _location: Location,
+      private route: ActivatedRoute
+    ) {
+      this.route.queryParams.subscribe(params => {
+        if (params['action'] === 'save') {
+          this.save.next(this.workbook);
+        }
+        this.previewFlag = params['preview'] === 'true';
+        this.cdp.markForCheck();
+      });
+    }
 
   move(from: number, to: number): void {
     const blocks = this.workbook.blocks;

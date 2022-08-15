@@ -8,6 +8,7 @@ import { IMenuControl, MenuTree } from '../../../services/menu/menu.interfaces';
   styleUrls: ['./mobile-menu.component.scss'],
 })
 export class MobileMenuComponent {
+  @Input() isMobile = false;
   @Input() userInfo: UserModel = {id: -1, role: '', email: ''};
   @Input() applicationMenu: MenuTree = [];
   @Input() controls: IMenuControl[] | null = null;
