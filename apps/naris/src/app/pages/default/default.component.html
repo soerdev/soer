@@ -1,5 +1,5 @@
 <nz-layout *ngIf="(app.user$ | async | dtoLastItem) as userInfo; else userError" class="app-layout">
-  <nz-sider *ngIf="breakpoint !== 'xs'" class="menu-sidebar" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0"
+  <nz-sider *ngIf="!isMobileView" class="menu-sidebar" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0"
     [nzCollapsed]="isCollapsed" #mmenu>
     <div class="sidebar-logo">
       <a [routerLink]="['/']">
@@ -28,7 +28,7 @@
 
   </nz-sider>
   <nz-layout style="overflow: hidden;">
-    <nz-page-header *ngIf="breakpoint !== 'xs'" class="site-page-header" [nzTitle]="title"
+    <nz-page-header *ngIf="!isMobileView" class="site-page-header" [nzTitle]="title"
       [nzSubtitle]="['md', 'lg', 'xl', 'xxl'].includes(breakpoint) ? subtitle : undefined">
       <nz-page-header-extra>
         <ng-container *ngTemplateOutlet="role; context: {role: userInfo.role}"></ng-container>
