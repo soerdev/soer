@@ -1,14 +1,13 @@
 <div class="icon-tabs">
 
     <a *ngFor="let tab of tabs"
-        (click)="active = tab" 
         [routerLink]="tab.path"
         nz-button
         nzSize="large"
         nzShape="circle"
         [title]="tab.title"
-        [disabled]="active.path.join('') === tab.path.join('')"
-        [nzType]="active.path.join('') === tab.path.join('') ? 'dashed' : 'primary'">
+        [disabled]="active.path.length > 0 && active.path.join('') === tab.path.join('')"
+        [nzType]="active.path.length > 0 && active.path.join('') === tab.path.join('') ? 'dashed' : 'primary'">
         <i  nz-icon  [nzType]="tab.icon || 'empty'" nzTheme="outline" ></i>
     </a>
 </div>

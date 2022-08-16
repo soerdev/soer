@@ -20,7 +20,6 @@ export class AuthComponent implements OnInit {
   }
 
   checkJWT(token: string | null): void {
-    console.log('???', token);
     if (token) {
       this.jwt = token;
       localStorage.setItem('token', this.jwt);

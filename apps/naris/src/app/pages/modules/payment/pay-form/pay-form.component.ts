@@ -160,7 +160,6 @@ export class PayFormComponent {
           window.location.href =  environment.host + '/api/v2/seller/order/' + order['id'];
         }
       }
-      console.log(result, '???');
     });
   }
 

@@ -53,11 +53,6 @@ export class ComposeIcontabsPageComponent extends ComposePage implements OnInit,
               icon: child.data?.['header'].icon,
               path: [newPath]
             };
-
-            if (this.tabs.length === 0 || newPath === '.') {
-              this.active = tab;
-            }
-            
             this.tabs.push(tab);
           }
         }
@@ -65,11 +60,15 @@ export class ComposeIcontabsPageComponent extends ComposePage implements OnInit,
   }
 
   activateTab(data: any): void {
-    this.active = this.tabs.find(tab => tab.componentName && tab.componentName === data.constructor?.name) || {
-      title: '',
-      icon: '',
-      path: []
+    const [activeRoute] = this.route.children;
+    if (activeRoute) {
+      this.active = this.tabs.find(tab => tab.title && tab.title === data.data?.header?.title) || {
+        title: '',
+        icon: '',
+        path: []
+      }
     }
+
   }
 
 }
