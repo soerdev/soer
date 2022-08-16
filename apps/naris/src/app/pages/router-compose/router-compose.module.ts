@@ -7,11 +7,16 @@ import { DumbModule } from '../dumb/dumb.module';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-
-
+import { ComposeIcontabsPageComponent } from './compose-icontabs-page/compose-icontabs-page.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @NgModule({
-  declarations: [ComposeOnePageComponent, ComposeTabPageComponent],
+  declarations: [
+    ComposeOnePageComponent,
+    ComposeTabPageComponent,
+    ComposeIcontabsPageComponent,
+  ],
   imports: [
     CommonModule,
     NzTabsModule,
@@ -19,9 +24,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzGridModule,
     DumbModule,
     RouterModule,
+    NzIconModule,
+    NzButtonModule
   ],
-  exports: [
-    [ComposeOnePageComponent, ComposeTabPageComponent],
-  ]
+  exports: [[ComposeOnePageComponent, ComposeTabPageComponent, ComposeIcontabsPageComponent]],
 })
-export class RouterComposeModule { }
+export class RouterComposeModule {}
