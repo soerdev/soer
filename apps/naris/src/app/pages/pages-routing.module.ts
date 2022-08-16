@@ -12,6 +12,7 @@ import { AbstracteRoutingModule } from './modules/abstracte/abstracte-routing.mo
 import { WorkbookKey } from './modules/abstracte/abstracte.const';
 import { CertificateComponent } from './modules/certificate/certificate/certificate.component';
 import { ComposeVideoPlayerComponent } from './modules/compose-video-player/compose-video-player.component';
+import { OverviewRoutingModule } from './modules/overview/overview-routing.module';
 import { OverviewComponent } from './modules/overview/overview.component';
 import { PayFormComponent } from './modules/payment/pay-form/pay-form.component';
 import { QuestionKey } from './modules/questions/questions.const';
@@ -33,7 +34,7 @@ const routes: Routes = [
         data: { header: {title: 'Выбор тарифа', subtitle: 'определите уровень платного доступа'}},
         component: PayFormComponent
       },
-      {
+      /*{
         path: 'overview',
         component: OverviewComponent,
         data: { header: {title: 'Брифинг', subtitle: 'кратко о возможностях и достижениях'}},
@@ -45,7 +46,7 @@ const routes: Routes = [
           streams: StreamService,
           workshops: WorkshopsService
         },
-      },
+      },*/
       {
         path: 'streams',
         component: StreamsComponent,
@@ -142,7 +143,8 @@ const routes: Routes = [
     }),
     QuestionsRoutingModule,
     TargetsRoutingModule,
-    AbstracteRoutingModule
+    AbstracteRoutingModule,
+    OverviewRoutingModule
   ],
   providers: [
     TasksResolver,

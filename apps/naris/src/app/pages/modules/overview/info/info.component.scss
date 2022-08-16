@@ -1,0 +1,62 @@
+::ng-deep .ant-card-bordered {
+    border-radius: 5px;
+}
+
+.contacts-level {
+    ::ng-deep i.anticon {
+        color: #1890ff;
+        font-size: 3rem;
+    }
+    
+    .contact {
+        display: flex;
+        flex-direction: row;
+        &_icon {
+            padding: 0 2em 0 0;
+        }
+        &_text {
+            min-height: 6rem;
+            p {
+                font-size: 1.5em;
+                color: rgba(0,0,0,.45);;
+            }
+        }
+    }
+}
+
+.social-level {
+   
+
+    .social {
+        display: flex;
+        flex-direction: row;
+        &_icon {
+            padding: 0 2em 0 0;
+            ::ng-deep i.anticon {
+                color: #1890ff;
+                font-size: 3rem;
+            }
+        }
+        &_text {
+            min-height: 7rem;
+            p {
+                font-size: 1.1rem;
+                color: rgba(0,0,0,.45);;
+            }
+        }
+    }
+}
+
+
+.link {
+    text-align: right; 
+    ::ng-deep i.anticon {
+        color: #1890ff;
+        font-size: 1.5rem;
+    }
+}
+
+.general-target {
+    color: #535FD7;
+    background-color: #E9EDF3;
+}

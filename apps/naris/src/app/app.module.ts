@@ -16,7 +16,6 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { environment } from '../environments/environment';
 import { IconsProviderModule } from '../icons-provider.module';
-import { PersonalActivityService } from './api/progress/personal-activity.service';
 import { ActivityKey } from './api/progress/progress.const';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

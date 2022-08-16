@@ -1,0 +1,47 @@
+<ng-container *ngIf="(target$ | async) as targets">
+    <nz-divider nzText="Следующий шаг" nzOrientation="left"></nz-divider>
+    <div nz-row [nzGutter]="[24, 24]" class="steps metrics" >
+      <ng-container  *ngIf="targets.status === 'ok' && targets.items.length > 0; else createFromTemplate">
+            <ng-container  *ngFor="let target of targets.items">
+              <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+                <a [routerLink]="['/', 'pages', 'targets', 'filter', target.id]">
+                  <nz-statistic
+                    [ngClass]="{'good': target.progress >= 50, 'normal': target.progress < 50, 'bad': target.progress <= 10}"
+                    nzSuffix="%"
+                    [nzValue]="target['progress']" [nzTitle]="target['title']"></nz-statistic>
+                </a>
+              </nz-col>
+            </ng-container>
+      </ng-container>
+      <ng-template #createFromTemplate>
+        <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+        <a [routerLink]="['/', 'pages', 'targets', 'templates', 'public']">
+          <nz-statistic
+            class="warn"
+            nzSuffix="..."
+            nzValue=""
+            nzTitle="У вас не создано ни одной цели. Нажмите здесь, чтобы создать из готовых шаблонов."></nz-statistic>
+        </a>
+        </nz-col>
+      </ng-template>
+    </div>
+  
+  </ng-container>
+  <nz-divider nzText="Метрики" nzOrientation="left"></nz-divider>
+  <div nz-row [nzGutter]="[24, 24]" class="metrics" >
+    <ng-container *ngFor="let metric of metrics">
+        <nz-col class="metric-level" nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+          <a [href]="metric['url']">
+            <nz-statistic *ngIf="(metric.list$ | async) as list;else loading" [ngClass]="{'good': list.items.length > 0, 'bad': list.items.length < 1}"
+              [nzSuffix]="metric['suffix']"
+              [nzValue]="(list.items.length | number)!" [nzTitle]="metric['title']"></nz-statistic>
+            <ng-template #prefixTpl><i nz-icon [nzType]="metric['icon']"></i></ng-template>
+          </a>
+        </nz-col>
+    </ng-container>
+  </div>
+  
+  
+  
+  <ng-template #aimIcon><p style="text-align: center;">посмотреть</p></ng-template>
+  <ng-template #loading><nz-spin></nz-spin></ng-template>

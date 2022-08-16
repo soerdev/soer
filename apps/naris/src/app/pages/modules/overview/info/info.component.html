@@ -1,0 +1,41 @@
+<div nz-row [nzGutter]="[24, 24]" >
+    <div *ngFor="let contact of data['brif']?.contacts" class="contacts-level" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+      <a [href]="contact?.url" target="_blank">
+        <nz-card nzHoverable>
+          <div class="contact">
+            <div *ngIf="contact.icon" class="contact_icon">
+              <i nz-icon [nzType]="contact?.icon"></i>
+            </div>
+            <div class="contact_text">
+              <h2>{{contact?.title}}</h2>
+              <p>{{contact?.text}}</p>
+            </div>
+          </div>
+          <div class="link"><i nz-icon nzType="arrow-right"></i></div>
+        </nz-card>
+      </a>
+    </div>
+  </div>
+  
+<div nz-row [nzGutter]="[24, 24]" >
+  <nz-divider nzText="Сообщества" nzOrientation="left"></nz-divider>
+  <div nz-row [nzGutter]="[24, 24]" >
+    <div *ngFor="let social of data['brif']?.social" class="social-level" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8">
+      <a [href]="social?.url" target="_blank">
+        <nz-card nzHoverable>
+          <div class="social">
+            <div *ngIf="social?.icon" class="social_icon">
+              <i nz-icon [nzType]="social.icon"></i>
+            </div>
+            <div class="social_text">
+              <h2>{{social?.title}}</h2>
+              <p>{{social?.text}}</p>
+            </div>
+          </div>
+          <div class="link"><i nz-icon nzType="arrow-right"></i></div>
+        </nz-card>
+      </a>
+    </div>
+  </div>
+  <ng-template #aimIcon><p style="text-align: center;">посмотреть</p></ng-template>
+  <ng-template #loading><nz-spin></nz-spin></ng-template>
