@@ -21,7 +21,8 @@
     bottom:25px;
     padding: 2px 0 2px 1em;
     border-radius: 5%;
-    background-color:rgba($color: #000000, $alpha: 0.3); 
+		box-shadow: 0 0 2px rgb(147 151 173 / 10%), 0px 2px 5px 2px rgb(147 151 173 / 30%);
+    background-color:rgba($color: #fff, $alpha: 0.3); 
 }
 
 .main-menu {
