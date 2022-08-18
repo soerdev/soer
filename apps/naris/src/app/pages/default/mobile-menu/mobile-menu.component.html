@@ -1,4 +1,4 @@
-<div class="menu-container" [ngClass]="{'mobile-menu': isMobile, 'desktop-menu': !isMobile}">
+<div *ngIf="isMobile || (controls || []).length > 0" class="menu-container" [ngClass]="{'mobile-menu': isMobile, 'desktop-menu': !isMobile}">
   <div class="main-menu">
     <button *ngIf="isMobile" nz-button nz-dropdown nzTrigger="click" nzSize="large" nzType="primary" [nzDropdownMenu]="menu"><i nz-icon
         nzType="menu" nzTheme="outline"></i></button>
