@@ -27,6 +27,13 @@
 
       </ul>
     </nz-dropdown-menu>
+    <a *ngIf="isMobile" [routerLink]="['overview']" nz-button nzSize="large" nzType="link" ><i nz-icon
+      nzType="rocket" nzTheme="outline"></i></a>
+      <a *ngIf="isMobile" [routerLink]="['workshops']" nz-button nzSize="large" nzType="link" ><i nz-icon
+        nzType="experiment" nzTheme="outline"></i></a>
+        <a *ngIf="isMobile" [routerLink]="['streams']" nz-button nzSize="large" nzType="link" ><i nz-icon
+          nzType="play-circle" nzTheme="outline"></i></a>
+    
   </div>
 
   <div class="controls" *ngIf="controls">
