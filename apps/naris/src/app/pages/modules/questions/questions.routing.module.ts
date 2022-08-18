@@ -10,14 +10,17 @@ const routes: Routes = [
   {
     path: 'qa',
     component: ComposeOnePageComponent,
-    data: {
-      header: { title: 'Вопросы и ответы', subtitle: 'здесь можно получить аудио-ответ' },
-    },
     children: [
       { path: '', redirectTo: 'my', pathMatch: 'prefix'},
       {
         path: 'my',
         component: ListQuestionsPageComponent,
+        data: {
+          header: { title: 'Вопросы и ответы', subtitle: 'здесь можно получить аудио-ответ' },
+          controls: [
+            {title: 'Добавить', path: ['..', 'create', 'new'], icon: 'plus'},
+          ]
+        },
         resolve: {
           questions: 'questionsEmitter'
         },
@@ -31,7 +34,14 @@ const routes: Routes = [
       },
       {
         path: 'create/new',
-        component: QuestionFormComponent
+        component: QuestionFormComponent,
+        data: {
+          header: {title: 'Новый вопрос', subtitle: 'любые вопросы на айти тематику'},
+          controls: [
+            {title: 'Сохранить', path: ['.'], action: 'save', icon: 'save'},
+            {title: 'Назад', path: ['../..'], icon: 'rollback'},
+          ]
+        }
       },
       {
           path: 'show/video/:videoId',

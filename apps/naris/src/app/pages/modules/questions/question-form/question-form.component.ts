@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService } from '@soer/sr-dto';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'soer-question-form',
@@ -17,9 +18,14 @@ export class QuestionFormComponent {
   constructor(
     @Inject('question') private questionId: BusEmitter,
     private bus$: MixedBusService,
-    private store$: DataStoreService,
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params['action'] === 'save') {
+        this.onSubmit();
+      }
+    });
     this.form = this.formBuilder.group({
       id: [null],
       question: [null, [Validators.maxLength(255)]]
