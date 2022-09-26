@@ -30,6 +30,9 @@ export class DocumentsService {
   findAll(): DocumentEntity[] {
     return this.documents;
   }
+  findAllByUrn(urn: string): DocumentEntity[] {
+    return this.documents.filter((tmpDoc) => tmpDoc.groupUrn === urn);
+  }
 
   findOne(id: number): DocumentEntity {
     return this.documents.find((tmpDoc) => tmpDoc.id === id);

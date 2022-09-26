@@ -33,7 +33,7 @@ POST {{backend}}/api/{{version}}/groups
 Content-Type: application/json
 
 {
-  "body": "Document {{$randomInt 0 100}}"   
+  "name": "Group{{$randomInt 0 100}}"   
 }
 
 
@@ -47,4 +47,4 @@ Content-Type: application/json
 }
 
 ### Get documents by groupname
-GET {{backend}}/api/{{version}}/group/{{newGroup.response.body.name}}/{{collection}}
+GET {{backend}}/api/{{version}}/groups/{{newGroup.response.body.name}}/{{collection}}
