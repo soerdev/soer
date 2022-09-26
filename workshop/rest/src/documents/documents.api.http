@@ -1,0 +1,28 @@
+@collection = documents
+@version = v1
+@backend = http://localhost:3000
+
+// ------ Documents CRUD
+
+### Create document
+# @name newDocument
+POST {{backend}}/api/{{version}}/{{collection}}
+Content-Type: application/json
+
+{
+  "body": "Document {{$randomInt 0 100}}"   
+}
+
+### Get documents
+GET {{backend}}/api/{{version}}/{{collection}}
+
+### Get document by id
+GET {{backend}}/api/{{version}}/{{collection}}/{{newDocument.response.body.id}}
+
+### Delete document by id
+DELETE {{backend}}/api/{{version}}/{{collection}}/{{newDocument.response.body.id}}
+
+// ------ Errors
+
+
+// ------ Groups
