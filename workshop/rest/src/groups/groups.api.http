@@ -1,0 +1,28 @@
+@collection = groups
+@version = v1
+@backend = http://localhost:3000
+
+// ------ Documents CRUD
+
+### Create group
+# @name newGroup
+POST {{backend}}/api/{{version}}/{{collection}}
+Content-Type: application/json
+
+{
+  "body": "Document {{$randomInt 0 100}}"   
+}
+
+### Get groups
+GET {{backend}}/api/{{version}}/{{collection}}
+
+### Get group by id
+GET {{backend}}/api/{{version}}/{{collection}}/{{newGroup.response.body.id}}
+
+### Delete group by id
+DELETE {{backend}}/api/{{version}}/{{collection}}/{{newGroup.response.body.id}}
+
+// ------ Errors
+
+
+// ------ Groups
