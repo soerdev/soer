@@ -26,3 +26,25 @@ DELETE {{backend}}/api/{{version}}/{{collection}}/{{newDocument.response.body.id
 
 
 // ------ Groups
+
+### Create group
+# @name newGroup
+POST {{backend}}/api/{{version}}/groups
+Content-Type: application/json
+
+{
+  "body": "Document {{$randomInt 0 100}}"   
+}
+
+
+### Create document with group
+# @name newDocument
+POST {{backend}}/api/{{version}}/{{collection}}?groupUrn={{newGroup.response.body.urn}}
+Content-Type: application/json
+
+{
+  "body": "Document {{$randomInt 0 100}}"   
+}
+
+### Get documents by groupname
+GET {{backend}}/api/{{version}}/group/{{newGroup.response.body.name}}/{{collection}}

@@ -1,1 +1,5 @@
-export class Group {}
+export class GroupEntity {
+  id: number;
+  urn: string;
+  name: string;
+}

@@ -13,12 +13,15 @@ export class DocumentsService {
     return ++this.autoInrementId;
   }
 
-  create(createDocumentDto: CreateDocumentDto): DocumentEntity {
+  create(
+    createDocumentDto: CreateDocumentDto,
+    groupUrn?: string,
+  ): DocumentEntity {
     const newDocument = {
       id: this.nextId(),
       urn: `urn:api_v1_documents:${uuid()}`,
       body: createDocumentDto.body,
-      groupUrn: null,
+      groupUrn: groupUrn || null,
     };
     this.documents.push(newDocument);
     return newDocument;

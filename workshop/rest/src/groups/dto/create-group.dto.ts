@@ -1,1 +1,3 @@
-export class CreateGroupDto {}
+export class CreateGroupDto {
+  readonly name: string;
+}
