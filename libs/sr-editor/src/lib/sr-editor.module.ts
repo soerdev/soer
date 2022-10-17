@@ -4,6 +4,7 @@ import { EditorComponent } from './editor/editor.component';
 import { BlockEditorComponent } from './blocks/block-editor/block-editor.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from '@angular/forms';
+import { TextareaAutoresizeDirective } from './textarea-autoresize.directive';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
     MarkdownModule.forRoot(),
     FormsModule,
   ],
-  declarations: [EditorComponent, BlockEditorComponent],
+  declarations: [EditorComponent, BlockEditorComponent, TextareaAutoresizeDirective],
   exports: [EditorComponent],
 })
 export class SrEditorModule {}
