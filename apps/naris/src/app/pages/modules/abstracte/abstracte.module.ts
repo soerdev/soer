@@ -21,7 +21,6 @@ import { DumbModule } from '../../dumb/dumb.module';
 import { SoerComponentsModule } from '../../soer-components/soer-components.module';
 import { EditAbstracteFormComponent } from './edit-abstracte-form/edit-abstracte-form.component';
 import { EditAbstractePageComponent } from './edit-abstracte-page/edit-abstracte-page.component';
-import { InlineMarkdownBlockComponent } from './inline-markdown-block/inline-markdown-block.component';
 import { ListAbstractePageComponent } from './list-abstracte-page/list-abstracte-page.component';
 import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte-page.component';
 
@@ -30,7 +29,6 @@ import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte
     ListAbstractePageComponent,
     EditAbstractePageComponent,
     ViewAbstractePageComponent,
-    InlineMarkdownBlockComponent,
     EditAbstracteFormComponent
   ],
   imports: [
