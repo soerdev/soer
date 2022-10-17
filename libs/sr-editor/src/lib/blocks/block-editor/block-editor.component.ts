@@ -1,19 +1,20 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { TextBlock } from '../../interfaces/document.model';
 
 @Component({
-  selector: 'soer-inline-markdown-block',
-  templateUrl: './inline-markdown-block.component.html',
-  styleUrls: ['./inline-markdown-block.component.scss'],
+  selector: 'soer-block-editor',
+  templateUrl: './block-editor.component.html',
+  styleUrls: ['./block-editor.component.scss'],
 })
-export class InlineMarkdownBlockComponent {
+export class BlockEditorComponent {
+  @Input() textBlock: TextBlock = {type: 'markdown', text: ''};
+  
   @ViewChild("edit") set editRef(ref: ElementRef) {
     if (ref) {
       ref.nativeElement.focus();
     }
   }
   @Input() localIndex = -1;
-  @Input() markdownText = '';
   @Input() isEdit = false;
   @Output() addBlock = new EventEmitter<number>();
   @Output() removeBlock = new EventEmitter<number>();
@@ -49,5 +50,4 @@ export class InlineMarkdownBlockComponent {
   onEndEdit(): void {
     this.isEdit = false;
     this.endEdit.next(this.localIndex);
-  }
-}
+  }}

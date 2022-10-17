@@ -5,9 +5,6 @@
 </nz-form-item>
 <nz-form-item>
     <nz-form-control>
-
-        <soer-editor [document]="workbook" ></soer-editor>
-
         <div *ngIf="previewFlag;else blocks" style="padding: 1.5em;">
             <markdown *ngFor="let block of workbook.blocks;">{{block.text}}</markdown>
         </div>
@@ -16,15 +13,5 @@
 
 
 <ng-template #blocks>
-    <ng-container *ngFor="let block of this.workbook.blocks; index as bIndex">
-        <soer-inline-markdown-block *ngIf="block.type === 'markdown'" [(markdownText)]="block.text"
-            [isEdit]="bIndex === editIndex"
-            [localIndex]="bIndex"
-            (moveDown)="move($event, $event + 1)"
-            (moveUp)="move($event, $event - 1)"
-            (removeBlock)="removeBlock($event)"
-            (addBlock)="addBlockMarkdown($event)">
-        </soer-inline-markdown-block>
-        
-    </ng-container>
+    <soer-editor [document]="workbook" ></soer-editor>
 </ng-template>
