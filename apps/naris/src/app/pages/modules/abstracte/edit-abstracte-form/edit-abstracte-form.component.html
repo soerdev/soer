@@ -5,6 +5,9 @@
 </nz-form-item>
 <nz-form-item>
     <nz-form-control>
+
+        <soer-editor [document]="workbook" ></soer-editor>
+
         <div *ngIf="previewFlag;else blocks" style="padding: 1.5em;">
             <markdown *ngFor="let block of workbook.blocks;">{{block.text}}</markdown>
         </div>

@@ -8,9 +8,9 @@ import { map } from "rxjs/operators";
 import { PersonalActivityService, VideoIdModel } from '../../../../api/progress/personal-activity.service';
 import { QuestionModel } from '../../../../api/questions/question.model';
 import { VideoModel } from '../../../../api/streams/stream.model';
-import { WorkbookModel } from '../../../../api/workbook/workbook.model';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel } from '../../../../api/targets/target.interface';
+import { WorkbookModel } from '@soer/sr-editor';
 
 
 @Component({

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, BusMessage } from '@soer/mixed-bus';
 import { DataStoreService, DtoPack } from '@soer/sr-dto';
+import { WorkbookModel } from '@soer/sr-editor';
 import { Observable, of } from 'rxjs';
 import { map } from "rxjs/operators";
 import { parseJsonDTOPack } from '../../../api/json.dto.helpers';
@@ -9,7 +10,6 @@ import { PersonalActivityService, VideoIdModel } from '../../../api/progress/per
 import { QuestionModel } from '../../../api/questions/question.model';
 import { VideoModel } from '../../../api/streams/stream.model';
 import { TargetModel } from '../../../api/targets/target.interface';
-import { WorkbookModel } from '../../../api/workbook/workbook.model';
 
 
 @Component({

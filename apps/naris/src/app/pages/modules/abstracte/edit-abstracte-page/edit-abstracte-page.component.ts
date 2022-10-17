@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandCreate, CommandUpdate, DataStoreService, deSerializeJson, extractDtoPackFromBus, SerializedJsonModel } from '@soer/sr-dto';
+import { EMPTY_WORKBOOK, WorkbookModel } from '@soer/sr-editor';
 import { map, Observable } from 'rxjs';
 import { convertToJsonDTO } from '../../../../api/json.dto.helpers';
-import { EMPTY_WORKBOOK, WorkbookModel } from '../../../../api/workbook/workbook.model';
 
 @Component({
   selector: 'soer-edit-abstracte-page',

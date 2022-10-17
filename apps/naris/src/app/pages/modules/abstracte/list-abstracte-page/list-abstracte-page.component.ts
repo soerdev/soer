@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { BusEmitter, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { CommandAction, CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
+import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
+import { CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
+import { WorkbookModel } from '@soer/sr-editor';
 import { Observable } from 'rxjs';
 import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
-import { WorkbookModel } from '../../../../api/workbook/workbook.model';
-import { ApplicationService } from '../../../../services/application.service';
 
 
 @Component({

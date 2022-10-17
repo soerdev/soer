@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SrDTOModule } from '@soer/sr-dto';
+import { SrEditorModule } from '@soer/sr-editor';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -53,7 +54,8 @@ import { ViewAbstractePageComponent } from './view-abstracte-page/view-abstracte
     RouterModule,
     MarkdownModule.forRoot(),
     SrDTOModule,
-    SoerComponentsModule
+    SoerComponentsModule,
+    SrEditorModule
   ],
 })
 export class AbstracteModule {}

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ANY_SERVICE, MixedBusModule } from '@soer/mixed-bus';
 import { SrDTOModule } from '@soer/sr-dto';
-import { ApplicationService } from 'apps/naris/src/app/services/application.service';
+import { ApplicationService } from '../../../../services/application.service';
 
 import { ListAbstractePageComponent } from './list-abstracte-page.component';
 

@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '../../../../../app/api/workbook/workbook.model';
+import { EMPTY_WORKBOOK, TextBlock, WorkbookModel } from '@soer/sr-editor';
+
 
 @Component({
   selector: 'soer-edit-abstracte-form',
