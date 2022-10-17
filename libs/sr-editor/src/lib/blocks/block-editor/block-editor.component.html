@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="info">MD&nbsp;[{{isEdit ? '*': '&nbsp;'}}]</div>
+    <div class="info">{{textBlock.type === 'markdown' ? 'MD&nbsp;' : ''}}{{textBlock.type === 'test' ? 'TST' : ''}}&nbsp;[{{isEdit ? '*': '&nbsp;'}}]</div>
     <div class="edit">
         <ng-container *ngIf="isEdit">
             <textarea class="markdown-block" [(ngModel)]="textBlock.text" (blur)="onEndEdit()"
@@ -7,6 +7,7 @@
                 soerAutoresize></textarea>
 
             <p class="help">(EDIT:{{localIndex}})
+                Alt-1,2,3 - markdown, test, presentation
                 Alt-Enter - новый блок,
                 Alt-Backspace - удалить блок,
                 Alt-Up/Down - сдвинуть блок,
@@ -16,7 +17,15 @@
 
         <ng-container *ngIf="!isEdit">
             <div class="markdown-block" (click)="isEdit = true">
-                <markdown *ngIf="textBlock.text; else HelpText">{{textBlock.text}}</markdown>
+                <ng-container [ngSwitch]="textBlock.type">
+                   <ng-container *ngSwitchCase="'markdown'">
+                        <markdown *ngIf="textBlock.text; else HelpText">{{textBlock.text}}</markdown>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'test'">
+                        <soer-block-test [text]="textBlock.text"></soer-block-test>
+                    </ng-container>
+
+                </ng-container>
             </div>
         </ng-container>
     </div>

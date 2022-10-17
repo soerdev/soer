@@ -5,14 +5,16 @@ import { BlockEditorComponent } from './blocks/block-editor/block-editor.compone
 import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from '@angular/forms';
 import { TextareaAutoresizeDirective } from './textarea-autoresize.directive';
+import { BlockTestComponent } from './blocks/block-test/block-test.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MarkdownModule.forRoot(),
-    FormsModule,
+  imports: [CommonModule, MarkdownModule.forRoot(), FormsModule],
+  declarations: [
+    EditorComponent,
+    BlockEditorComponent,
+    TextareaAutoresizeDirective,
+    BlockTestComponent,
   ],
-  declarations: [EditorComponent, BlockEditorComponent, TextareaAutoresizeDirective],
   exports: [EditorComponent],
 })
 export class SrEditorModule {}

@@ -1,5 +1,5 @@
 export interface TextBlock {
-    type: 'markdown',
+    type: 'markdown' | 'test' | 'presentation',
     text: string;
 }
 export interface WorkbookModel {

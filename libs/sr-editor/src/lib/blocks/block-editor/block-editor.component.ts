@@ -42,6 +42,14 @@ export class BlockEditorComponent {
       this.moveDown.next(this.localIndex);
     }
 
+    if ($event.altKey && $event.code === 'Digit1') {
+      this.textBlock.type = 'markdown';
+    }
+
+    if ($event.altKey && $event.code === 'Digit2') {
+      this.textBlock.type = 'test';
+    }
+
     if ($event.code === 'Escape') {
       this.isEdit = false;
     }

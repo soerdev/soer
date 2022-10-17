@@ -1,0 +1,13 @@
+{{question}}
+
+<ul *ngIf="answers.length > 0;else empty" class="quiz-questions-list">
+    <li *ngFor="let one of answers">
+        <label class="quiz-question__label">
+        <input type="checkbox"/>
+        {{one.answer}}
+        </label>
+    </li>
+</ul>
+
+
+<ng-template #empty><p><i>Не указан ни один вопрос</i></p></ng-template>
