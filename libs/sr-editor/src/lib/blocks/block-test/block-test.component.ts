@@ -13,7 +13,10 @@ export class BlockTestComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const [question, answersText] = this.text.split("\n\n");
+    const blocks = this.text.split("\n\n");
+    const answersText = blocks.pop();
+    const question = blocks.join("\n\n");
+
     if (answersText) {
       const answers = (answersText + '').split("\n").map(tmpAnswer => {
         const correct = tmpAnswer.substring(0, 1) === '+';
