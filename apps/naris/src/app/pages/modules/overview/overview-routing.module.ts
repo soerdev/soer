@@ -12,8 +12,13 @@ const routes: Routes = [
   {
     path: 'overview',
     component: ComposeIcontabsPageComponent,
-    data: { header: {title: 'Достижение целей', subtitle: 'помощь в саморазвитии'}},
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'info'
+      },
+
       {
         path: 'metrics',
         data: { header: {title: 'Метрики', subtitle: 'отражают ваши достижения и цели', icon: 'pie-chart'}},
@@ -27,7 +32,7 @@ const routes: Routes = [
           },
       },
       {
-      path: '',
+      path: 'info',
       data: { header: {title: 'Информация', subtitle: 'контакты и группы сообщества', icon: 'info-circle'}},
       component: InfoComponent,
       resolve: {

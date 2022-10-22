@@ -109,16 +109,16 @@ export abstract class ComposePage {
     }
 
     onNewSchema(): void {
-      this.router.navigate(['create', 'new'], { relativeTo: this.route });
+      this.router.navigate(['create', 'new'], { relativeTo: this.findActivatedRoute(this.route) });
     }
     onEditSchema(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
-      this.router.navigate(['edit', data.payload.id], { relativeTo: this.route });
+      this.router.navigate(['edit', data.payload.id], { relativeTo: this.findActivatedRoute(this.route) });
     }
 
     onViewSchema(data: BusMessage | BusError): void {
       if (data instanceof BusError) { return; }
-      this.router.navigate(['view', data.payload.id], { relativeTo: this.route });
+      this.router.navigate(['view', data.payload.id], { relativeTo: this.findActivatedRoute(this.route) });
     }
 
     closePopup(): void {
@@ -127,5 +127,23 @@ export abstract class ComposePage {
 
     showPopup(action: boolean): void {
       this.popup = action;
+    }
+
+
+    // TODO: сделать абстрактным и возвращать ROUTE в зависимости от типа компонента
+    private findActivatedRoute(ar: ActivatedRoute): ActivatedRoute {
+      if (ar) {
+        if (ar.children.length === 1) {
+          const [next] = ar.children;
+          return this.findActivatedRoute(next);
+        }
+        return ar;
+      }
+
+      if (this.route.children.length === 0) {
+        return this.route;
+      }
+
+      return this.findActivatedRoute(this.route);
     }
   }

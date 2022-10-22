@@ -115,6 +115,24 @@ const routes: Routes = [
       }
     }),
 
+    SrDTOModule.forChild<WorkbookKey>({
+      namespace: 'quiz',
+      schema: {url: 'v2/json/quiz/:wid'},
+      keys: {
+        quiz: {wid: '?'},
+        quizs: {wid: 'personal'},
+      }
+    }),
+
+    SrDTOModule.forChild<WorkbookKey>({
+      namespace: 'articles',
+      schema: {url: 'v2/json/article/:wid'},
+      keys: {
+        article: {wid: '?'},
+        articles: {wid: 'personal'},
+      }
+    }),
+
     SrDTOModule.forChild<QuestionKey>({
       namespace: 'qa',
       schema: {url: 'questions/:qid'},

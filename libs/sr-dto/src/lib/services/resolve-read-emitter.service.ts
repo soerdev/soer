@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ANT_ICON_ANGULAR_CONSOLE_PREFIX } from '@ant-design/icons-angular';
 import { busEmitterFactory, MixedBusService } from '@soer/mixed-bus';
 import { of } from 'rxjs';
 import { first } from 'rxjs/operators';

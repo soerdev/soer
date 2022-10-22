@@ -33,7 +33,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'create/new',
+        path: 'my/create/new',
         component: QuestionFormComponent,
         data: {
           header: {title: 'Новый вопрос', subtitle: 'любые вопросы на айти тематику'},

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandDelete, CommandEdit, CommandNew, CommandView, DataStoreService, DtoPack } from '@soer/sr-dto';
 import { WorkbookModel } from '@soer/sr-editor';
@@ -14,14 +15,19 @@ import { parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 })
 export class ListAbstractePageComponent {
 
+  public name? = '';
+  private workbooksId: BusEmitter;
+  private workbookId: BusEmitter;
   workbook$: Observable<DtoPack<WorkbookModel>>;
   constructor(
-    @Inject('workbook') private workbookId: BusEmitter,
-    @Inject('workbooks') private workbooksId: BusEmitter,
-
     private bus$: MixedBusService,
-    private store$: DataStoreService
+    private store$: DataStoreService,
+    private route: ActivatedRoute
   ) {
+    this.name = this.route.snapshot.data['header'].title;
+    
+    this.workbooksId = this.route.snapshot.data['workbooks'];
+    this.workbookId = {...this.workbooksId, key: {wid: '?'}}
     this.workbook$ = parseJsonDTOPack<WorkbookModel>(this.store$.of(this.workbooksId), 'workbooks');
   }
 

@@ -1,15 +1,17 @@
+<ng-container *ngIf="(active$ | async) as active">
 <div class="icon-tabs">
 
     <a *ngFor="let tab of tabs"
         [routerLink]="tab.path"
         nz-button
         nzSize="large"
-        nzShape="circle"
+        nzShape="round"
         [title]="tab.title"
         [disabled]="active.path.length > 0 && active.path.join('') === tab.path.join('')"
         [nzType]="active.path.length > 0 && active.path.join('') === tab.path.join('') ? 'dashed' : 'primary'">
-        <i  nz-icon  [nzType]="tab.icon || 'empty'" nzTheme="outline" ></i>
+        <i *ngIf="tab.icon" nz-icon  [nzType]="tab.icon || 'empty'" nzTheme="outline" ></i>
+        <span *ngIf="tab.iconText">{{tab.iconText}}</span>
     </a>
 </div>
-
+</ng-container>
 <router-outlet (activate)="activateTab($event)"></router-outlet>
