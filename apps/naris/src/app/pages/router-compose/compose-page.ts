@@ -1,6 +1,7 @@
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusEmitter, BusError, BusMessage, isBusMessage, MixedBusService } from '@soer/mixed-bus';
-import { CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
+import { ChangeDataEvent, CommandCancel, CommandEdit, CommandNew, CommandRead, CommandView, CreateDoneEvent, DeleteDoneEvent, ERROR, OK, UpdateDoneEvent } from '@soer/sr-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
@@ -9,6 +10,7 @@ import { Subscription } from 'rxjs';
 export abstract class ComposePage {
     protected subscriptions: Subscription[] = [];
     public popup = false;
+    private updateSID: any = 0;
 
     render = () => console.log(Math.random());
 
@@ -17,14 +19,24 @@ export abstract class ComposePage {
         protected bus$: MixedBusService,
         protected router: Router,
         protected route: ActivatedRoute,
-        protected message: NzMessageService
+        protected message: NzMessageService,
+        protected cdp: ChangeDetectorRef
     ) { }
 
     composeInit(): void {
       this.subscriptions = [
         this.bus$.of(DeleteDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно удален', evtResult)),
         this.bus$.of(CreateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно создан', evtResult)),
-        this.bus$.of(UpdateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно изменен', evtResult))
+        this.bus$.of(UpdateDoneEvent).subscribe(evtResult => this.showMessageOrErrors('Элемент успешно изменен', evtResult)),
+        this.bus$.of(ChangeDataEvent).subscribe(() => {
+          if (this.updateSID) {
+            clearTimeout(this.updateSID);
+            this.updateSID = 0;
+          }
+          this.updateSID = setTimeout(() => {
+          this.cdp.detectChanges();
+        }, 100);
+      })
       ];
 
       this.register();

@@ -20,6 +20,8 @@ export class StoreCrudService implements CRUD {
         private bus$: MixedBusService,
         private urlBuilder: UrlBuilderService
     ) {
+        const wnd = (window as any);
+        wnd.store$ = this;
         console.log('Start RESTfull CRUD events service');
         bus$.of(CommandNew).subscribe(this.createNew.bind(this));
         bus$.of(CommandRead).subscribe(this.read.bind(this));

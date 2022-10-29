@@ -63,6 +63,10 @@ function createcrudEmitters<T extends BusKey>(options: CrudOptions<T>): Provider
 }
 
 function createCRUDSBusId(providerName: string, emitter: CRUDBusEmitter): Provider {
+  const wnd = (window as any);
+  wnd.emitters = wnd.emitters || {};
+  wnd.emitters[providerName] = emitter;
+
   return {
     provide: `${providerName}`,
     useFactory: () => {

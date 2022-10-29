@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MixedBusService } from '@soer/mixed-bus';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -16,6 +16,7 @@ interface IconTab {
   selector: 'soer-compose-icontabs-page',
   templateUrl: './compose-icontabs-page.component.html',
   styleUrls: ['./compose-icontabs-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ComposeIcontabsPageComponent extends ComposePage implements OnInit, OnDestroy {
 
@@ -25,9 +26,10 @@ export class ComposeIcontabsPageComponent extends ComposePage implements OnInit,
                bus$: MixedBusService,
                router: Router,
                route: ActivatedRoute,
-               message: NzMessageService
+               message: NzMessageService,
+               cdp: ChangeDetectorRef
   ) {
-    super(bus$, router, route, message);
+    super(bus$, router, route, message, cdp);
     this.prepareTabs();
   }
 

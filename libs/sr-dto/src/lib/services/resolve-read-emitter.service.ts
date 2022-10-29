@@ -12,6 +12,9 @@ export class ResolveReadEmitterService implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
     const owner = busEmitterFactory(this.owner, route.params);
+    const wnd = (window as any);
+    wnd.resolvedEmitters = wnd.resolvedEmitters || {};
+    wnd.resolvedEmitters[owner.sid.toString()] = owner;
     this.bus$.publish(new CommandRead(owner));
     //TODO: refactor toPromise to firstValueOf
     return of(owner).toPromise();

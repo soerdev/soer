@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -7,7 +7,8 @@ import { ComposePage } from '../compose-page';
 @Component({
   selector: 'soer-compose-tab-page',
   templateUrl: './compose-tab-page.component.html',
-  styleUrls: ['./compose-tab-page.component.scss']
+  styleUrls: ['./compose-tab-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ComposeTabPageComponent extends ComposePage implements OnInit, OnDestroy {
 
@@ -16,9 +17,10 @@ export class ComposeTabPageComponent extends ComposePage implements OnInit, OnDe
                bus$: MixedBusService,
                router: Router,
                route: ActivatedRoute,
-               message: NzMessageService
+               message: NzMessageService,
+               cdp: ChangeDetectorRef
   ) {
-    super(bus$, router, route, message);
+    super(bus$, router, route, message, cdp);
   }
 
   ngOnInit(): void {
