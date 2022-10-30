@@ -1,4 +1,3 @@
-
 :host {
   display: flex;
   text-rendering: optimizeLegibility;
@@ -62,7 +61,11 @@ nz-content {
 .main-content {
   background: white;
   max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
+
 ::ng-deep .ant-popover-inner-content {
   max-width: 20rem;
 }
@@ -70,6 +73,7 @@ nz-content {
 .ant-btn {
     margin-left: 12px;
 }
+
 
 @media screen and (min-width: 768px) {
   .menu-sidebar {
@@ -93,7 +97,6 @@ nz-content {
   }
 }
 
-
 @media screen and (max-width: 460px) {
   .main-content {
     padding: 20px 5px 10px 5px;
@@ -107,6 +110,7 @@ nz-content {
   color: white;
   background-color: #6B7A90;
 }
+
 .workshop-label {
   color: white;
   background-color: #1e64f0;
@@ -116,6 +120,7 @@ nz-content {
 color: white;
 background-color: red;
 }
+
 .price-label {
 margin: 2px 5px;
 display: inline-block;
