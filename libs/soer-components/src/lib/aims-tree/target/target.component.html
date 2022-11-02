@@ -11,5 +11,5 @@
         <div class="card_progress">
             <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>
         </div>
-        <soer-aims-tree [root]="target"></soer-aims-tree>
+        <soer-aims-tree [root]="target" (update)="check($event, target)"></soer-aims-tree>
 </nz-card>

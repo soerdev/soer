@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BusEmitter, MixedBusService } from '@soer/mixed-bus';
 import { CommandUpdate, DataStoreService, DtoPack, OK } from '@soer/sr-dto';
 import { NzNotificationComponent, NzNotificationDataOptions, NzNotificationService } from 'ng-zorro-antd/notification';
 import { filter, first, Observable } from 'rxjs';
-import { AimModel } from '@soer/soer-components';
 import { convertToJsonDTO, parseJsonDTOPack } from '../../../../api/json.dto.helpers';
 import { TargetModel, Visibility } from '../../../../api/targets/target.interface';
 import { propagateProgress, updateProgress } from '../progress.helper';
@@ -48,6 +47,16 @@ export class ListAimsPageComponent implements OnInit {
     this.createTasksVisibility()
   }
 
+  onUpdate(target: TargetModel): void {
+    const tmpTargetId = {...this.targetId, key: {tid: target.id}};
+    this.bus$.publish(
+      new CommandUpdate(
+        tmpTargetId,
+        { ...convertToJsonDTO(target, ['id']), id: target.id },
+        {skipRoute: true, skipSyncRead: true}
+      )
+    );
+  }
    // eslint-disable-next-line @typescript-eslint/ban-types
   check(task: TargetModel, target: TargetModel, progress: number = DONE_PROGRESS, template: TemplateRef<{}> | null = null): void {
     propagateProgress(task, progress);

@@ -4,7 +4,7 @@
         <div nz-row [nzGutter]="[24, 24]" class="targets" >
         <ng-container *ngFor="let target of targets; let index = index">
             <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="12" style="margin: 0 auto;">
-                <soer-target [target]="target"></soer-target>
+                <soer-target [target]="target" (update)="onUpdate($event)"></soer-target>
             </div>
         </ng-container>
         </div>
@@ -32,45 +32,4 @@
         </span>
       </div>
     </div>
-</ng-template>
-
-<ng-template #listTasks let-target="target" let-root="root" let-hideClosed="visibility" let-taskId="taskId">
-    <ng-container  *ngIf="target.progress !== doneProgress">
-        <ng-container *ngFor="let task of target.tasks; let index = index;">
-            <div [ngClass]="{task: target === root, aim: target !== root, done: task.progress === doneProgress, invisible: !hideClosed}">
-                <ng-container *ngIf="task.progress < doneProgress;">
-                    <div class="task-container">
-                        <ng-container *ngIf="task.tasks?.length > 0;else taskDone">
-                            <a class="tasks_expander" *ngIf="task.tasks?.length > 0" (click)="expanderCache[taskId + '.' + index] = !expanderCache[taskId+ '.' + index]">
-                                <nz-progress  [nzStrokeColor]="gradientColors"  [nzPercent]="task.progress" nzType="circle" [nzWidth]="30"></nz-progress>
-                                <i nz-icon [nzType]="!!expanderCache[taskId + '.' + index] ? 'down' : 'right'"></i>
-                                <span>{{task.title}}</span>
-                                <span class="task_statistic">({{task | countClosedTasks}} / {{task.tasks.length}})</span>
-                            </a>
-                        </ng-container>
-                        <ng-template #taskDone>
-                            <button
-                            nz-button
-                            nzType="default"
-                            nzSize="small"
-                            nzShape="circle"
-                            (click)="check(task, root, doneProgress, notify)"
-                            ><i nz-icon nzType="check"></i></button>
-                            <span>{{task.title}}</span>
-                        </ng-template>
-                    </div>
-                    <ng-container *ngIf="!!expanderCache[taskId + '.' + index]">
-                        <ng-container *ngTemplateOutlet="listTasks; context: {target: task, root: root, visibility: hideClosed, taskId: taskId + '.' + index}"></ng-container>
-                    </ng-container>
-
-                </ng-container>
-                <ng-container *ngIf="task.progress === doneProgress;">
-                    <div class="task-container" nz-typography nzDisabled>
-                        <i class="aim_done-icon" nz-icon nzType="check"></i>
-                        {{task.title}}
-                    </div>
-                </ng-container>
-            </div>
-        </ng-container>
-    </ng-container>
 </ng-template>
