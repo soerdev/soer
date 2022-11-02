@@ -3,24 +3,9 @@
 
         <div nz-row [nzGutter]="[24, 24]" class="targets" >
         <ng-container *ngFor="let target of targets; let index = index">
-        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="isSingleMode ? 24 : 12" style="margin: 0 auto;">
-        <nz-card> 
-            <div class="card_toolbar">
-                <a nz-button nzType="link" *ngIf="!isSingleMode" [routerLink]="['filter', target.id]"><i nz-icon nzType="pushpin"></i></a> 
-                <a nz-button nzType="link" *ngIf="isSingleMode" [routerLink]="['/', 'pages', 'targets']"><i nz-icon nzType="bars"></i></a>
-                <a nz-button nzType="link" (click)="toggleTaskVisibility(target.id)"><i nz-icon [nzType]="visibility[target.id || 0] ? 'eye' : 'eye-invisible'"></i></a> 
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="12" style="margin: 0 auto;">
+                <soer-target [target]="target"></soer-target>
             </div>
-
-            <div class="card_title">
-                    <a [title]="target.title" [routerLink]="['/pages/targets', {outlets: {popup: ['target', 'edit', target.id]}}]" nz-button nzType="link">{{target.title}}</a>
-            </div>
-            <div class="card_progress">
-                <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>
-            </div>
-
-            <ng-container *ngTemplateOutlet="listTasks; context: {target: target, root: target, visibility: visibility[target.id || 0], taskId: index+''}"></ng-container>
-        </nz-card>
-        </div>
         </ng-container>
         </div>
     </ng-container>

@@ -160,6 +160,32 @@
       "tags": [],
       "implicitDependencies": ["naris"]
     },
+    "soer-components": {
+      "projectType": "library",
+      "root": "libs/soer-components",
+      "sourceRoot": "libs/soer-components/src",
+      "prefix": "soer",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/soer-components"],
+          "options": {
+            "jestConfig": "libs/soer-components/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/soer-components/**/*.ts",
+              "libs/soer-components/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "sr-auth": {
       "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",

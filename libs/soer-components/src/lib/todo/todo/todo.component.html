@@ -1,0 +1,10 @@
+<button
+            *ngIf="!checked"
+            nz-button
+            nzType="default"
+            nzSize="small"
+            nzShape="circle"
+            (click)="toggle()"
+            ><i nz-icon nzType="check"></i></button>
+<i *ngIf="checked" class="todo_done-icon" nz-icon nzType="check"></i>            
+<span>{{label}}</span>

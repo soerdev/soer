@@ -1,0 +1,17 @@
+<div class="task">
+    <div class="task-container">
+        <ng-container *ngIf="aim.tasks.length > 0;else aimDone">
+            <a class="tasks_expander" *ngIf="aim.tasks.length > 0" (click)="toggle()">
+                <nz-progress  [nzStrokeColor]="gradientColors"  [nzPercent]="aim.progress" nzType="circle" [nzWidth]="30"></nz-progress>
+                <i nz-icon [nzType]="isExpand ? 'down' : 'right'"></i>
+                <span>{{aim.title}}</span>
+            </a>
+        </ng-container>
+        <ng-template #aimDone>
+            <soer-todo [label]="aim.title" [checked]="aim.progress === doneProgress" (update)="update.emit(aim)"></soer-todo>
+        </ng-template>
+    </div>
+    <div class="aim" *ngIf="isExpand">
+        <soer-aims-tree [root]="aim" (update)="update.emit($event)"></soer-aims-tree>
+    </div>
+</div>

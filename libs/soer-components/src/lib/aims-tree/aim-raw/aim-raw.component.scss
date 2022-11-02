@@ -1,0 +1,104 @@
+p {
+    cursor: pointer;
+}
+
+button  {
+    margin: 0 0.5rem;
+}
+
+nz-progress  {
+    margin: 0 0.4rem;
+}
+
+::ng-deep .ant-btn>span {
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+nz-card {
+    height: 100%;
+}
+
+.targets {
+    margin: 1rem auto !important;
+}
+
+.card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        &_title {
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            a {
+                display: inline-block;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        &_toolbar {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            text-align: right;
+            a {
+                margin: 0 5px;
+            }
+        }
+
+        &_progress {
+            width: 50%;
+            margin: 0 auto;
+        }
+}
+
+.task {
+    padding: 0.5rem 0 0.5rem 0;
+    .tasks_expander i{
+        margin: 0 0.5rem 0 0;
+    }
+    .aim {
+        &_card {
+            
+            .ant-btn>span {
+                display: inline;
+            }
+        }
+       padding: 0.5rem 1.85rem;
+    }
+    .task_statistic {
+        font-size: 0.875rem;
+        padding: 0 0.2rem;
+        margin: 0 0 0 auto;
+        white-space: nowrap;
+    }
+
+    ::ng-deep .ant-typography {
+        margin: 0;
+    }
+}
+
+
+
+.task-container {
+    a {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.done.invisible {
+    display: none;
+}
+
+.task
+.aim_done-icon {
+    margin: 0 0.5rem 0 0.8rem;
+}

@@ -1,0 +1,15 @@
+<nz-card> 
+        <div class="card_toolbar">
+            <!--<a nz-button nzType="link" *ngIf="!isSingleMode" [routerLink]="['filter', target.id]"><i nz-icon nzType="pushpin"></i></a> 
+            <a nz-button nzType="link" *ngIf="isSingleMode" [routerLink]="['/', 'pages', 'targets']"><i nz-icon nzType="bars"></i></a>
+            <a nz-button nzType="link" (click)="toggleTaskVisibility(target.id)"><i nz-icon [nzType]="visibility[target.id || 0] ? 'eye' : 'eye-invisible'"></i></a> -->
+        </div>
+
+        <div class="card_title">
+                <a [title]="target.title" nzType="link">{{target.title}}</a>
+        </div>
+        <div class="card_progress">
+            <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>
+        </div>
+        <soer-aims-tree [root]="target"></soer-aims-tree>
+</nz-card>

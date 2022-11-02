@@ -58,6 +58,7 @@ export abstract class ComposePage {
           })
       }
       extract(this.router.routerState.root);
+
       result.forEach(h => {
         
         const isSameSchema = function (a: BusEmitter, b: BusEmitter): boolean {
@@ -66,7 +67,10 @@ export abstract class ComposePage {
           return aStr === bStr;
         }
         if (h.sid === data.owner.sid) {
-          this.bus$.publish(new CommandRead(h));
+
+          if (isBusMessage(data) && data.params?.['skipSyncRead'] !== true)  {
+            this.bus$.publish(new CommandRead(h));
+          }
         }
       });
 
