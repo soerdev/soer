@@ -1,7 +1,7 @@
 <nz-card> 
         <div class="card_toolbar">
             <ng-content select="[toolbar]"></ng-content>
-            <a nz-button nzType="link" (click)="hideCompleted = !hideCompleted"><i nz-icon [nzType]="hideCompleted ? 'eye' : 'eye-invisible'"></i></a>
+            <!--<a nz-button nzType="link" (click)="hideCompleted = !hideCompleted"><i nz-icon [nzType]="hideCompleted ? 'eye' : 'eye-invisible'"></i></a>-->
         </div>
 
         <div class="card_title">
@@ -10,5 +10,5 @@
         <div class="card_progress">
             <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>
         </div>
-        <soer-aims-tree [hideCompleted]="hideCompleted" [root]="target" (update)="check($event, target)"></soer-aims-tree>
+        <soer-aims-tree  [root]="target" (update)="check($event, target)"></soer-aims-tree>
 </nz-card>

@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 export class TodoComponent {
   @Input() label = '';
   @Input() checked = false;
+  
   public isUndo = false;
   @Output() update: EventEmitter<boolean> = new EventEmitter<boolean>();
 

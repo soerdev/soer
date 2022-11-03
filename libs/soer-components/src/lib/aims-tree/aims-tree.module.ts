@@ -10,6 +10,7 @@ import { AimsTreeComponent } from './aims-tree/aims-tree.component';
 import { TodoModule } from '../todo';
 import { TargetComponent } from './target/target.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TargetService } from './target.service';
 
 @NgModule({
   declarations: [AimsTreeComponent, AimRawComponent, TargetComponent],
@@ -23,6 +24,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzGridModule,
     NzTypographyModule
   ],
+  providers: [TargetService],
   exports: [AimsTreeComponent, TargetComponent],
 })
 export class AimsTreeModule {}

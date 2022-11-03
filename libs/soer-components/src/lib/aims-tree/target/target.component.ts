@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AimModel, EMPTY_AIM } from '../interfaces/aim.model';
+import { TargetService } from '../target.service';
 
 @Component({
   selector: 'soer-target',
@@ -9,18 +10,15 @@ import { AimModel, EMPTY_AIM } from '../interfaces/aim.model';
 })
 export class TargetComponent {
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
-  public hideCompleted = true;
 
   @Input() target: AimModel = EMPTY_AIM;
   @Output() update: EventEmitter<AimModel> = new EventEmitter<AimModel>();
   @Output() edit: EventEmitter<AimModel> = new EventEmitter<AimModel>();
 
+  constructor(private targetService: TargetService) {}
 
   check(task: AimModel, target: AimModel): void {
-    
-    const progress =task.progress === 100 ? 0 : 100;
-    propagateProgress(task, progress);
-    updateProgress(target);
+    this.targetService.check(task, target);
     this.update.emit(target);
   }
 
@@ -28,26 +26,4 @@ export class TargetComponent {
     this.edit.emit(this.target);
   }
 
-}
-
-
-
-
-function propagateProgress(target: AimModel, progress: number): void {
-  if (target.tasks?.length > 0) {
-    target.tasks.forEach(task => propagateProgress(task, progress));
-  }
-  target.progress = progress;
-}
-
-function updateProgress(target: AimModel): void {
-  if (target.tasks?.length > 0) {
-      target.tasks.forEach( task => updateProgress(task));
-      target.progress = calcProgress(target);
-  }
-}
-
-function calcProgress(target: AimModel): number {
-  const value = target.tasks.reduce((r, v) => ({ total: r.total + 100, real: r.real + v.progress }), { total: 0, real: 0 });
-  return value.total > 0 ? Math.floor(value.real / value.total * 100) : 0;
 }
