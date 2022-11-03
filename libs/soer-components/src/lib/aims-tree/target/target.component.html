@@ -6,7 +6,7 @@
         </div>
 
         <div class="card_title">
-                <a [title]="target.title" nzType="link">{{target.title}}</a>
+                <a [title]="target.title" nzType="link" (click)="onEdit()">{{target.title}}</a>
         </div>
         <div class="card_progress">
             <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>

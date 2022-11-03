@@ -1,3 +1,5 @@
+
+<div nz-typography [nzDisabled]="checked">
 <button     
         *ngIf="isUndo && checked"
         nz-button
@@ -16,3 +18,4 @@
             ><i nz-icon nzType="check"></i></button>
 <i *ngIf="checked" class="todo_done-icon" nz-icon nzType="check"></i>
 <span>{{label}}</span>
+</div>

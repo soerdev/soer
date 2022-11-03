@@ -1,35 +1,13 @@
 <ng-container *ngIf="(targets$ | async)?.items as targets">
     <ng-container *ngIf="targets.length > 0;else nocontent">
-
         <div nz-row [nzGutter]="[24, 24]" class="targets" >
-        <ng-container *ngFor="let target of targets; let index = index">
-            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="12" style="margin: 0 auto;">
-                <soer-target [target]="target" (update)="onUpdate($event)"></soer-target>
-            </div>
-        </ng-container>
+            <ng-container *ngFor="let target of targets; let index = index">
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="12" style="margin: 0 auto;">
+                    <soer-target [target]="target" (update)="onUpdate($event)" (edit)="onEdit($event)"></soer-target>
+                </div>
+            </ng-container>
         </div>
-    </ng-container>
-
+  </ng-container>
 </ng-container>
 
-<ng-template #done><i nz-icon nzType="check"></i></ng-template>
 <ng-template #nocontent><nz-empty nzNotFoundImage="simple"></nz-empty></ng-template>
-
-<ng-template #notify let-notification>
-    <div class="ant-notification-notice-content">
-      <div>
-        <div class="ant-notification-notice-message">Undo</div>
-        <div class="ant-notification-notice-description">
-          Отменить только совершенное действие
-        </div>
-        <span class="ant-notification-notice-btn">
-            <button nz-button nzType="primary" nzSize="small" (click)="notification.close()">
-                <span>Cancel</span>
-              </button>
-          <button nz-button nzType="primary" nzSize="small" (click)="undo(notification)">
-            <span>Undo</span>
-          </button>
-        </span>
-      </div>
-    </div>
-</ng-template>

@@ -9,6 +9,7 @@ import { AimRawComponent } from './aim-raw/aim-raw.component';
 import { AimsTreeComponent } from './aims-tree/aims-tree.component';
 import { TodoModule } from '../todo';
 import { TargetComponent } from './target/target.component';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 @NgModule({
   declarations: [AimsTreeComponent, AimRawComponent, TargetComponent],
@@ -19,7 +20,8 @@ import { TargetComponent } from './target/target.component';
     NzIconModule,
     NzButtonModule,
     NzCardModule,
-    NzGridModule
+    NzGridModule,
+    NzTypographyModule
   ],
   exports: [AimsTreeComponent, TargetComponent],
 })

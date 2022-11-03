@@ -11,6 +11,8 @@ export class TargetComponent {
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
   @Input() target: AimModel = EMPTY_AIM;
   @Output() update: EventEmitter<AimModel> = new EventEmitter<AimModel>();
+  @Output() edit: EventEmitter<AimModel> = new EventEmitter<AimModel>();
+
   check(task: AimModel, target: AimModel): void {
     
     const progress =task.progress === 100 ? 0 : 100;
@@ -19,7 +21,13 @@ export class TargetComponent {
     this.update.emit(target);
   }
 
+  onEdit(): void {
+    this.edit.emit(this.target);
+  }
+
 }
+
+
 
 
 function propagateProgress(target: AimModel, progress: number): void {
