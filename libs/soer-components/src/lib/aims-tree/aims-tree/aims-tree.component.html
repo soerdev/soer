@@ -1,6 +1,6 @@
 <ng-container  *ngIf="root.progress !== doneProgress">
     <ng-container *ngFor="let task of root.tasks; let index = index;">
-        <soer-aim-raw [aim]="task" (update)="update.emit($event)"></soer-aim-raw>
+        <soer-aim-raw *ngIf="!(hideCompleted && task.progress === 100)" [aim]="task" (update)="update.emit($event)"></soer-aim-raw>
     </ng-container>
 </ng-container>
 

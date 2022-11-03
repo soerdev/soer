@@ -9,9 +9,12 @@ import { AimModel, EMPTY_AIM } from '../interfaces/aim.model';
 })
 export class TargetComponent {
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
+  public hideCompleted = true;
+
   @Input() target: AimModel = EMPTY_AIM;
   @Output() update: EventEmitter<AimModel> = new EventEmitter<AimModel>();
   @Output() edit: EventEmitter<AimModel> = new EventEmitter<AimModel>();
+
 
   check(task: AimModel, target: AimModel): void {
     

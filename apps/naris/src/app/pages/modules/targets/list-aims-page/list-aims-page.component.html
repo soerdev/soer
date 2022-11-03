@@ -2,8 +2,13 @@
     <ng-container *ngIf="targets.length > 0;else nocontent">
         <div nz-row [nzGutter]="[24, 24]" class="targets" >
             <ng-container *ngFor="let target of targets; let index = index">
-                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="12" style="margin: 0 auto;">
-                    <soer-target [target]="target" (update)="onUpdate($event)" (edit)="onEdit($event)"></soer-target>
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" [nzXl]="isSingleMode ? 24 : 12" style="margin: 0 auto;">
+                    <soer-target [target]="target"  (update)="onUpdate($event)" (edit)="onEdit($event)">
+                        <ng-container toolbar>
+                            <a nz-button nzType="link" *ngIf="!isSingleMode" [routerLink]="['filter', target.id]"><i nz-icon nzType="pushpin"></i></a> 
+                            <a nz-button nzType="link" *ngIf="isSingleMode" [routerLink]="['/', 'pages', 'targets']"><i nz-icon nzType="bars"></i></a>
+                        </ng-container>
+                    </soer-target>
                 </div>
             </ng-container>
         </div>

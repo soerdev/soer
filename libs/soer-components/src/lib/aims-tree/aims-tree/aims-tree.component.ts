@@ -8,6 +8,7 @@ import { AimModel, EMPTY_AIM } from '../interfaces/aim.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AimsTreeComponent  {
+  @Input() hideCompleted = false;
   @Input() root: AimModel = EMPTY_AIM;
   @Output() update: EventEmitter<AimModel> = new EventEmitter<AimModel>();
   doneProgress = 100;
