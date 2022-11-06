@@ -1,5 +1,5 @@
 export interface AimModel {
-    id?: number;
+    id?: number | string;
     title: string;
     overview: string;
     progress: number;

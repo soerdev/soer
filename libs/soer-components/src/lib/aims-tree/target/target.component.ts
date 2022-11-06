@@ -11,6 +11,8 @@ import { TargetService } from '../target.service';
 export class TargetComponent {
   public readonly gradientColors = { '0%': '#ff0000', '50%': '#ff0000', '75%': '#ff9900', '100%': '#0f0' };
 
+  public isEdit = false;
+ 
   @Input() target: AimModel = EMPTY_AIM;
   @Output() update: EventEmitter<AimModel> = new EventEmitter<AimModel>();
   @Output() edit: EventEmitter<AimModel> = new EventEmitter<AimModel>();
@@ -22,8 +24,21 @@ export class TargetComponent {
     this.update.emit(target);
   }
 
+  onSave(): void {
+    this.isEdit = false;
+    this.update.emit(this.target);
+  }
   onEdit(): void {
     this.edit.emit(this.target);
+  }
+
+  onAddTo(aim: AimModel): void {
+    this.targetService.factory(this.target).addTaskTo(aim);
+  }
+
+  onDelete(aim: AimModel): void {
+    console.log('????');
+    this.targetService.factory(this.target).delete(aim);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TargetMiddleware } from './helpers/target.middleware';
 import { AimModel } from './interfaces/aim.model';
 
 
@@ -31,6 +32,10 @@ export class TargetService {
 
   constructor() { 
     console.log('????', 'TARGET SERVICE');
+  }
+
+  factory(target: AimModel): TargetMiddleware {
+    return new TargetMiddleware(target);
   }
 
   check(task: AimModel, target: AimModel): void {

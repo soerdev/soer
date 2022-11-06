@@ -2,6 +2,8 @@
         <div class="card_toolbar">
             <ng-content select="[toolbar]"></ng-content>
             <!--<a nz-button nzType="link" (click)="hideCompleted = !hideCompleted"><i nz-icon [nzType]="hideCompleted ? 'eye' : 'eye-invisible'"></i></a>-->
+            <a *ngIf="!isEdit" nz-button nzType="link" (click)="isEdit = !isEdit"><i nz-icon [nzType]="'edit'"></i></a>
+            <a *ngIf="isEdit" nz-button nzType="link" (click)="onSave()"><i nz-icon [nzType]="'save'"></i></a>
         </div>
 
         <div class="card_title">
@@ -10,5 +12,5 @@
         <div class="card_progress">
             <nz-progress [nzStrokeColor]="gradientColors" [nzPercent]="target.progress"></nz-progress>
         </div>
-        <soer-aims-tree  [root]="target" (update)="check($event, target)"></soer-aims-tree>
+        <soer-aims-tree [isEdit]="isEdit" [root]="target" (update)="check($event, target)" (delete)="onDelete($event)" (add)="onAddTo($event)"></soer-aims-tree>
 </nz-card>

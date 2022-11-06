@@ -49,7 +49,7 @@ export class ListAimsPageComponent implements OnInit {
     this.createTasksVisibility()
   }
 
-  onUpdate(target: TargetModel): void {
+  onUpdate(target: AimModel): void {
     const tmpTargetId = {...this.targetId, key: {tid: target.id}};
     this.bus$.publish(
       new CommandUpdate(
